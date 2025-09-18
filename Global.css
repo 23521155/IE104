@@ -20,13 +20,19 @@
 
 html{
     font-size: 62.5%;
-
 }
 body{
     font-size: 1.6rem;
     text-rendering: optimizeSpeed;
     background: var(--background-color);
     font-family: 'Montserrat', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+html,body{
+    height: 100%;
+    margin: 0;
 }
 button,input,[tabindex]{
     border: none;
@@ -234,12 +240,112 @@ html *::-webkit-scrollbar-track {
 
 /*Content*/
 .content {
+    height: 1000px;
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
     font-size: 3rem;
     transition: transform 0.8s ease-in-out;
+}
+
+/*Footer*/
+
+.footer{
+    background-color: #000;
+    height:  var(--height-footer);
+    position: relative;
+}
+
+.footer>ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 80px 0 80px;
+    margin-bottom: 15px;
+}
+
+.footer-title{
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 40px;
+}
+
+.footer-gmail{
+    margin-top: 14px;
+    color:#a09f9c;
+    font-size: 1.4rem;
+    transition: color 0.3s ease;
+    display: flex;
+}
+
+.footer-gmail:hover{
+    color: #ffffff;
+    user-select: none;
+}
+
+.footer-item{
+    margin-top: 14px;
+    color:#a09f9c;
+    font-size: 1.4rem;
+    transition: color 0.3s ease;
+    display: flex;
+}
+
+.footer-item:hover{
+    color: #ffffff;
+}
+
+.footer-icon{
+    margin-top: 20px;
+    display: flex;
+}
+
+.footer-icon > a{
+    margin-right: 5px;
+    color:#a09f9c;
+    font-size: 1.6rem;
+    transition: color 0.3s ease;
+}
+
+.footer-icon > a:hover{
+    color: #ffffff;
+}
+
+.footer-powered{
+    border-top: 1px solid #efefef;
+    position: absolute;
+    width: 100%;
+    top: 260px;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 100px 0 20px;
+}
+
+.footer-powered-text{
+    color:#a09f9c;
+    font-size: 1.8rem;
+}
+
+.footer-powered-text:hover{
+    color:#ffffff;
+}
+
+.footer-pay{
+    padding: 0 10px;
+}
+
+.footer-pay > a{
+    color:#a09f9c;
+    font-size: 2.2rem;
+    margin: 0 2px;
+}
+
+.footer-pay > a:hover{
+    color: #ffffff;
 }
 
 /* khi modal mở, content bị đẩy sang phải 40px */
