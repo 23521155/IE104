@@ -1,0 +1,722 @@
+
+
+
+:root{
+    --height-header: 64px;
+    --height-footer: 355px;
+    --background-color:#efefef;
+    --text-color:#000008;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Cho WebKit browsers (Chrome, Edge, Safari, Opera) */
+    input[type="search"]::-webkit-search-cancel-button {
+        cursor: pointer;
+    }
+}
+
+html{
+    font-size: 62.5%;
+
+}
+body{
+    font-size: 1.6rem;
+    text-rendering: optimizeSpeed;
+    background: var(--background-color);
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+button,input,[tabindex]{
+    border: none;
+    outline: none;
+}
+a[href]{
+    text-decoration: none;
+}
+
+/*// scroll bar*/
+html ::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #ced0da;
+}
+html *::-webkit-scrollbar-thumb:hover {
+    border-radius: 4px;
+    background-color: #bfc2cf;
+}
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+/*Header*/
+.header{
+    height: var(--height-header);
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: sticky;
+    z-index: 5;
+    top: 0;
+}
+
+.header-left{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.header-right{
+    display: flex;
+    padding-right: 20px;
+    font-size: 2rem;
+    gap:20px;
+}
+
+.menu-button {
+    height: 100%;
+    width: 250px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.hamburger-menu {
+    height: 24px;
+    width: 60px;
+    border-top: 2px solid var(--text-color);
+    border-bottom: 2px solid var(--text-color);
+    position: relative;
+}
+
+.hamburger-menu::before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100px;
+    background: var(--text-color);
+    top: 49%;
+    left: 0;
+    transition: width 0.6s ease;
+}
+
+.hamburger-menu-title {
+    margin-left: 50px;
+    font-size: 1.6rem;
+    font-weight: 500;
+    transition: margin-left 0.6s ease;
+    user-select: none;
+}
+
+.menu-button:hover .hamburger-menu::before {
+    width: 60px;
+}
+
+.menu-button:hover .hamburger-menu-title {
+    margin-left: 10px;
+}
+
+.search{
+    height: 40px;
+    width: 100px;
+    border: 1px solid var(--text-color);
+    border-radius: 20px;
+    background-color: var(--background-color);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    position: absolute;
+    left: 250px;
+    transition: width 0.6s ease;
+    overflow: hidden;
+}
+
+.search-input{
+    width: 60px;
+    height: 40px;
+    transition: width 0.6s ease;
+    background-color:#efefef ;
+    margin-left: 5px;
+}
+
+.search-icon{
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+.search:hover{
+    width: 400px;
+    cursor: pointer;
+}
+
+.search:hover .search-input{
+    width: 400px;
+}
+
+.user {
+    position: relative;
+    width: 60px;
+    height: 24px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.6s ease;
+    color: var(--text-color);
+}
+
+.user-title {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    opacity: 0;
+    transform: translateY(-50%) translateX(0);
+    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+    color: var(--text-color);
+}
+
+.user:hover .user-icon {
+    transform: translateY(-50%) translateX(-40px);
+}
+
+.user:hover .user-title {
+    opacity: 1;
+    transform: translateY(-50%) translateX(5px);
+}
+.cart {
+    position: relative;
+    width: 60px;
+    height: 24px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.cart-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.6s ease;
+    color: var(--text-color);
+}
+
+.cart-title {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    opacity: 0;
+    transform: translateY(-50%) translateX(0);
+    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+    color: var(--text-color);
+}
+
+.cart:hover .cart-icon {
+    transform: translateY(-50%) translateX(-40px);
+}
+
+.cart:hover .cart-title {
+    opacity: 1;
+    transform: translateY(-50%) translateX(5px);
+}
+
+/*Content*/
+.content {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    transition: transform 0.8s ease-in-out;
+}
+
+/* khi modal mở, content bị đẩy sang phải 40px */
+.content.shift-right {
+    transform: translateX(100px);
+}
+/* Content bật từ dưới lên khi đóng */
+.content.shift-down {
+    transform: translateY(100px);
+}
+
+
+
+/*Menu Modal*/
+
+.menu-modal{
+    width: 100%;
+    background-color: var(--background-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: translateX(-100%);
+    transition: transform 1s ease-in-out;
+    z-index: 9;
+    display: flex;
+
+
+}
+.menu-modal.active {
+    /*display: block;*/
+    transform: translateX(0);
+}
+.menu-modal.closing {
+    animation: slideUp 0.5s forwards ease-in-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+}
+.menu-modal-left{
+    width: 440px;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 60px 40px;
+}
+
+.menu-modal-header{
+    display: flex;
+    justify-content: space-between;
+}
+.menu-modal-header > div{
+    cursor: pointer;
+}
+.menu-modal-title{
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--text-color);
+    position: relative;
+}
+.menu-modal-title::before{
+    content: "";
+    border: 1.5px solid var(--text-color);
+    width: 0;
+    position:absolute;
+    left:0;
+    bottom:0;
+    margin-top: 5px;
+    opacity: 0;               /* ẩn hoàn toàn */
+    transition: width 0.6s ease, opacity 0.7s ease;
+}
+.menu-modal-header > div:hover  .menu-modal-title::before{
+    width: 100%;
+    opacity: 1;
+}
+
+.menu-modal-close{
+    font-size: 2.4rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+.menu-modal-list{
+    margin-top: 45px;
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+
+}
+.menu-modal-list > div {
+    margin-bottom: 25px;
+}
+.menu-modal-content{
+    font-size: 1.8rem;
+
+    color:var(--text-color);
+    position: relative;
+}
+.menu-modal-content::before{
+    content: "";
+    border: 1.5px solid var(--text-color);
+    width: 0;
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    opacity: 0; /* ẩn hoàn toàn */
+    transition: width 0.6s ease, opacity 0.7s ease;
+}
+.menu-modal-list > div:hover .menu-modal-content::before{
+    width: 100%;
+    opacity: 1;
+}
+.menu-modal-content > i{
+    margin-right: 5px;
+}
+
+/*User Modal*/
+
+
+.user-modal{
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
+    z-index: 6;
+}
+.user-modal-overlay{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.6);
+}
+.user-modal-login{
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    height: 580px;
+    width: 480px;
+    background-color: #fff;
+    border-radius: 20px;
+    z-index: 9;
+    transform: scaleY(0);
+    transition: transform 0.4s ease;
+    transform-origin: center center;
+}
+.user-modal-login-header{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    height: 200px;
+}
+.login-register{
+    display: flex;
+    height: 80px;
+    align-items: center;
+    justify-content: center;
+}
+.or{
+    font-size: 1.4rem;
+    margin: 0 15px;
+}
+.login,
+.register{
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+.login > div,
+.register > div{
+    font-size: 2rem;
+    cursor: pointer;
+    color: #a09f9c;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.login > div::before,
+.register > div::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    border: 1px solid var(--text-color);
+    width: 0;
+    opacity: 0;
+    transition: width 0.6s ease, opacity 0.7s ease;
+}
+
+.login:hover > div::before,
+.register:hover > div::before{
+    width: 100%;
+    opacity: 1;
+}
+.login:hover,
+.register:hover{
+    color:var(--text-color);
+}
+.login-icon{
+    display: flex;
+    justify-content: center;
+}
+.login-icon > i {
+    border: 1px solid #a09f9c;
+    font-size:  1.6rem;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.login-icon > i:hover {
+    background: #000008;
+    color: #ffffff;
+}
+.user-modal-login-form,
+.user-modal-register-form {
+    padding: 0 100px;
+}
+.input-login-register {
+    position: relative;
+    margin: 25px 0;
+    border-bottom: 2px solid #a09f9c;
+}
+
+.input-login-register input {
+    width: 90%;
+    padding: 10px;
+    font-size: 1.4rem;
+    border: none;
+    outline: none;
+    background: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-login-register:focus-within {
+    border-color: #000008;
+}
+
+.input-login-register label {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    color: #aaa;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+.input-login-register input:focus ~ label,
+.input-login-register input:valid ~ label {
+    top: -15px;
+    font-size: 1.2rem;
+    color: #000008;
+    font-weight: 500;
+}
+.input-close{
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+.input-close::before,
+.input-close::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-top: 1.2px solid black;
+    display: none;
+}
+.input-close::before {
+    bottom: 8px;
+    transform: rotate(45deg);
+}
+
+.input-close::after {
+    bottom: 8px;
+    transform: rotate(-45deg);
+}
+.input-login-register input:valid ~ .input-close::before,
+.input-login-register input:valid ~ .input-close::after {
+    display: block;
+}
+.btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    background: #a09f9c;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    transition: background 0.3s ,box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    background: #000008;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.password-forgot{
+    margin-top: 10px;
+    font-size: 1.4rem;
+    color: #a09f9c;
+    position: absolute;
+    right: 50%;
+    transform:  translateX(50%);
+    cursor: pointer;
+}
+.password-forgot > div::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    border: 1px solid var(--text-color);
+    width: 0;
+    opacity: 0;
+    transition: width 0.6s ease, opacity 0.7s ease;
+}
+.password-forgot:hover{
+    color: var(--text-color);
+}
+.password-forgot:hover >  div::before{
+    width: 100%;
+    opacity: 1;
+}
+.user-modal-register{
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    height: 580px;
+    width: 600px;
+    background-color: #fff;
+    border-radius: 20px;
+    display: none;
+    z-index: 9;
+    transform: scaleY(0);
+    transition: transform 0.4s ease;
+    transform-origin: center center;
+}
+.user-modal-register-header{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    height: 200px;
+}
+.register-name,
+.register-password{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; /* khoảng cách giữa các input */
+}
+.welcome{
+    font-size: 2.4rem;
+    margin-top: 20px;
+}
+.register-name  .input-login-register > input,
+.register-password  .input-login-register > input {
+    width: 80%;
+}
+
+.back-arrow{
+    height: 14px;
+    width: 24px;
+    position: relative;
+    cursor: pointer;
+    left: -80px;
+    top: 30px;
+}
+.back-arrow > div{
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 110%;
+    border: 1px solid #000008;
+    top: 50%;
+}
+.back-arrow > div::before,
+.back-arrow > div::after{
+    position: absolute;
+    content: "";
+    width: 40%;
+    border: 1px solid #000008;
+}
+.back-arrow > div::before{
+    top: -4.5px;
+    left: -3px;
+    transform: rotate(135deg);
+}
+.back-arrow > div::after{
+    bottom: -4.5px;
+    left: -3px;
+    transform: rotate(-135deg);
+}
+.user-close-modal{
+    height: 20px;
+    width: 20px;
+    position: relative;
+    cursor: pointer;
+    right: -80px;
+    top: 30px;
+}
+.user-close-modal::before,
+.user-close-modal::after{
+    content: "";
+    position: absolute;
+    border: 1px solid var(--text-color);
+    width: 120%;
+}
+.user-close-modal::before{
+    transform:  rotate(45deg);
+    left: -2px;
+    bottom: 14px;
+}
+.user-close-modal::after{
+    transform:  rotate(-45deg);
+    left: -2px;
+    bottom: 14px;
+}
+.user-modal-forgot-password{
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    height: 330px;
+    width: 400px;
+    background-color: #fff;
+    border-radius: 20px;
+    display: none;
+    z-index: 9;
+    transform: scaleY(0);
+    transition: transform 0.4s ease;
+    transform-origin: center center;
+}
+.forgot-password-header{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    height: 100px;
+}
+.forgot-password-title{
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.forgot-password-para{
+    margin-top: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 10px;
+    line-height: 1.6;
+}
+.forgot-password-form{
+    padding: 0 50px;
+}
+.forgot-password-header > .back-arrow{
+    left: 30px;
+    top: -14px;
+}
+.forgot-password-header > .back-arrow > div::before{
+    left: -1.2px;
+    top: -4px;
+}
+.forgot-password-header > .back-arrow > div::after{
+    left: -1.2px;
+    bottom: -3.5px;
+}
+.forgot-password-header > .user-close-modal {
+    top: -12px;
+    right: 30px;
+}

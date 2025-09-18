@@ -1,10 +1,202 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>NameWeb</title>
+    <link rel="stylesheet" href="../Global.css">
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="container">
+    <header class="header">
+        <div class="header-left">
+            <div class="menu-button" id="menu-button">
+                <div class="hamburger-menu">
+                </div>
+                <div class="hamburger-menu-title">MENU</div>
+            </div>
+            <div class="search">
+                <div class="search-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <input type="search" placeholder="Search" class="search-input" aria-label="Search"/>
+            </div>
+        </div>
+        <div class="logo">NAME WEB</div>
+        <div class="header-right">
+            <div class="user" id="user-button">
+                <div class="user-icon"><i class="fa-regular fa-user"></i></div>
+                <div class="user-title">
+                    USER
+                </div>
+            </div>
+            <div class="cart">
+                <div class="cart-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <div class="cart-title">
+                    CART
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="content">web</div>
+</div>
+<div class="menu-modal" id="menu-modal">
+    <div class="menu-modal-left">
+        <header class="menu-modal-header">
+            <div>
+                <div class="menu-modal-title">MENU</div>
+            </div>
+            <div class="menu-modal-close" id="menu-modal-close"><i class="fa-solid fa-xmark"></i></div>
+        </header>
+        <div class="menu-modal-list">
+            <div><a href="" class="menu-modal-content">NEW ARRIVALS</a></div>
+            <div><a href="" class="menu-modal-content">DRESSES</a></div>
+            <div><a href="" class="menu-modal-content">CLOTHING</a></div>
+            <div><a href="" class="menu-modal-content">HAPPY LUNAR YEAR</a></div>
+            <div><a href="" class="menu-modal-content">BRANDS WE LOVE</a></div>
+            <div><a href="" class="menu-modal-content">SHOES</a></div>
+            <div><a href="" class="menu-modal-content">ACCESSORIES</a></div>
+            <div><a href="" class="menu-modal-content">SALE</a></div>
+            <div><a href="" class="menu-modal-content">MODE CLOSET</a></div>
+            <div><a href="" class="menu-modal-content">
+                <i class="fa-regular fa-user"></i>ACCOUNT</a></div>
+            <div><a href="" class="menu-modal-content">
+                <i class="fa-regular fa-heart"></i>
+                WISHLIST</a></div>
 
+        </div>
+    </div>
+    <div class="menu-modal-right">
+        <header class="menu-modal-header">BEST SELLERS</header>
+    </div>
+</div>
+
+<!--        Modal user -->
+
+<div class="user-modal" id="user-modal">
+    <div class="user-modal-overlay">
+    </div>
+    <!--        Modal user login-->
+
+    <div class="user-modal-login" id="user-modal-login">
+        <div class="user-modal-login-header">
+            <div>
+                <div class="login-register">
+                    <div class="login">LOGIN</div>
+                    <div class="or">or</div>
+                    <div class="register" id="register">
+                        <div>REGISTER</div>
+                    </div>
+                </div>
+                <div class="login-icon">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-google"></i>
+                    <i class="fa-brands fa-apple"></i>
+                </div>
+            </div>
+            <div class="user-close-modal" id="user-close-modal"></div>
+        </div>
+        <form class="user-modal-login-form">
+            <div class="input-login-register">
+                <input type="text" required >
+                <label>EMAIL</label>
+                <div class="input-close"></div>
+            </div>
+            <div class="input-login-register">
+                <input type="password" required>
+                <label>PASSWORD</label>
+                <div class="input-close"></div>
+            </div>
+            <button type="submit" class="btn">LOGIN</button>
+            <div class="password-forgot" id="password-forgot"><div>PASSWORD FORGOTTEN?</div></div>
+        </form>
+    </div>
+
+
+    <!--        Modal user register-->
+
+    <div class="user-modal-register" id="user-modal-register">
+        <div class="user-modal-register-header">
+            <div class="back-arrow" id="back-arrow-register">
+                <div></div>
+            </div>
+            <div>
+                <div class="login-register">
+                    <div class="login" id="login">
+                        <div>LOGIN</div>
+                    </div>
+                    <div class="or">or</div>
+                    <div class="register">
+                        REGISTER
+                    </div>
+                </div>
+                <div class="welcome">WELCOME TO NAMEWEB</div>
+            </div>
+            <div class="user-close-modal" id="user-close-register"></div>
+        </div>
+        <div class="user-modal-register-form">
+            <div class="register-name">
+                <div class="input-login-register input-register">
+                    <input type="text" required>
+                    <label>FIRST NAME</label>
+                    <div class="input-close"></div>
+                </div>
+                <div class="input-login-register  input-register">
+                    <input type="text" required>
+                    <label>LAST NAME</label>
+                    <div class="input-close"></div>
+                </div>
+            </div>
+            <div class="input-login-register">
+                <input type="text" required>
+                <label>EMAIL</label>
+                <div class="input-close"></div>
+            </div>
+            <div class="register-password">
+                <div class="input-login-register">
+                    <input type="password" required>
+                    <label>PASSWORD</label>
+                    <div class="input-close"></div>
+                </div>
+                <div class="input-login-register">
+                    <input type="password" required>
+                    <label>CONFIRM PASSWORD</label>
+                    <div class="input-close"></div>
+                </div>
+            </div>
+            <button type="submit" class="btn">REGISTER</button>
+        </div>
+    </div>
+
+    <!--        Modal user forgot password-->
+
+    <div class="user-modal-forgot-password" id="user-modal-forgot-password">
+        <div class="forgot-password-header">
+            <div class="back-arrow" id="back-arrow-forgot-password">
+                <div></div>
+            </div>
+            <div>
+                <div class="forgot-password-title">FORGOTTEN PASSWORD?</div>
+                <p class="forgot-password-para">PLEASE INSERT YOUR EMAIL, AND WE WILL SEND YOU A LINK TO RESET YOUR PASSWORD.</p>
+            </div>
+            <div class="user-close-modal" id="user-close-forgot-password"></div>
+        </div>
+        <form class="forgot-password-form">
+            <div class="input-login-register">
+                <input type="text" required>
+                <label>EMAIL</label>
+                <div class="input-close"></div>
+            </div>
+            <button type="submit" class="btn">SEND</button>
+        </form>
+    </div>
+</div>
+<script src="Home.js"></script>
+<script src="../Global.js"></script>
 </body>
 </html>
