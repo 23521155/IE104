@@ -78,7 +78,13 @@ html *::-webkit-scrollbar-track {
     align-items: center;
     position: relative;
 }
-
+.logo{
+    font-family: "Homemade Apple", cursive;
+    margin-right: 80px;
+    font-size: 2.5rem;
+    color: var(--text-color);
+    user-select: none;
+}
 .header-right{
     display: flex;
     padding-right: 20px;
@@ -240,12 +246,8 @@ html *::-webkit-scrollbar-track {
 
 /*Content*/
 .content {
-    height: 1000px;
     display: flex;
     width: 100%;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
     transition: transform 0.8s ease-in-out;
 }
 
@@ -348,7 +350,7 @@ html *::-webkit-scrollbar-track {
     color: #ffffff;
 }
 
-/* khi modal mở, content bị đẩy sang phải 40px */
+/* khi modal mở, content bị đẩy sang phải 100px */
 .content.shift-right {
     transform: translateX(100px);
 }

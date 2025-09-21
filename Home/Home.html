@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NameWeb</title>
+    <title>ANDIFI</title>
     <link rel="stylesheet" href="../Global.css">
     <link rel="stylesheet" href="Home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libertinus+Keyboard&family=Rajdhani:wght@300;400;500;600;700&display=swap&family=Montserrat:wght@400;500;700&display=swap&family=Homemade+Apple" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -25,7 +27,7 @@
                 <input type="search" placeholder="Search" class="search-input" aria-label="Search"/>
             </div>
         </div>
-        <div class="logo">NAME WEB</div>
+        <div class="logo">ANDIFI</div>
         <div class="header-right">
             <div class="user" id="user-button">
                 <div class="user-icon"><i class="fa-regular fa-user"></i></div>
@@ -43,12 +45,50 @@
             </div>
         </div>
     </header>
-    <div class="content">web</div>
+    <main class="content">
+        <div class="content-introduction">
+            <aside class="sidebar">
+                <div>
+                    <div>
+                        TRENDY STYLE
+                    </div>
+                    <h1><strong>FASHION</strong> <br> DRESS 2025</h1>
+                    <p class="information">
+                        Fashion dress 2025 highlights a harmonious balance between minimalism, sustainability, and modern elegance. Designers embrace clean silhouettes, soft textures, and eco-friendly fabrics that enhance comfort while maintaining sophistication. The trend emphasizes timeless shapes reimagined with bold details, innovative tailoring, and versatile designs suitable for both casual and formal settings.
+                    </p>
+                    <div class="knowMore-button">KNOW MORE</div>
+                </div>
+            </aside>
+            <aside class="slider">
+                    <div class="slides">
+                        <img src="https://media.voguearabia.com/photos/677e1ee13281e8d370ffe9e3/3:4/w_1920,c_limit/GettyImages-2174502363.jpg"
+                             class="slide active"/>
+                        <img src="https://media.voguearabia.com/photos/677e1ee30a7dde8f939aab83/master/w_1600,c_limit/00024-sia-arnika-spring-2025-ready-to-wear-berlin-credit-berlinfw.jpg"
+                         class="slide"/>
+                        <img src="https://media.voguearabia.com/photos/677e1ee63281e8d370ffe9e6/master/w_1600,c_limit/00008-ottolinger-spring-2025-ready-to-wear-credit-gorunway.jpg"
+                         class="slide"/>
+                        <img src="https://media.voguearabia.com/photos/677e1ee83281e8d370ffe9e9/master/w_1600,c_limit/00020-saint-laurent-spring-2025-ready-to-wear-credit-gorunway.jpg"
+                             class="slide"/>
+                        <img src="https://media.voguearabia.com/photos/677e1eea3281e8d370ffe9eb/master/w_1600,c_limit/00024-lauren-manoogian-spring-2025-ready-to-wear-credit-brand.jpg"
+                             class="slide"/>
+                </div>
+                <div class="bottom-center">
+                    <div class="indicators">
+                        <span class="dot active" onclick="showSlide(0)"></span>
+                        <span class="dot" onclick="showSlide(1)"></span>
+                        <span class="dot" onclick="showSlide(2)"></span>
+                        <span class="dot" onclick="showSlide(3)"></span>
+                        <span class="dot" onclick="showSlide(4)"></span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
     <footer class="footer">
         <ul>
             <li class="footer-list">
-                <div class="footer-title">NAME WEB</div>
-                <div class="footer-gmail">NAMEWEB@gmail.com</div>
+                <div class="footer-title">ANDIFI</div>
+                <div class="footer-gmail">ANDIFI@gmail.com</div>
                 <div class="footer-icon">
                     <a href=""><i class="fa-regular fa-envelope"></i></a>
                     <a href=""><i class="fa-brands fa-facebook"></i></a>
@@ -78,12 +118,12 @@
                 <a href="" class="footer-item">About Us</a>
                 <a href="" class="footer-item">The Mod Blog</a>
                 <a href="" class="footer-item">Customer Testimonials</a>
-                <a href="" class="footer-item">NameWeb Gift Cards</a>
-                <a href="" class="footer-item">Shop and Trade on NameWeb</a>
+                <a href="" class="footer-item">ANDIFI Gift Cards</a>
+                <a href="" class="footer-item">Shop and Trade on ANDIFI</a>
             </li>
         </ul>
         <div class="footer-powered">
-            <a class="footer-powered-text" href="">Copyright © 2025 NameWeb Powered by Phòng khtc UIT.</a>
+            <a class="footer-powered-text" href="">Copyright © 2025 ANDIFI Powered by Phòng khtc UIT.</a>
             <div class="footer-pay">
                 <a href=""><i class="fa-brands fa-cc-paypal"></i></a>
                 <a href=""><i class="fa-brands fa-cc-visa"></i></a>
@@ -183,7 +223,7 @@
                         REGISTER
                     </div>
                 </div>
-                <div class="welcome">WELCOME TO NAMEWEB</div>
+                <div class="welcome">WELCOME TO ANDIFI</div>
             </div>
             <div class="user-close-modal" id="user-close-register"></div>
         </div>
