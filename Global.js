@@ -17,7 +17,7 @@ const logicMenuModal =()=>{
         setTimeout(() => {
             content.classList.remove('shift-right');
             content.classList.add('shift-down');
-        }, 600);
+        }, 1000);
     });
 
     closeBtn.addEventListener('click', () => {
