@@ -71,6 +71,7 @@ html *::-webkit-scrollbar-track {
     position: sticky;
     z-index: 5;
     top: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .header-left{
@@ -246,8 +247,6 @@ html *::-webkit-scrollbar-track {
 
 /*Content*/
 .content {
-    display: flex;
-    width: 100%;
     transition: transform 0.8s ease-in-out;
 }
 
