@@ -30,6 +30,10 @@ body{
     flex-direction: column;
     min-height: 100vh;
 }
+body.modal-open {
+    overflow: hidden;
+    height: 100%;
+}
 html,body{
     height: 100%;
     margin: 0;
@@ -366,15 +370,11 @@ html *::-webkit-scrollbar-track {
     width: 100%;
     background-color: var(--background-color);
     position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
     transform: translateX(-100%);
     transition: transform 1s ease-in-out;
     z-index: 9;
     display: flex;
-
+    inset: 0; /* full màn hình */
 
 }
 .menu-modal.active {
@@ -489,7 +489,56 @@ html *::-webkit-scrollbar-track {
 .menu-modal-content > i{
     margin-right: 5px;
 }
-
+.menu-modal-right{
+    flex : 1;
+    padding: 50px 20px 0 20px;
+     /* full chiều cao viewport */
+    overflow-y: auto;      /* chỉ khối này được scroll */
+    -webkit-overflow-scrolling: touch; /* mượt trên mobile */
+}
+.menu-modal-right-title{
+    text-align: center;
+    font-family: 'Rajdhani', Arial, sans-serif;
+    font-size: 4rem;
+    user-select:  none;
+    width: 100%;
+}
+.menu-modal-right-content{
+    display: grid;
+    margin: 60px auto;
+    grid-template-columns: repeat(3, calc(100% /3));
+    grid-auto-rows: 400px;
+}
+.menu-modal-img{
+    background-color: white;
+    margin: 1px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+.menu-modal-img1,
+.menu-modal-img2{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: opacity 1.5s ease;
+    position: absolute;
+}
+.menu-modal-img1{
+    opacity: 1;
+}
+.menu-modal-img2{
+    opacity: 0;
+}
+.menu-modal-img:hover .menu-modal-img1{
+    opacity: 0;
+}
+.menu-modal-img:hover .menu-modal-img2{
+    opacity: 1;
+}
 /*User Modal*/
 
 
