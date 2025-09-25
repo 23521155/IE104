@@ -4,15 +4,18 @@ const logicMenuModal =()=>{
     const menuModal = document.getElementById('menu-modal');
     const closeBtn = document.getElementById('menu-modal-close');
     const content = document.querySelector('.content');
+    const body = document.body;
 
     menuBtn.addEventListener('click', () => {
         // reset nếu đang đóng
         menuModal.classList.remove('closing');
         // menuModal.style.display = 'block';
 
+
         setTimeout(() => {
             menuModal.classList.add('active');
             content.classList.add('shift-right');
+            body.classList.add('modal-open');
         }, 10);
         setTimeout(() => {
             content.classList.remove('shift-right');
@@ -27,6 +30,8 @@ const logicMenuModal =()=>{
         menuModal.classList.remove('active');
         menuModal.classList.add('closing');
 
+
+
         setTimeout(() => {
             content.classList.remove('shift-down');
         }, 0);
@@ -34,6 +39,7 @@ const logicMenuModal =()=>{
         // sau khi animation xong thì ẩn
         menuModal.addEventListener('animationend', () => {
             menuModal.classList.remove('closing');
+            body.classList.remove('modal-open');
         }, { once: true });
     });
 }
