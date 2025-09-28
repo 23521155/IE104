@@ -8,10 +8,9 @@ const logicMenuModal =()=>{
 
     menuBtn.addEventListener('click', () => {
         // reset nếu đang đóng
+
         menuModal.classList.remove('closing');
         // menuModal.style.display = 'block';
-
-
         setTimeout(() => {
             menuModal.classList.add('active');
             content.classList.add('shift-right');
