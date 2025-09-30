@@ -65,37 +65,46 @@ html *::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0);
 }
 
+
+.container{
+}
+
 /*Header*/
 .header{
     height: var(--height-header);
+    width: 100vw;
     background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
     position: sticky;
     z-index: 5;
     top: 0;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
 }
-
+.row-header{
+    height: 100%;
+}
 .header-left{
     display: flex;
     align-items: center;
-    position: relative;
+    height: 100%;
 }
 .logo{
     font-family: "Homemade Apple", cursive;
-    margin-right: 80px;
     font-size: 2.5rem;
     color: var(--text-color);
     user-select: none;
+    height: 64px;
+    display: flex;
+    align-items: center;
 }
 .header-right{
     display: flex;
-    padding-right: 20px;
     font-size: 2rem;
-    gap:20px;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: right;
 }
 
 .menu-button {
@@ -104,7 +113,6 @@ html *::-webkit-scrollbar-track {
     cursor: pointer;
     display: flex;
     align-items: center;
-    padding-left: 20px;
 }
 
 .hamburger-menu {
@@ -151,8 +159,6 @@ html *::-webkit-scrollbar-track {
     display: flex;
     align-items: center;
     padding: 0 10px;
-    position: absolute;
-    left: 250px;
     transition: width 0.6s ease;
     overflow: hidden;
 }
@@ -253,6 +259,7 @@ html *::-webkit-scrollbar-track {
 /*Content*/
 .content {
     transition: transform 0.8s ease-in-out;
+    width: 100vw;
 }
 
 /*Footer*/
@@ -935,6 +942,9 @@ html *::-webkit-scrollbar-track {
     .hamburger-menu-title{
         display: none;
     }
+    .header-right{
+        gap:20px
+    }
     .user,
     .cart{
         width: 25px;
@@ -946,6 +956,10 @@ html *::-webkit-scrollbar-track {
     .user:hover .user-icon,
     .cart:hover .cart-icon{
         transform: translateY(-50%) translateX(0);
+    }
+    .menu-modal-list > div:hover .menu-modal-content::before{
+        width: 0;
+        opacity: 0;
     }
     .menu-modal-left{
         width: 100%;
@@ -984,19 +998,18 @@ html *::-webkit-scrollbar-track {
         display: none;
     }
     .header-left{
-
         flex-direction: column;
         justify-content: center;
     }
     .logo{
-        margin: 0;
-        margin-left: 70px;
+        align-items: flex-start;
+        margin-top: 20px;
         font-size: 1.8rem;
     }
     .search{
         margin: 0;
         position: absolute;
-        left: 50px;
+        left: 30px;
         height: 30px;
         width: 80px;
     }
@@ -1010,15 +1023,26 @@ html *::-webkit-scrollbar-track {
     .header-right{
         padding: 0;
         gap: 10px;
+        align-items: flex-start;
+        margin-top: 20px;
+    }
+    .header{
+        height: 100px;
+    }
+    .search{
+        margin-top: 80px;
     }
     .header-left{
+        margin-top: 20px;
         height: auto;
+        flex-direction: column;
     }
 
     .user,
     .cart{
         font-size: 1.7rem;
         height: 20px;
+
     }
 
     .menu-modal-list > div{
@@ -1063,6 +1087,51 @@ html *::-webkit-scrollbar-track {
     }
     .user-modal-login{
         max-width: 350px;
+    }
+
+    .user-modal-login{
+        width: 300px;
+        height:  420px;
+    }
+    .user-modal-login-header{
+        height: 150px;
+    }
+    .user-modal-login-form{
+        padding: 0 20px;
+    }
+    .user-modal-register{
+        width: 300px;
+        height: 450px;
+    }
+    .welcome{
+        margin: 0;
+        font-size: 2rem;
+    }
+    .user-modal-register-header{
+        height: 120px;
+    }
+    .user-modal-register-form{
+        padding: 0 20px;
+    }
+    label{
+        font-size: 1.2rem;
+    }
+    .input-login-register > input:last-child{
+        margin-bottom: 10px;
+    }
+    .user-modal-forgot-password{
+        width: 300px;
+    }
+    .password-forgot > div{
+        text-align: center;
+    }
+    .user-close-modal{
+        left: 0;
+        top: 0;
+    }
+    .back-arrow{
+        left: 0;
+        top: 0;
     }
     .row{
         margin-left: -4px;
@@ -1164,9 +1233,35 @@ html *::-webkit-scrollbar-track {
 }
 
 /*Tablet*/
-@media only screen and (min-width: 46.25em) and ( max-width: 64em) {
+@media only screen and (min-width: 46.25em) and ( max-width: 64.1em) {
+    .header{
+        height: 100px;
+    }
+    .header-left{
+        flex-direction: column;
+        height: auto;
+        margin-top: 20px;
+        align-items: flex-start;
+    }
+    .header-right{
+        align-items: flex-start;
+        margin-top: 20px;
+    }
+    .logo{
+        align-items: flex-start;
+        margin-top: 20px;
+        font-size: 1.8rem;
+    }
+    .search{
+        margin: 0;
+        left: 30px;
+        height: 30px;
+        width: 80px;
+        margin-top: 20px;
+    }
     .menu-button{
         width: 60px;
+        height: auto;
     }
     .menu-button:hover .hamburger-menu::before{
         width: 40px;
@@ -1177,15 +1272,8 @@ html *::-webkit-scrollbar-track {
     .hamburger-menu::before{
         width: 40px;
     }
-    .search{
-        left: 110px;
-    }
     .search:hover{
         width: 425px;
-    }
-    .logo{
-        margin-right: 0;
-        margin-left: 50px;
     }
 
     .menu-modal{
@@ -1322,7 +1410,7 @@ html *::-webkit-scrollbar-track {
 }
 
 /*Desktop vua*/
-@media (min-width: 64em) and (max-width: 82.5em){
+@media (min-width: 64.1em) and (max-width: 82.5em){
     .wide{
         width: 996px!important;
     }
