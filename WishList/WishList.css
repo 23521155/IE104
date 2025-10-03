@@ -1,0 +1,78 @@
+.title-wishlist {
+    display: flex;
+    font-size: 3rem;
+    align-items: center;
+    gap: 15px;
+    font-weight: 500;
+    height: 150px;
+}
+.title-wishlist > p{
+    font-size: 2.6rem;
+}
+.home-wishlist{
+    display: flex;
+    font-size: 1.8rem;
+    height: 100px;
+    gap: 5px;
+}
+.home-wishlist > a{
+    color: #a09f9c;
+    transition: color 0.3s ease;
+}
+.home-wishlist > a:hover{
+    color: #000008;
+}
+.box-wishlist{
+    background-color:  white;
+    height: 1241px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.row-wishlist{
+    padding: 50px 50px 20px 50px;
+}
+.production{
+    width: 100%;
+    aspect-ratio: 1/1.2;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+.production > img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.info{
+    margin-top: 20px;
+}
+.name{
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.price{
+    font-size: 1.4rem;
+    color: #a09f9c;
+    transition: color 0.3s ease-in-out;
+}
+.price:hover{
+    color: #000008;
+}
+.addCart-button{
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    background-color: #000008;
+    border-radius: 5px;
+    color: white;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease-in-out;
+}
+.addCart-button:hover{
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    transform: translateY(-5px);
+}
