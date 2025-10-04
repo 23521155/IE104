@@ -1,0 +1,106 @@
+.production-header {
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.breadcrumb {
+    font-size: 1.4rem;
+    color: #555;
+}
+
+.product-count {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-top: 8px;
+}
+
+.product-card {
+    background-color: #f8f8f8;
+    margin-bottom: 24px;
+}
+
+.product-image-container {
+    position: relative;
+    aspect-ratio: 1 / 1.25;
+    background-color: #e0e0e0;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wishlist-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: #000;
+    cursor: pointer;
+}
+
+.product-info {
+    padding: 12px;
+}
+
+.product-name {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.product-price {
+    font-size: 1.4rem;
+    color: #333;
+    margin-top: 4px;
+}
+
+.add-cart-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 25px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.add-cart-btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.page-number, .page-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.4rem;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.page-number.active, .page-number:hover, .page-arrow:hover {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.page-number.active {
+    font-weight: bold;
+}
