@@ -4,10 +4,17 @@
 }
 
 .breadcrumb {
+    display: flex;
     font-size: 1.4rem;
-    color: #555;
+    color: #a09f9c;
 }
-
+.breadcrumb > a{
+    margin-right: 5px;
+    transition: color 0.3s ease;
+}
+.breadcrumb > a:hover{
+    color: #000008;
+}
 .product-count {
     font-size: 1.6rem;
     font-weight: 500;
@@ -56,7 +63,9 @@
 }
 
 .add-cart-btn {
-    width: 100%;
+    width: 80%;
+    height: 50px;
+    margin-left: 40px;
     padding: 12px;
     margin-top: 12px;
     background-color: #fff;

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         productCard.innerHTML = `
             <div class="product-image-container">
-                <img src="" alt="${product.name}" class="product-image">
+                <img src="https://modcloth.com/cdn/shop/files/2025_08_01ModCloth_Beta1489.jpg?crop=center&height=264&v=1755285188&width=220" alt="${product.name}" class="product-image">
                 <i class="fa-regular fa-heart wishlist-icon"></i>
             </div>
             <div class="product-info">
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <button class="add-cart-btn">Add Cart</button>
         `;
-        
+
         col.appendChild(productCard);
         productGrid.appendChild(col);
     });
