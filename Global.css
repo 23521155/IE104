@@ -176,12 +176,14 @@ html *::-webkit-scrollbar-track {
     color: var(--text-color);
 }
 
-.search:hover{
+.search:hover,
+.search.active{
     width: 400px;
     cursor: pointer;
 }
 
-.search:hover .search-input{
+.search:hover .search-input,
+.search.active .search-input{
     width: 400px;
 }
 

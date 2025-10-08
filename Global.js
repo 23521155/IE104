@@ -160,5 +160,38 @@ const logicUserModal = ()=>{
 
 }
 
+// Search Input
+const searchInput = ()=>{
+    const search = document.querySelector(".search");
+    const input = document.querySelector(".search-input");
+
+    input.addEventListener("input", () => {
+        if (input.value.trim() !== "") {
+            // Khi có chữ
+            search.classList.add("active");
+        } else {
+            // Khi trống
+            search.classList.remove("active");
+        }
+    });
+}
+
+// Delete input in user modal
+const deleteInputUserModal = () =>{
+    document.querySelectorAll(".input-close").forEach(closeBtn => {
+        closeBtn.addEventListener("click", () => {
+            const wrapper = closeBtn.closest(".input-login-register"); // tìm khối cha
+            const input = wrapper.querySelector("input"); // chọn input bên trong khối đó
+            input.value = ""; // xóa chữ
+            input.focus(); // đưa con trỏ lại input
+            input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+        });
+    });
+}
 logicMenuModal()
 logicUserModal()
+searchInput()
+deleteInputUserModal()
+
+
+
