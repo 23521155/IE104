@@ -306,7 +306,8 @@
         </div>
     </div>
 </div>
-
+<!--toast-->
+<div id="toast-container"></div>
 <!--        Modal user -->
 
 <div class="user-modal" id="user-modal">
@@ -371,34 +372,34 @@
         <div class="user-modal-register-form">
             <div class="register-name">
                 <div class="input-login-register input-register">
-                    <input type="text" required>
+                    <input type="text" id="firstNameRegister" required>
                     <label>FIRST NAME</label>
                     <div class="input-close"></div>
                 </div>
                 <div class="input-login-register  input-register">
-                    <input type="text" required>
+                    <input type="text" id="lastNameRegister" required>
                     <label>LAST NAME</label>
                     <div class="input-close"></div>
                 </div>
             </div>
             <div class="input-login-register">
-                <input type="text" required>
+                <input type="text" id="emailRegister" required>
                 <label>EMAIL</label>
                 <div class="input-close"></div>
             </div>
             <div class="register-password">
                 <div class="input-login-register">
-                    <input type="password" required>
+                    <input type="password" id="passwordRegister" required>
                     <label>PASSWORD</label>
                     <div class="input-close"></div>
                 </div>
-                <div class="input-login-register">
-                    <input type="password" required>
+                <div class="input-login-register" id="confirmPasswordWrapper">
+                    <input type="password" id="confirmPasswordRegister" required>
                     <label>CONFIRM PASSWORD</label>
                     <div class="input-close"></div>
                 </div>
             </div>
-            <button type="submit" class="btn">REGISTER</button>
+            <button type="submit" id="btnRegister" class="btn">REGISTER</button>
         </div>
     </div>
 

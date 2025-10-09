@@ -58,12 +58,26 @@ const logicUserModal = ()=>{
     const userModalLogin = document.getElementById('user-modal-login');
     const userModalRegister = document.getElementById('user-modal-register');
     const userModalForgotPassword = document.getElementById('user-modal-forgot-password')
+    const inputLoginRegister = document.getElementsByClassName('input-login-register');
+    const allInputs = []; // mảng chứa tất cả input con
+
+    for (const el of inputLoginRegister) {
+        const inputs = el.getElementsByTagName('input'); // lấy các input con
+        allInputs.push(...inputs); // nối vào mảng allInputs
+    }
     userBtn.addEventListener('click', () => {
         userModal.style.opacity ='1';
         userModal.style.visibility = 'visible';
         userModalLogin.style.transform = 'scaleY(1)'
     })
     userCloseBtn.addEventListener('click', () => {
+        allInputs.forEach(input => {
+            input.value = ""; // xóa chữ
+            input.focus(); // đưa con trỏ lại input
+            input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+        })
+        const oldError = document.querySelector(".error-message");
+        if (oldError) oldError.remove();
         userModalLogin.style.transform ='scaleY(0)'
         setTimeout(()=>{
             userModal.style.opacity = '0';
@@ -71,6 +85,14 @@ const logicUserModal = ()=>{
         },400)
     })
     userCLoseRegisterBtn.addEventListener('click', () => {
+
+        allInputs.forEach(input => {
+            input.value = ""; // xóa chữ
+            input.focus(); // đưa con trỏ lại input
+            input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+        })
+        const oldError = document.querySelector(".error-message");
+        if (oldError) oldError.remove();
         userModalRegister.style.transform = 'scaleY(0)';
         setTimeout(()=>{
             userModalLogin.style.removeProperty('display');
@@ -80,6 +102,13 @@ const logicUserModal = ()=>{
         },400)
     })
     userCloseForgotPasswordBtn.addEventListener('click', () => {
+        allInputs.forEach(input => {
+            input.value = ""; // xóa chữ
+            input.focus(); // đưa con trỏ lại input
+            input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+        })
+        const oldError = document.querySelector(".error-message");
+        if (oldError) oldError.remove();
         userModalForgotPassword.style.transform = 'scaleY(0)';
         setTimeout(()=>{
             userModalLogin.style.removeProperty('display');
@@ -113,6 +142,13 @@ const logicUserModal = ()=>{
         },300)
     })
     loginBtn.addEventListener('click', () => {
+        allInputs.forEach(input => {
+            input.value = ""; // xóa chữ
+            input.focus(); // đưa con trỏ lại input
+            input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+        })
+        const oldError = document.querySelector(".error-message");
+        if (oldError) oldError.remove();
         userModalRegister.style.transform = 'scaleY(0)'
         setTimeout(() => {
             userModalRegister.style.display = 'none';
@@ -128,6 +164,13 @@ const logicUserModal = ()=>{
         },300)
     })
     backRegBtn.addEventListener('click', () => {
+        allInputs.forEach(input => {
+            input.value = ""; // xóa chữ
+            input.focus(); // đưa con trỏ lại input
+            input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+        })
+        const oldError = document.querySelector(".error-message");
+        if (oldError) oldError.remove();
         userModalRegister.style.transform = 'scaleY(0)'
         setTimeout(() => {
             userModalRegister.style.display = 'none';
@@ -188,10 +231,119 @@ const deleteInputUserModal = () =>{
         });
     });
 }
+
+// User register form api
+const registerForm = ()=>{
+    document.getElementById("btnRegister").addEventListener("click", async (e) => {
+        e.preventDefault(); // Ngăn form reload trang
+
+        // Xóa thông báo lỗi cũ (nếu có)
+        const oldError = document.querySelector(".error-message");
+        if (oldError) oldError.remove();
+
+
+        // Lấy dữ liệu từ input
+        const firstName = document.getElementById("firstNameRegister").value.trim();
+        const lastName = document.getElementById("lastNameRegister").value.trim();
+        const email = document.getElementById("emailRegister").value.trim();
+        const password = document.getElementById("passwordRegister").value.trim();
+        const confirmPassword = document.getElementById("confirmPasswordRegister").value.trim();
+        const inputLoginRegister = document.getElementsByClassName('input-login-register');
+        const allInputs = []; // mảng chứa tất cả input con
+
+        for (const el of inputLoginRegister) {
+            const inputs = el.getElementsByTagName('input'); // lấy các input con
+            allInputs.push(...inputs); // nối vào mảng allInputs
+        }
+        // Kiểm tra đơn giản
+        if (password !== confirmPassword) {
+            const wrapper = document.getElementById("confirmPasswordWrapper");
+            const error = document.createElement("div");
+            const userRegisterForm = document.getElementById('user-modal-register');
+            error.className = "error-message";
+            error.textContent = "Passwords do not match!";
+            wrapper.appendChild(error);
+            userRegisterForm.classList.add("error-show");
+            // Xóa lỗi khi user sửa lại
+            const confirmInput = document.getElementById("confirmPasswordRegister");
+            confirmInput.addEventListener(
+                "input",
+                () => {
+                    if (confirmInput.value === password && error) error.remove();
+                },
+                { once: true }
+            );
+            return;
+        }
+
+        // Gửi dữ liệu lên backend
+        try {
+            const res = await fetch("http://localhost:1234/v1/users/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    firstName,
+                    lastName,
+                    email,
+                    password
+                })
+            });
+
+            const data = await res.json();
+
+            function showToast(message, type = "success") {
+                const container = document.getElementById("toast-container");
+                const toast = document.createElement("div");
+                toast.className = `toast ${type}`;
+
+                // Icon tùy loại
+                const icons = {
+                    success: "✅",
+                    error: "❌",
+                    info: "ℹ️",
+                    warning: "⚠️"
+                };
+
+                toast.innerHTML = `
+        <span class="toast-icon">${icons[type] || ""}</span>
+        <span class="toast-message">${message}</span>
+    `;
+
+                container.appendChild(toast);
+
+                // Hiện
+                setTimeout(() => toast.classList.add("show"), 10);
+
+                // Tự ẩn sau 3 giây
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                    setTimeout(() => toast.remove(), 400);
+                }, 3000);
+            }
+
+
+            if (res.ok) {
+                showToast("Register success!", "success");
+                allInputs.forEach(input => {
+                    input.value = ""; // xóa chữ
+                    input.focus(); // đưa con trỏ lại input
+                    input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+                })
+            } else {
+                showToast(data.message || "Register failed!", "error");
+            }
+        } catch (err) {
+            console.error("Error:", err);
+            alert("Cannot connect to server.");
+        }
+    });
+}
 logicMenuModal()
 logicUserModal()
 searchInput()
 deleteInputUserModal()
-
+registerForm()
 
 
