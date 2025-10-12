@@ -1,3 +1,35 @@
+function showToast(message, type = "success") {
+    const container = document.getElementById("toast-container");
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+
+    // Icon tùy loại
+    const icons = {
+        success: "✅",
+        error: "❌",
+        info: "ℹ️",
+        warning: "⚠️"
+    };
+
+    toast.innerHTML = `
+        <span class="toast-icon">${icons[type] || ""}</span>
+        <span class="toast-message">${message}</span>
+    `;
+
+    container.appendChild(toast);
+
+    // Hiện
+    setTimeout(() => toast.classList.add("show"), 10);
+
+    // Tự ẩn sau 3 giây
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 400);
+    }, 3000);
+}
+
+
+
 // Open and close modal
 const logicMenuModal =()=>{
     const menuBtn = document.getElementById('menu-button');
@@ -69,6 +101,31 @@ const logicUserModal = ()=>{
         userModal.style.opacity ='1';
         userModal.style.visibility = 'visible';
         userModalLogin.style.transform = 'scaleY(1)'
+
+        const token = localStorage.getItem('accessToken');
+        const loginForm = document.getElementById('user-modal-login-form');
+        const loginIcon = document.getElementById('login-icon');
+        const loggedInDiv = document.getElementById('user-logged-in');
+        const logoutBtn = document.getElementById('btnLogout');
+        if (token) {
+            // Ẩn form login, hiện nút đăng xuất
+            loginForm.style.display = 'none';
+            loginIcon.style.display = 'none';
+            loggedInDiv.style.display = 'block';
+        } else {
+            // Ngược lại
+            loginForm.style.display = 'block';
+            loginIcon.style.display = 'flex';
+            loggedInDiv.style.display = 'none';
+        }
+
+// 🔥 Xử lý nút đăng xuất
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            showToast('LOGGED OUT!', 'success');
+            setTimeout(() => location.reload(), 800); // reload lại trang
+        });
     })
     userCloseBtn.addEventListener('click', () => {
         allInputs.forEach(input => {
@@ -293,37 +350,6 @@ const registerForm = ()=>{
 
             const data = await res.json();
 
-            function showToast(message, type = "success") {
-                const container = document.getElementById("toast-container");
-                const toast = document.createElement("div");
-                toast.className = `toast ${type}`;
-
-                // Icon tùy loại
-                const icons = {
-                    success: "✅",
-                    error: "❌",
-                    info: "ℹ️",
-                    warning: "⚠️"
-                };
-
-                toast.innerHTML = `
-        <span class="toast-icon">${icons[type] || ""}</span>
-        <span class="toast-message">${message}</span>
-    `;
-
-                container.appendChild(toast);
-
-                // Hiện
-                setTimeout(() => toast.classList.add("show"), 10);
-
-                // Tự ẩn sau 3 giây
-                setTimeout(() => {
-                    toast.classList.remove("show");
-                    setTimeout(() => toast.remove(), 400);
-                }, 3000);
-            }
-
-
             if (res.ok) {
                 showToast("Register success!", "success");
                 allInputs.forEach(input => {
@@ -335,15 +361,135 @@ const registerForm = ()=>{
                 showToast(data.message || "Register failed!", "error");
             }
         } catch (err) {
-            console.error("Error:", err);
             alert("Cannot connect to server.");
         }
     });
 }
+
+// User login form api
+const  loginForm = ()=>{
+    document.getElementById("btnLogin").addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("emailLogin").value.trim();
+        const password = document.getElementById("passwordLogin").value.trim();
+        // Gửi dữ liệu lên backend
+
+        try{
+            const res = await fetch("http://localhost:1234/v1/users/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+                credentials: "include" // 🔥 quan trọng
+            });
+            const data = await res.json();
+            if(res.ok) {
+                localStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("refreshToken", data.refreshToken);
+                showToast('Login success', "success");
+                setTimeout(() => location.reload(), 500); // đợi 0.3s rồi reload
+            }else {
+                showToast(data.message, "error");
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    })
+}
+
+// GOOGLE SOCIAL LOGIN
+const loginGoogle = () => {
+    // Khởi tạo popup Google OAuth2 (hiển thị chọn tài khoản)
+    const client = google.accounts.oauth2.initCodeClient({
+        client_id: "989333640465-booovcfjq5mo389qn4ptd0h1oojhpvb2.apps.googleusercontent.com",
+        scope: "email profile openid",
+        ux_mode: "popup",
+        callback: handleGoogleResponse,
+    });
+
+    //  Khi click nút google icon => mở popup
+    const googleLoginBtn = document.getElementById("googleLoginBtn");
+    googleLoginBtn.addEventListener("click", () => {
+        client.requestCode(); // hiện popup chọn tài khoản
+    });
+
+    // 3⃣ Callback khi user đăng nhập xong
+    async function handleGoogleResponse(response) {
+
+        const code = response.code; // Đây là mã xác thực bạn gửi cho backend
+
+        console.log("code", code)
+        try {
+            const res = await fetch("http://localhost:1234/v1/users/google-login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code }), //
+                credentials: "include",
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                localStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("refreshToken", data.refreshToken);
+                showToast("Login with Google success", "success");
+                setTimeout(() => location.reload(), 500);
+            } else {
+                showToast(data.message || "Login failed", "error");
+            }
+        } catch (err) {
+            console.error("Google login error:", err);
+        }
+    }
+};
+
+// Forgot password
+const forgotPassword = () => {
+    document.getElementById("forgotPasswordBtn").addEventListener("click", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("emailForgotPassword").value.trim();
+
+        try{
+            const res = await fetch("http://localhost:1234/v1/users/forgot-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                }),
+                credentials: "include" // 🔥 quan trọng
+            });
+
+            const data = await res.json();
+            if(res.ok) {
+
+                showToast('Check Your Email', "success");
+            }else {
+                showToast(data.message, "error");
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+
 logicMenuModal()
 logicUserModal()
 searchInput()
 deleteInputUserModal()
 registerForm()
-
-
+loginForm()
+loginGoogle()
+forgotPassword()

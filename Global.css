@@ -1012,7 +1012,33 @@ html *::-webkit-scrollbar-track {
     from { width: 100%; }
     to { width: 0; }
 }
+/*CSS user đã đăng nhập*/
+.user-logged-in {
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    padding: 0 40px;
+}
 
+.user-logged-in p {
+    margin-bottom: 50px;
+    font-size: 16px;
+    color: #333;
+}
+
+.user-logged-in .btn {
+    background-color: #ff5b5b;
+    color: white;
+    font-size: 1.6rem;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    height: 50px;
+}
+
+.user-logged-in .btn:hover {
+    background-color: #ff3333;
+}
 
 
 /* viet css grid*/
