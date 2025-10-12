@@ -324,28 +324,32 @@
                         <div>REGISTER</div>
                     </div>
                 </div>
-                <div class="login-icon">
+                <div class="login-icon" id="login-icon">
                     <i class="fa-brands fa-facebook-f"></i>
-                    <i class="fa-brands fa-google"></i>
+                    <i class="fa-brands fa-google" id="googleLoginBtn"></i>
                     <i class="fa-brands fa-apple"></i>
                 </div>
             </div>
             <div class="user-close-modal" id="user-close-modal"></div>
         </div>
-        <form class="user-modal-login-form">
+        <form class="user-modal-login-form" id="user-modal-login-form">
             <div class="input-login-register">
-                <input type="text" required >
+                <input type="text" id="emailLogin" required >
                 <label>EMAIL</label>
                 <div class="input-close"></div>
             </div>
             <div class="input-login-register">
-                <input type="password" required>
+                <input type="password" id="passwordLogin" required>
                 <label>PASSWORD</label>
                 <div class="input-close"></div>
             </div>
-            <button type="submit" class="btn">LOGIN</button>
+            <button type="submit" class="btn" id="btnLogin">LOGIN</button>
             <div class="password-forgot" id="password-forgot"><div>PASSWORD FORGOTTEN?</div></div>
         </form>
+        <div class="user-logged-in" id="user-logged-in" style="display: none;">
+            <p>You are logged in!</p>
+            <button id="btnLogout" class="btn">LOG OUT</button>
+        </div>
     </div>
 
 
@@ -369,7 +373,7 @@
             </div>
             <div class="user-close-modal" id="user-close-register"></div>
         </div>
-        <div class="user-modal-register-form">
+        <form class="user-modal-register-form">
             <div class="register-name">
                 <div class="input-login-register input-register">
                     <input type="text" id="firstNameRegister" required>
@@ -400,7 +404,7 @@
                 </div>
             </div>
             <button type="submit" id="btnRegister" class="btn">REGISTER</button>
-        </div>
+        </form>
     </div>
 
     <!--        Modal user forgot password-->
@@ -418,15 +422,17 @@
         </div>
         <form class="forgot-password-form">
             <div class="input-login-register">
-                <input type="text" required>
+                <input type="text" id="emailForgotPassword" required>
                 <label>EMAIL</label>
                 <div class="input-close"></div>
             </div>
-            <button type="submit" class="btn">SEND</button>
+            <button type="submit" class="btn" id="forgotPasswordBtn">SEND</button>
         </form>
     </div>
 </div>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="Home.js"></script>
 <script src="../Global.js"></script>
+
 </body>
 </html>
