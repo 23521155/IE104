@@ -1,50 +1,93 @@
-.production-header {
-    padding: 20px 0;
-    margin-bottom: 20px;
-}
-
-.breadcrumb {
+.home-products{
     display: flex;
-    font-size: 1.4rem;
+    font-size: 2rem;
+    height: 20px;
+    gap: 5px;
     color: #a09f9c;
-}
-.breadcrumb > a{
-    margin-right: 5px;
+    font-weight: 500;
     transition: color 0.3s ease;
+    margin-bottom: 80px;
+    width: 100px;
 }
-.breadcrumb > a:hover{
+.home-products:hover{
+    cursor: pointer;
+}
+.home-products > div,
+.home-products > i{
+    color: #a09f9c;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+.home-products:hover div{
     color: #000008;
 }
-.product-count {
-    font-size: 1.6rem;
+.home-products:hover i{
+    color: #000008;
+    cursor: pointer;
+}
+.title-products {
+    font-size: 2.8rem;
+    gap: 15px;
     font-weight: 500;
-    margin-top: 8px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+}
+.title-products > p{
+    font-size: 2.6rem;
 }
 
 .product-card {
     background-color: #f8f8f8;
-    margin-bottom: 24px;
+    margin-bottom: 1px;
+    cursor: pointer;
 }
 
 .product-image-container {
     position: relative;
     aspect-ratio: 1 / 1.25;
     background-color: #e0e0e0;
+    overflow: hidden;
+}
+.product-image-container > div {
+    pointer-events: none;
+}
+.product-image-container > div img:first-child {
+    opacity: 1;
+}
+.product-image-container > div img:last-child {
+    opacity: 0;
+}
+
+.product-image-container:hover > div img:first-child {
+    opacity: 0;
+}
+.product-image-container:hover > div img:last-child {
+    opacity: 1;
 }
 
 .product-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1.5s ease;
+    cursor: pointer;
 }
+
+
 
 .wishlist-icon {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 2rem;
-    color: #000;
+    top: 15px;
+    right: 15px;
+    font-size: 2.5rem;
+    color: #000008;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .product-info {
@@ -52,14 +95,26 @@
 }
 
 .product-name {
-    font-size: 1.4rem;
-    font-weight: 500;
+    font-size: 1.6rem;
+    font-weight: 520;
+    margin-top: 10px;
+    font-family: 'Outfit', sans-serif;
 }
 
-.product-price {
-    font-size: 1.4rem;
-    color: #333;
-    margin-top: 4px;
+.product-price > p {
+    display: inline-block;
+    font-size: 1.5rem;
+    color: #a09f9c;
+    margin-top: 10px;
+    font-family: 'Outfit', sans-serif;
+    transition: color 0.3s ease;
+    user-select: none;
+    font-weight: 600;
+
+}
+.product-price > p:hover {
+    color: #000008;
+    cursor: pointer;
 }
 
 .add-cart-btn {
@@ -68,13 +123,15 @@
     margin-left: 40px;
     padding: 12px;
     margin-top: 12px;
+    margin-bottom: 40px;
     background-color: #fff;
     border: 1px solid #000;
     border-radius: 25px;
     font-size: 1.4rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.5s, color 0.3s;
+    font-family: 'Outfit', sans-serif;
 }
 
 .add-cart-btn:hover {
@@ -87,29 +144,34 @@
     justify-content: center;
     align-items: center;
     margin: 40px 0;
+    gap: 20px;
 }
 
 .page-number, .page-arrow {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     margin: 0 5px;
-    border: 1px solid #ccc;
     border-radius: 50%;
-    color: #333;
-    text-decoration: none;
-    font-size: 1.4rem;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    color: #a09f9c;
+    font-size: 1.8rem;
+    transition: background-color 0.5s, color 0.5s;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
 }
 
 .page-number.active, .page-number:hover, .page-arrow:hover {
     background-color: #000;
     color: #fff;
-    border-color: #000;
 }
 
 .page-number.active {
     font-weight: bold;
+}
+#ellipsis{
+    font-size: 1.8rem;
+    color: #a09f9c;
+    margin-top: 5px;
 }
