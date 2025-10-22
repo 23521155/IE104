@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libertinus+Keyboard&family=Rajdhani:wght@300;400;500;600;700&display=swap&family=Montserrat:wght@400;500;700&display=swap&family=Homemade+Apple" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libertinus+Keyboard&family=Rajdhani:wght@300;400;500;600;700&display=swap&family=Montserrat:wght@400;500;700&display=swap&family=Homemade+Apple&family=Outfit:wght@100..900" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -59,20 +59,30 @@
     </header>
     <main class="content">
         <div class="grid wide">
-            <div class="production-header">
-                <div class="breadcrumb"><a href="../../IE104/Home/Home.html">Home</a> / ...</div>
-                <div class="product-count">999 products</div>
+            <div class="title-products">
+                <i class="fa-solid fa-shirt"></i>
+                <p id="products-quantity"></p>
             </div>
+            <a href="../../IE104/Home/Home.html" class="home-products">
+                <i class="fa-regular fa-house"></i>
+                <div>Home</div>
+            </a>
             <div class="row no-gutters" id="product-grid">
                 <!-- Products will be injected here by JavaScript -->
             </div>
             <div class="pagination">
-                <a href="#" class="page-arrow">&lt;</a>
-                <a href="#" class="page-number active">1</a>
-                <a href="#" class="page-number">2</a>
-                <a href="#" class="page-number">...</a>
-                <a href="#" class="page-number">N</a>
-                <a href="#" class="page-arrow">&gt;</a>
+                <div class="page-arrow" id="prevPage">
+                    <i class="fa-solid fa-backward"></i>
+                </div>
+                <div class="page-number" id="first-page-number"></div>
+                <div class="page-number" id="second-page-number"></div>
+                <div  id="ellipsis">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <div class="page-number" id="last-page-number"></div>
+                <div class="page-arrow" id="nextPage">
+                    <i class="fa-solid fa-forward"></i>
+                </div>
             </div>
         </div>
     </main>
@@ -221,7 +231,7 @@
                 </div>
                 <div class="login-icon" id="login-icon">
                     <i class="fa-brands fa-facebook-f"></i>
-                    <i class="fa-brands fa-google"></i>
+                    <i class="fa-brands fa-google" id="googleLoginBtn"></i>
                     <i class="fa-brands fa-apple"></i>
                 </div>
             </div>
@@ -268,7 +278,7 @@
             </div>
             <div class="user-close-modal" id="user-close-register"></div>
         </div>
-        <div class="user-modal-register-form">
+        <form class="user-modal-register-form">
             <div class="register-name">
                 <div class="input-login-register input-register">
                     <input type="text" id="firstNameRegister" required>
@@ -299,7 +309,7 @@
                 </div>
             </div>
             <button type="submit" id="btnRegister" class="btn">REGISTER</button>
-        </div>
+        </form>
     </div>
 
     <!--        Modal user forgot password-->
@@ -317,14 +327,15 @@
         </div>
         <form class="forgot-password-form">
             <div class="input-login-register">
-                <input type="text" required>
+                <input type="text" id="emailForgotPassword" required>
                 <label>EMAIL</label>
                 <div class="input-close"></div>
             </div>
-            <button type="submit" class="btn">SEND</button>
+            <button type="submit" class="btn" id="forgotPasswordBtn">SEND</button>
         </form>
     </div>
 </div>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="Productions.js"></script>
 <script src="../Global.js"></script>
 </body>

@@ -312,7 +312,7 @@
                 </div>
                 <div class="login-icon" id="login-icon">
                     <i class="fa-brands fa-facebook-f"></i>
-                    <i class="fa-brands fa-google"></i>
+                    <i class="fa-brands fa-google" id="googleLoginBtn"></i>
                     <i class="fa-brands fa-apple"></i>
                 </div>
             </div>
@@ -359,7 +359,7 @@
             </div>
             <div class="user-close-modal" id="user-close-register"></div>
         </div>
-        <div class="user-modal-register-form">
+        <form class="user-modal-register-form">
             <div class="register-name">
                 <div class="input-login-register input-register">
                     <input type="text" id="firstNameRegister" required>
@@ -390,7 +390,7 @@
                 </div>
             </div>
             <button type="submit" id="btnRegister" class="btn">REGISTER</button>
-        </div>
+        </form>
     </div>
 
     <!--        Modal user forgot password-->
@@ -408,14 +408,15 @@
         </div>
         <form class="forgot-password-form">
             <div class="input-login-register">
-                <input type="text" required>
+                <input type="text" id="emailForgotPassword" required>
                 <label>EMAIL</label>
                 <div class="input-close"></div>
             </div>
-            <button type="submit" class="btn">SEND</button>
+            <button type="submit" class="btn" id="forgotPasswordBtn">SEND</button>
         </form>
     </div>
 </div>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="../Global.js"></script>
 </body>
 </html>

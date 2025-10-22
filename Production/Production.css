@@ -10,6 +10,7 @@
     margin-bottom: 60px;
     transition: color 0.3s ease;
     display: flex;
+    width: 100px;
 }
 .breadcrumb > p{
     margin-left: 3px;
@@ -35,16 +36,17 @@
 }
 .production-info {
     padding: 0 30px;
+    font-family: 'Outfit', sans-serif;
 }
 
-.product-title {
-    font-size: 2.2rem;
+.product-name {
+    font-size: 2.4rem;
     font-weight: 600;
     margin-bottom: 6px;
 }
 
 .product-brand {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: #a09f9c;
     margin-bottom: 16px;
 }
@@ -66,10 +68,11 @@
     padding: 8px 16px;
     border: 1px solid #aaa;
     background-color: #fff;
-    border-radius: 25px;
+    border-radius:25px;
     cursor: pointer;
     font-weight: 500;
-    transition: all 0.25s ease;
+    transition: all 0.3s ease;
+    font-family:  'Outfit', sans-serif;
 }
 
 .size-btn:hover,
@@ -96,6 +99,7 @@
     cursor: pointer;
     transition: 0.25s;
     height: 50px;
+    font-family:  'Outfit', sans-serif;
 }
 
 .add-cart {
@@ -120,7 +124,7 @@
 
 
 .product-description {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     line-height: 1.6;
 }
 
@@ -132,6 +136,8 @@
 .product-description a {
     color: #0077cc;
     text-decoration: underline;
+    font-size: 1.2rem;
+    line-height: 14px;
 }
 
 .product-description a:hover {
@@ -139,7 +145,8 @@
 }
 
 .size-info {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+
     color: #555;
     margin-top: 15px;
 }
@@ -148,14 +155,16 @@
     width: 100%;
 }
 .suggest-productions > p {
-    height: 150px;
+    height: 120px;
     display: flex;
     align-items: center;
-    font-size: 1.8rem;
+    font-size: 2rem;
+    font-family:  'Outfit', sans-serif;
 }
 .suggest-production {
     width: 100%;
     cursor: pointer;
+    margin-bottom: 50px;
 }
 .suggest-production img {
     width: 100%;
@@ -164,6 +173,13 @@
 .suggest-production-name{
     margin-top: 20px;
     font-size: 1.8rem;
+    font-weight: 520;
+    font-family: 'Outfit', sans-serif;
+}
+.suggest-production-price{
+    font-family: 'Outfit', sans-serif;
+    margin-top: 10px;
+    font-size: 1.5rem;
     font-weight: 600;
 }
 /* ===== Responsive ===== */
