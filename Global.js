@@ -120,9 +120,12 @@ const logicUserModal = ()=>{
         }
 
 // 🔥 Xử lý nút đăng xuất
-        logoutBtn.addEventListener('click', () => {
+        logoutBtn.addEventListener('click', async () => {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
+            await fetch('http://localhost:1234/v1/users/logout', {
+                method: 'DELETE',
+            })
             showToast('LOGGED OUT!', 'success');
             setTimeout(() => location.reload(), 800); // reload lại trang
         });

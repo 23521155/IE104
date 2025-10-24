@@ -102,13 +102,13 @@
     font-family:  'Outfit', sans-serif;
 }
 
-.add-cart {
+.add-cart-btn {
     background-color: #000;
     color: #fff;
     font-size: 1.8rem;
 }
 
-.add-cart:hover {
+.add-cart-btn:hover {
     background-color: #000008;
 }
 
