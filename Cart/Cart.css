@@ -81,6 +81,7 @@
 }
 .cart-product-details > img{
     width: 120px;
+    cursor: pointer;
 }
 .quantity-control {
     display: flex;

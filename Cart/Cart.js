@@ -96,6 +96,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         updateItemTotal(qtyInput, productPrice, productTotalEl, productId);
+        if(e.target.tagName === 'IMG') {
+            const product = products.find(product => product._id === productId);
+            sessionStorage.setItem('product', JSON.stringify(product));
+            window.location.href = `../Production/Production.html?id=${product._id}`;
+        }
     }
 
     // Khi người dùng rời khỏi ô input (blur event)

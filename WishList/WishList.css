@@ -24,7 +24,7 @@
 }
 .box-wishlist{
     background-color:  white;
-    height: 1241px;
+    height: 720px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -33,7 +33,6 @@
 }
 .production{
     width: 100%;
-    aspect-ratio: 1/1.2;
     cursor: pointer;
     margin-bottom: 30px;
 }
@@ -41,6 +40,7 @@
     width: 100%;
     object-fit: cover;
     border-radius: 10px;
+    height: 430px;
 }
 .info{
     margin-top: 20px;
@@ -48,7 +48,13 @@
 .name{
     font-size: 1.7rem;
     font-weight: 500;
+    height: 50px;
     margin-bottom: 10px;
+}
+.price-trash{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .price{
     font-size: 1.4rem;
@@ -56,6 +62,16 @@
     transition: color 0.3s ease-in-out;
 }
 .price:hover{
+    color: #000008;
+}
+.trash{
+    width: 20px;
+    margin-top: 10px;
+    color: #a09f9c;
+    transition: color 0.3s ease;
+}
+.trash:hover{
+    cursor: pointer;
     color: #000008;
 }
 .addCart-button{
