@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    loadingOverlay.classList.remove('hidden');
+
+    await lottie.loadAnimation({
+        container: document.getElementById('loading-animation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../animations/Grocery.json' // ✅ đường dẫn đúng
+    });
+    await lottie.loadAnimation({
+        container: document.getElementById('loading-animation-ellipsis'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../animations/Loading.json'
+    });
+
     const cartProducts = document.querySelector('.cart-products');
     const cartTotal = document.querySelector('.cart-total');
     const accessToken = localStorage.getItem('accessToken');
@@ -9,6 +27,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             'Authorization': `Bearer ${accessToken}`,
         }
     });
+
+    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
 
     const cart = await res.json();
     const products = cart.cartItems;

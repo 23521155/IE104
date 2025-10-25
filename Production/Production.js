@@ -1,4 +1,4 @@
-const showToast = (message, type = "success") => {
+const showToasttt = (message, type = "success") => {
     const container = document.getElementById("toast-container");
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
@@ -27,7 +27,26 @@ const showToast = (message, type = "success") => {
         setTimeout(() => toast.remove(), 400);
     }, 3000);
 }
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    loadingOverlay.classList.remove('hidden');
+
+    await lottie.loadAnimation({
+        container: document.getElementById('loading-animation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../animations/Grocery.json' // ✅ đường dẫn đúng
+    });
+    await lottie.loadAnimation({
+        container: document.getElementById('loading-animation-ellipsis'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../animations/Loading.json'
+    });
+
+    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
     const product = JSON.parse(sessionStorage.getItem('product'));
     const products = JSON.parse(sessionStorage.getItem('products'));
     if (!product) return;
@@ -78,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="product-action">
             <button class="btn add-cart-btn">Add to cart</button>
-            <button class="btn add-wishlist">Add to wishlist ${' (' + product.wishlistCount + ')'}</button>
+            <button class="btn add-wishlist-btn">Add to wishlist ${' (' + product.wishlistCount + ')'}</button>
           </div>
 
           <div class="product-description">
@@ -105,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.stopPropagation();
         const token = localStorage.getItem('accessToken');
         if(!token){
-            showToast('You need to Login!', 'error');
+            showToasttt('You need to Login!', 'error');
         }
         else{
             const res = await fetch('http://localhost:1234/v1/cart/add-cart', {
@@ -119,9 +138,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     product
                 })
             });
-            console.log('ho')
             const response = await res.json();
-            showToast(response, 'success');
+            showToasttt(response, 'success');
+        }
+    })
+    const addWishlistBtn = document.querySelector('.add-wishlist-btn');
+    addWishlistBtn.addEventListener('click', async event => {
+        event.stopPropagation();
+        const token = localStorage.getItem('accessToken');
+        if(!token){
+            showToasttt('You need to Login!', 'error');
+        } else{
+            const res = await fetch('http://localhost:1234/v1/wishlist/add-wishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Nếu API cần token (JWT, v.v.), thêm dòng này:
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    product
+                })
+            });
+            const response = await res.json();
+            showToasttt(response, 'success');
         }
     })
     const suggestProducts = document.querySelector('.suggest-productions');

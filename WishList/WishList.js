@@ -29,6 +29,24 @@ const showToast = (message, type = "success") => {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    loadingOverlay.classList.remove('hidden');
+
+    await lottie.loadAnimation({
+        container: document.getElementById('loading-animation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../animations/Grocery.json' // ✅ đường dẫn đúng
+    });
+    await lottie.loadAnimation({
+        container: document.getElementById('loading-animation-ellipsis'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../animations/Loading.json'
+    });
+
     const rowWishList = document.querySelector('.row-wishlist');
     const accessToken = localStorage.getItem('accessToken');
     const res = await fetch(`http://localhost:1234/v1/wishlist/get-wishList`, {
@@ -37,6 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             'Authorization': `Bearer ${accessToken}`,
         }
     });
+    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
+
     const wishList = await res.json();
     const products = wishList.wishListItems;
     rowWishList.innerHTML = `
