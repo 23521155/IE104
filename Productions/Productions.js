@@ -29,12 +29,31 @@ const showToastt = (message, type = "success") => {
 }
 
 document.addEventListener('DOMContentLoaded',  async function () {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    loadingOverlay.classList.remove('hidden');
+
+   await lottie.loadAnimation({
+        container: document.getElementById('loading-animation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../animations/Grocery.json'
+    });
+    await lottie.loadAnimation({
+        container: document.getElementById('loading-animation-ellipsis'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../animations/Loading.json'
+    });
+
     const params = new URLSearchParams(window.location.search);
     let page = parseInt(params.get('page')) || 1;
     const productType = params.get('type');
     const limit = 24;
 
     const response = await fetch(`http://localhost:1234/v1/product/${productType}?page=${page}&limit=${limit}`);
+    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
 
     const {products,totalProducts} = await response.json();
     const productGrid = document.getElementById('product-grid');

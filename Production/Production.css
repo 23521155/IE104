@@ -112,13 +112,13 @@
     background-color: #000008;
 }
 
-.add-wishlist {
+.add-wishlist-btn {
     background-color: #ffffff;
     color: #000008;
     font-size: 1.8rem;
 }
 
-.add-wishlist:hover {
+.add-wishlist-btn:hover {
     background-color: #e9e9e9;
 }
 
