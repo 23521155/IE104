@@ -89,55 +89,79 @@ document.addEventListener('DOMContentLoaded',  async function () {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
 
-        productCard.innerHTML = `
-            <div class="product-image-container">
-            <div>
-            <img src="${product?.images[0].url}" alt="${product.name}" class="product-image">
-            <img src="${product?.images[1].url}" alt="${product.name}" class="product-image">
-            </div>   
-                <i class="fa-regular fa-heart wishlist-icon"></i>
-            </div>
-            <div class="product-info">
-                <div class="product-name">${product.name}</div>
-                <div class="product-price">
-                <p>
-                 $${product.price}
-                </p>
+            productCard.innerHTML = `
+                <div class="product-image-container">
+                <div>
+                <img src="${product?.images[0].url}" alt="${product.name}" class="product-image">
+                <img src="${product?.images[1].url}" alt="${product.name}" class="product-image">
                 </div>
-            </div>
-            <button class="add-cart-btn">Add Cart</button>
-        `;
+                   <i class="fa-regular fa-heart wishlist-icon add-wishlist-btn"></i>   
+                </div>
+                <div class="product-info">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">
+                    <p>
+                     $${product.price}
+                    </p>
+                    </div>
+                </div>
+                <button class="add-cart-btn">Add Cart</button>
+            `;
 
-        col.appendChild(productCard);
-        productGrid.appendChild(col);
+            col.appendChild(productCard);
+            productGrid.appendChild(col);
 
-        productCard.addEventListener('click', event => {
-            sessionStorage.setItem('product', JSON.stringify(product));
+            productCard.addEventListener('click', event => {
+                sessionStorage.setItem('product', JSON.stringify(product));
 
-            window.location.href = `../Production/Production.html?id=${product._id}`;
-        })
-        const addCartBtn = productCard.querySelector('.add-cart-btn');
-        addCartBtn.addEventListener('click', async event => {
-            event.stopPropagation();
-            const token = localStorage.getItem('accessToken');
-            if(!token){
-                showToastt('You need to Login!', 'error');
-            }
-            else{
-                const res = await fetch('http://localhost:1234/v1/cart/add-cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // Nếu API cần token (JWT, v.v.), thêm dòng này:
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        product
-                    })
-                });
-                const response = await res.json();
-                showToast(response, 'success');
-            }
+                window.location.href = `../Production/Production.html?id=${product._id}`;
+            })
+            const addCartBtn = productCard.querySelector('.add-cart-btn');
+            addCartBtn.addEventListener('click', async event => {
+                event.stopPropagation();
+                const token = localStorage.getItem('accessToken');
+                if(!token){
+                    showToastt('You need to Login!', 'error');
+                }
+                else{
+                    const res = await fetch('http://localhost:1234/v1/cart/add-cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Nếu API cần token (JWT, v.v.), thêm dòng này:
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            product
+                        })
+                    });
+                    const response = await res.json();
+                    showToast(response, 'success');
+                }
+            });
+
+            const wishlistBtn = productCard.querySelector('.add-wishlist-btn');
+            wishlistBtn.addEventListener('click', async event => {
+                event.stopPropagation();
+                const token = localStorage.getItem('accessToken');
+                if(!token){
+                    showToastt('You need to Login!', 'error');
+                }
+                else{
+                    const res = await fetch('http://localhost:1234/v1/wishlist/add-wishlist', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Nếu API cần token (JWT, v.v.), thêm dòng này:
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            product
+                        })
+                    });
+                    const response = await res.json();
+                    showToast(response, 'success');
+                }
+            })
         });
     });
-});
