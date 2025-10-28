@@ -111,8 +111,8 @@ document.addEventListener('DOMContentLoaded',  async function () {
             productCard.innerHTML = `
                 <div class="product-image-container">
                 <div>
-                <img src="${product?.images[0].url}" alt="${product.name}" class="product-image">
-                <img src="${product?.images[1].url}" alt="${product.name}" class="product-image">
+                <img src="${product?.images[0]?.url}" alt="${product.name}" class="product-image">
+                <img src="${product?.images[1]?.url}" alt="${product.name}" class="product-image">
                 </div>
                    <i class="fa-regular fa-heart wishlist-icon add-wishlist-btn"></i>   
                 </div>
