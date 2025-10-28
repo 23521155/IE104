@@ -161,7 +161,6 @@ html *::-webkit-scrollbar-track {
     padding: 0 10px;
     transition: width 0.6s ease;
     overflow: hidden;
-
 }
 
 .search-input{
@@ -189,6 +188,58 @@ html *::-webkit-scrollbar-track {
     width: 400px;
 }
 
+.autocomplete-search{
+    position: relative;
+}
+.search-results{
+    max-height: 400px;
+    top: 105%;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow-y: auto;
+    display: none;
+}
+.search-results.show{
+    display: block;
+}
+.search-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.search-item:hover {
+    background: #f7f7f7;
+}
+.search-item img {
+    width: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.search-item .info {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.6rem;
+}
+.search-see-more{
+    color: #a09f9c;
+    margin-top: 5px;
+    font-size: 1.2rem;
+}
+.no-result {
+    padding: 10px;
+    text-align: center;
+    color: #777;
+}
 .user {
     position: relative;
     width: 60px;
@@ -1195,6 +1246,7 @@ html *::-webkit-scrollbar-track {
         width: 200px;
         z-index: 999;
     }
+
     .header-right{
         padding: 0;
         gap: 10px;

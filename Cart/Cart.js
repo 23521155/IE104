@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return `
                 <div class="cart-product" data-id='${product._id}'>
                     <div class="cart-product-details">
-                        <img src="${product.images[0].url}" alt="">
+                        <img src="${product?.images[0]?.url}" alt="">
                         <div class="info">
                             <div class="product-price">${'$' + product.price}</div>
                             <div class="name">${product.name}</div>

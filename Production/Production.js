@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '../animations/Grocery.json' // ✅ đường dẫn đúng
+        path: '../animations/Grocery.json' //
     });
     await lottie.loadAnimation({
         container: document.getElementById('loading-animation-ellipsis'),
@@ -104,13 +104,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             <p>
             ${product.description}
             </p>
-            <ul>
-              ${product.careIntroduction && `<li>${product.careIntroduction}</li>`}
-              ${product.length && `<li>${'Length: ' + product.length + '″'}</li>`}
-              ${product.origin && `<li>${product.origin}</li>`}
-              ${product.material && `<li>${product.material}</li>`}
-              
-            </ul>
+     ${(product.careIntroduction || product.length || product.origin || product.material)
+            ? `
+    <ul>
+      ${product.careIntroduction ? `<li>${product.careIntroduction}</li>` : ""}
+      ${product.length ? `<li>Length: ${product.length}″</li>` : ""}
+      ${product.origin ? `<li>${product.origin}</li>` : ""}
+      ${product.material ? `<li>${product.material}</li>` : ""}
+    </ul>
+  `
+            : ""
+        }
 
             <p class="size-info">
               Fit information: True to Size <br>

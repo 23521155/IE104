@@ -1,4 +1,4 @@
-const showToast = (message, type = "success") => {
+const showToastttt = (message, type = "success") => {
     const container = document.getElementById("toast-container");
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify({ product })
             });
             const response = await res.json();
-            showToast(response, 'success');
+            showToastttt(response, 'success');
             return;
         }
 
