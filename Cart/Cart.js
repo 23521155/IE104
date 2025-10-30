@@ -84,8 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <div class="product-price">${displayPrice}</div>
                 <div class="name">${product.name}</div>
                 <div class="length">${lang === "vi" ? "Chiều dài" : "Length"}: ${
-                product.length + "″"
-            }</div>
+                product.length + "″" }</div>
                 <div class="trash"><i class="fa-solid fa-trash"></i></div>
               </div>
             </div>

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
     const product = JSON.parse(sessionStorage.getItem('product'));
-    const products = JSON.parse(sessionStorage.getItem('products'));
+    const products = JSON.parse(localStorage.getItem('products'));
     const randomProducts = products.sort(() => Math.random() - 0.5).slice(0, 4);
     const storedLang = localStorage.getItem("selectedLang");
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
