@@ -1,4 +1,4 @@
-function showToast(message, type = "success") {
+export const showToast = async (message, type = "success") => {
     const container = document.getElementById("toast-container");
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
@@ -10,7 +10,9 @@ function showToast(message, type = "success") {
         info: "ℹ️",
         warning: "⚠️"
     };
-
+    const storedLang = localStorage.getItem("selectedLang");
+    const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
+    message = await translateText(message,lang);
     toast.innerHTML = `
         <span class="toast-icon">${icons[type] || ""}</span>
         <span class="toast-message">${message}</span>
@@ -27,18 +29,107 @@ function showToast(message, type = "success") {
         setTimeout(() => toast.remove(), 400);
     }, 3000);
 }
+export  const translateText = async (text, targetLanguage = 'vi') => {
+    const cacheKey = `trans_${targetLanguage}_${text}`;
+    const cached = localStorage.getItem(cacheKey);
+    if(cached) return cached;
 
+    const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLanguage}&dt=t&q=${encodeURIComponent(text)}`
+    );
+    const data = await res.json();
+    const translated = data[0][0][0];
 
+    localStorage.setItem(cacheKey, translated);
+    return translated;
+}
 
-
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", async (event) => {
     // Open and close modal
-    const logicMenuModal =()=>{
+    const logicMenuModal = async ()=>{
         const menuBtn = document.getElementById('menu-button');
         const menuModal = document.getElementById('menu-modal');
+        const menuModalRight = document.querySelector('.menu-modal-right');
         const closeBtn = document.getElementById('menu-modal-close');
         const content = document.querySelector('.content');
         const body = document.body;
+
+        const storedLang = localStorage.getItem("selectedLang");
+        const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
+
+        const res = await fetch('http://localhost:1234/v1/productType/')
+        const data = await res.json();
+
+        const products = data.filter(product => product._isBestSeller);
+
+
+        menuModalRight.innerHTML =
+            `
+            <div class="menu-modal-right-title">
+            ${lang === 'vi' ? 'SẢN PHẨM BÁN CHẠY' : 'BEST SELLERS'}
+            </div>
+        <div class="menu-modal-right-content">
+        ${products.map((product) => 
+            `
+             <div class="menu-modal-img" data-id="${product._id}">
+                                <img class="menu-modal-img1" src="${product.images[0].url}" alt="">
+                                <img class="menu-modal-img2" src="${product.images[1].url}" alt="">
+            </div>
+            `
+            ).join('')}
+        </div>
+            `
+        const productElements = document.querySelectorAll('.menu-modal-img');
+
+        productElements.forEach(el => {
+            el.addEventListener('click', () => {
+                const id = el.dataset.id;
+                const product = products.filter(product => product._id === id);
+                sessionStorage.setItem('product', JSON.stringify(...product));
+                window.location.href = `http://localhost:63342/IE104/Production/Production.html?id=${id}`;
+            });
+        });
+
+        const menuModalList = document.querySelector('.menu-modal-list')
+
+        menuModalList.innerHTML = `
+            <div><a href="http://localhost:63342/IE104/Productions/Productions.html" class="menu-modal-content">NEW ARRIVALS</a></div>
+            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=dresses&page=1" class="menu-modal-content">DRESSES</a></div>
+            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=tops&page=1" class="menu-modal-content">CLOTHING</a></div>
+            <div><a href="" class="menu-modal-content">HAPPY LUNAR YEAR</a></div>
+            <div><a href="https://www.gucci.com/us/en/" class="menu-modal-content">BRANDS WE LOVE</a></div>
+            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=shoes&page=1" class="menu-modal-content">SHOES</a></div>
+            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=jewelry&page=1" class="menu-modal-content">ACCESSORIES</a></div>
+            <div><a href="" class="menu-modal-content">SALE</a></div>
+            <div><a href="" class="menu-modal-content">MODE CLOSET</a></div>
+            <div><a href="" class="menu-modal-content">
+                <i class="fa-regular fa-user"></i>ACCOUNT</a></div>
+            <div><a href="../WishList/WishList.html" class="menu-modal-content">
+                <i class="fa-regular fa-heart"></i>
+                WISHLIST</a></div>
+
+        `
+        const items = document.querySelectorAll('.menu-modal-content');
+
+        const texts = Array.from(items).map(el => el.textContent.trim());
+
+
+        const textTranslateds = await Promise.all(
+            texts.map(text => translateText(text, lang))
+        );
+        textTranslateds[3] = 'CHÚC MỪNG NĂM MỚI'
+        textTranslateds[4] = 'NHÃN HIỆU YÊU THÍCH';
+        textTranslateds[8] = 'CHẾ ĐỘ TỦ ĐỒ';
+        textTranslateds[10] = 'DANH SÁCH YÊU THÍCH';
+        items.forEach((el, index) => {
+            const icon = el.querySelector('i');
+            el.textContent = textTranslateds[index];
+            if (icon) el.prepend(icon); // thêm lại icon vào đầu nếu có
+        });
+
+
+
+
+
 
         menuBtn.addEventListener('click', () => {
             // reset nếu đang đóng
@@ -517,11 +608,70 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
     };
 
+    const chooseLanguageLogic = () => {
+        const languageBtn = document.querySelector(".language-button");
+        const dropdown = document.querySelector(".language-dropdown");
 
 
+        const storedLang = localStorage.getItem("selectedLang");
+        let currentLang = null;
+
+        try {
+            currentLang = storedLang ? JSON.parse(storedLang) : null;
+        } catch (err) {
+            console.error("Invalid JSON in localStorage:", err);
+            localStorage.removeItem("selectedLang");
+        }
+
+        if (!currentLang) {
+            currentLang = {
+                flag: "http://localhost:63342/IE104/public/images/united-states.png",
+                lang: "EN",
+            };
+
+            localStorage.setItem("selectedLang", JSON.stringify(currentLang));
+        }
+
+        languageBtn.innerHTML = `
+    <img src="${currentLang.flag}" alt="">
+    <p>${currentLang.lang}</p>
+  `;
 
 
+        languageBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle("hidden");
+        });
 
+
+        document.addEventListener("click", () => {
+            dropdown.classList.add("hidden");
+        });
+
+
+        dropdown.querySelectorAll("li").forEach((li) => {
+            li.addEventListener("click", () => {
+                const lang = li.dataset.lang;
+                const flag = li.querySelector("img").src;
+
+                const selectedLang = {
+                    flag,
+                    lang: lang.toUpperCase(),
+                };
+
+
+                localStorage.setItem("selectedLang", JSON.stringify(selectedLang));
+
+
+                languageBtn.innerHTML = `
+        <img src="${selectedLang.flag}" alt="">
+        <p>${selectedLang.lang}</p>
+      `;
+
+                window.location.reload();
+            });
+        });
+    };
 
 
     logicMenuModal()
@@ -530,9 +680,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
     deleteInputUserModal()
     registerForm()
     loginForm()
-
     forgotPassword()
     searchLogic()
+    chooseLanguageLogic()
+
 })
 
 document.addEventListener("load", (event) => {

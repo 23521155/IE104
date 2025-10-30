@@ -4,18 +4,30 @@
     color: #000008;
     font-family: "Poppins", sans-serif;
 }
-.breadcrumb{
+.home-products{
+    display: inline-flex;
     font-size: 2rem;
+    height: 20px;
+    gap: 5px;
     color: #a09f9c;
-    margin-bottom: 60px;
+    font-weight: 500;
     transition: color 0.3s ease;
-    display: flex;
-    width: 100px;
+    margin-bottom: 80px;
+
 }
-.breadcrumb > p{
-    margin-left: 3px;
+.home-products:hover{
+    cursor: pointer;
 }
-.breadcrumb:hover{
+.home-products > div,
+.home-products > i{
+    color: #a09f9c;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+.home-products:hover div{
+    color: #000008;
+}
+.home-products:hover i{
     color: #000008;
     cursor: pointer;
 }
@@ -123,24 +135,25 @@
 }
 
 
-.product-description {
+.product-info {
     font-size: 1.6rem;
     line-height: 1.6;
 }
 
-.product-description ul {
+.product-info ul {
     list-style: disc;
     margin: 10px 0 10px 20px;
+
 }
 
-.product-description a {
+.product-info a {
     color: #0077cc;
     text-decoration: underline;
     font-size: 1.2rem;
     line-height: 14px;
 }
 
-.product-description a:hover {
+.product-info a:hover {
     color: #005fa3;
 }
 
@@ -162,25 +175,42 @@
     font-family:  'Outfit', sans-serif;
 }
 .suggest-production {
-    width: 100%;
+    background-color: #f8f8f8;
+    margin-bottom: 30px;
     cursor: pointer;
-    margin-bottom: 50px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.suggest-production:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .suggest-production img {
     width: 100%;
-    border-radius: 10px;
+    aspect-ratio: 2/3;
+}
+.suggest-production-name,
+.suggest-production-price {
+    padding: 0 12px;
 }
 .suggest-production-name{
-    margin-top: 20px;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 520;
+    margin-top: 20px;
     font-family: 'Outfit', sans-serif;
+    color: #000008;
 }
 .suggest-production-price{
-    font-family: 'Outfit', sans-serif;
-    margin-top: 10px;
     font-size: 1.5rem;
+    color: #a09f9c;
+    font-family: 'Outfit', sans-serif;
+    transition: color 0.3s ease;
+    user-select: none;
     font-weight: 600;
+    margin: 10px 0;
+}
+.suggest-production-price:hover {
+    color: #000008;
 }
 /* ===== Responsive ===== */
 @media (max-width: 64.1em) {

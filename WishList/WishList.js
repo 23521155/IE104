@@ -1,32 +1,4 @@
-const showToastttt = (message, type = "success") => {
-    const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-
-    // Icon tùy loại
-    const icons = {
-        success: "✅",
-        error: "❌",
-        info: "ℹ️",
-        warning: "⚠️"
-    };
-
-    toast.innerHTML = `
-        <span class="toast-icon">${icons[type] || ""}</span>
-        <span class="toast-message">${message}</span>
-    `;
-
-    container.appendChild(toast);
-
-    // Hiện
-    setTimeout(() => toast.classList.add("show"), 10);
-
-    // Tự ẩn sau 3 giây
-    setTimeout(() => {
-        toast.classList.remove("show");
-        setTimeout(() => toast.remove(), 400);
-    }, 3000);
-}
+import {showToast} from '../Global.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const loadingOverlay = document.getElementById('loading-overlay');
@@ -59,8 +31,45 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const wishList = await res.json();
     const products = wishList.wishListItems;
+
+    const storedLang = localStorage.getItem("selectedLang");
+    const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
+    const EXCHANGE_USD_TO_VND = 26328;
+
+    const wishlistTitle = document.querySelector('.title-wishlist');
+    let p,home,a,addCartBtn;
+    if(lang === "vi") {
+        p = 'Yêu thích';
+        home = 'Trang chủ';
+        a = 'Yêu thích';
+        addCartBtn = 'Thêm vào giỏ hàng';
+    } else if(lang === 'en'){
+        p = 'Wish List';
+        home = 'Home';
+        a = 'Wish list';
+        addCartBtn = 'Add to cart';
+    }
+    wishlistTitle.innerHTML = `
+           <i class="fa-regular fa-heart"></i>
+           <p class="p">${p}</p>
+    `;
+
+    const homeButton = document.querySelector('.home-wishlist');
+    homeButton.innerHTML = `
+            <a href="../../IE104/Home/Home.html">${home}</a>
+            <p>/</p>
+            <a href="">${a}</a>
+    `
+
     rowWishList.innerHTML = `
                        ${products.map((product) => {
+                           let formattedPrice;
+                                   if(lang ==='vi'){
+                                       formattedPrice = (product.price * EXCHANGE_USD_TO_VND).toLocaleString('vi-VN') + '₫'
+                                   }
+                                   else if (lang ==='en'){
+                                       formattedPrice = '$' + product.price.toLocaleString('en-US',{ minimumFractionDigits: 2 });
+                                   }
                            return (
                                `
                                 <div class="col xxl-3 xl-3 l-3 m-6 c-12">
@@ -69,11 +78,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                                <div class="info">
                                    <div class="name">${product.name}</div>
                                    <div class="price-trash">
-                                    <div class="price">$${product.price}</div>
+                                    <div class="price">${formattedPrice}</div>
                                     <div class="trash"><i class="fa-solid fa-trash"></i></div>
                                    </div>
                                </div>
-                               <div class="addCart-button"> Add Cart</div>
+                               <div class="addCart-button">${addCartBtn}</div>
                                 </div>
                                </div>`
                            )
@@ -113,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify({ product })
             });
             const response = await res.json();
-            showToastttt(response, 'success');
+            showToast(response, 'success');
             return;
         }
 
