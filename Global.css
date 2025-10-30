@@ -311,6 +311,104 @@ html *::-webkit-scrollbar-track {
     transform: translateY(-50%) translateX(5px);
 }
 
+.language-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.language-button {
+    position: relative;
+    width: 40px;
+    height: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.language-button > img {
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.6s ease;
+}
+
+.language-button:hover > img {
+    transform: translateY(-50%) translateX(-40px);
+}
+
+.language-button > p {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    opacity: 0;
+    transform: translateY(-50%) translateX(0);
+    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+    color: var(--text-color, #333);
+}
+
+.language-button:hover > p {
+    opacity: 1;
+    transform: translateY(-50%) translateX(5px);
+}
+
+/* Dropdown */
+.language-dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    width: 160px;
+    z-index: 10;
+    animation: fadeInDown 0.25s ease;
+}
+
+.language-dropdown.hidden {
+    display: none;
+}
+
+.language-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.language-dropdown li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.language-dropdown li:hover {
+    background: #ffe3f1;
+}
+
+.language-dropdown img {
+    width: 40px;
+    height: 40px;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /*Content*/
 .content {
     transition: transform 0.8s ease-in-out;
@@ -522,7 +620,7 @@ html *::-webkit-scrollbar-track {
 
 }
 .menu-modal-list > div {
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 .menu-modal-content{
     font-size: 1.8rem;
@@ -556,10 +654,11 @@ html *::-webkit-scrollbar-track {
 }
 .menu-modal-right-title{
     text-align: center;
-    font-family: 'Rajdhani', Arial, sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 4rem;
     user-select:  none;
     width: 100%;
+    font-weight: 400;
 }
 .menu-modal-right-content{
     display: grid;

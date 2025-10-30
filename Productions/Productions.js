@@ -1,32 +1,4 @@
-const showToastt = (message, type = "success") => {
-    const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-
-    // Icon tùy loại
-    const icons = {
-        success: "✅",
-        error: "❌",
-        info: "ℹ️",
-        warning: "⚠️"
-    };
-
-    toast.innerHTML = `
-        <span class="toast-icon">${icons[type] || ""}</span>
-        <span class="toast-message">${message}</span>
-    `;
-
-    container.appendChild(toast);
-
-    // Hiện
-    setTimeout(() => toast.classList.add("show"), 10);
-
-    // Tự ẩn sau 3 giây
-    setTimeout(() => {
-        toast.classList.remove("show");
-        setTimeout(() => toast.remove(), 400);
-    }, 3000);
-}
+import {showToast, translateText} from "../Global.js";
 
 document.addEventListener('DOMContentLoaded',  async function () {
     const loadingOverlay = document.getElementById('loading-overlay');
@@ -47,15 +19,35 @@ document.addEventListener('DOMContentLoaded',  async function () {
         path: '../animations/Loading.json'
     });
 
+
+
+
     const params = new URLSearchParams(window.location.search);
     let page = parseInt(params.get('page')) || 1;
     const productType = params.get('type');
     const limit = 24;
+    let products = [];
+    let totalProducts = 0;
+    if(productType){
+        const response = await fetch(`http://localhost:1234/v1/product/${productType}?page=${page}&limit=${limit}`);
+        const data = await response.json();
+        products = data.products;
+        totalProducts = data.totalProducts;
+    }
+    else {
+        // new arrival
+        const res = await fetch('http://localhost:1234/v1/productType/')
+        const data = await res.json();
+        const sorted = data.sort((a, b) => b.createdAt - a.createdAt);
+        products = sorted.slice(0, 24);
+        totalProducts = products.length;
+    }
 
-    const response = await fetch(`http://localhost:1234/v1/product/${productType}?page=${page}&limit=${limit}`);
+
+
+
     setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
 
-    const {products,totalProducts} = await response.json();
     const productGrid = document.getElementById('product-grid');
     const productsQuantity = document.getElementById('products-quantity');
     productsQuantity.textContent = totalProducts;
@@ -101,9 +93,33 @@ document.addEventListener('DOMContentLoaded',  async function () {
         }
     });
     sessionStorage.setItem('products', JSON.stringify(products));
+
+    const storedLang = localStorage.getItem("selectedLang");
+    const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
+
+    let addCartBtnValue
+    if (lang === "vi") {
+        addCartBtnValue = "Thêm vào giỏ hàng";
+    } else if(lang === "en") {
+        addCartBtnValue = "Add to cart";
+    }
+    const homeButton = document.querySelector('.home-button');
+    const originalText = homeButton.innerText;
+    const translatedText = await translateText(originalText, lang);
+    homeButton.innerText = translatedText;
     products.forEach(product => {
         const col = document.createElement('div');
         col.className = 'col xxl-3 xl-3 l-4 m-6 c-12 no-gutters';
+
+        let displayPrice = product.price;
+        let formattedPrice = "";
+        if (lang === "vi") {
+            displayPrice = Math.round(product.price * 26328);
+            formattedPrice = `${displayPrice.toLocaleString("vi-VN")} ₫`;
+        }
+        else if (lang === "en") {
+            formattedPrice = `$${displayPrice.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
+        }
 
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
@@ -120,11 +136,11 @@ document.addEventListener('DOMContentLoaded',  async function () {
                     <div class="product-name">${product.name}</div>
                     <div class="product-price">
                     <p>
-                     $${product.price}
+                     ${formattedPrice}
                     </p>
                     </div>
                 </div>
-                <button class="add-cart-btn">Add Cart</button>
+                <button class="add-cart-btn">${addCartBtnValue}</button>
             `;
 
             col.appendChild(productCard);
@@ -140,7 +156,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
                 event.stopPropagation();
                 const token = localStorage.getItem('accessToken');
                 if(!token){
-                    showToastt('You need to Login!', 'error');
+                    showToast('You need to Login!', 'error');
                 }
                 else{
                     const res = await fetch('http://localhost:1234/v1/cart/add-cart', {
