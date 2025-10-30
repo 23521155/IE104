@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         autoplay: true,
         path: '../animations/Loading.json'
     });
-    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
+
     let currentSlide = 0;
     const slides = document.querySelectorAll(".slide");
     const dots = document.querySelectorAll(".dot");
@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     information.innerHTML = `${informationText}`
     knowMoreBtn.innerHTML = `${knowMoreText}`
+    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
 })
 
 

@@ -95,11 +95,11 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html" class="menu-modal-content">NEW ARRIVALS</a></div>
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=dresses&page=1" class="menu-modal-content">DRESSES</a></div>
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=tops&page=1" class="menu-modal-content">CLOTHING</a></div>
-            <div><a href="" class="menu-modal-content">HAPPY LUNAR YEAR</a></div>
+            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=happylunar&page=1" class="menu-modal-content">HAPPY LUNAR YEAR</a></div>
             <div><a href="https://www.gucci.com/us/en/" class="menu-modal-content">BRANDS WE LOVE</a></div>
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=shoes&page=1" class="menu-modal-content">SHOES</a></div>
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=jewelry&page=1" class="menu-modal-content">ACCESSORIES</a></div>
-            <div><a href="" class="menu-modal-content">SALE</a></div>
+            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=sale&page=1" class="menu-modal-content">SALE</a></div>
             <div><a href="" class="menu-modal-content">MODE CLOSET</a></div>
             <div><a href="" class="menu-modal-content">
                 <i class="fa-regular fa-user"></i>ACCOUNT</a></div>
@@ -116,10 +116,14 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         const textTranslateds = await Promise.all(
             texts.map(text => translateText(text, lang))
         );
-        textTranslateds[3] = 'CHÚC MỪNG NĂM MỚI'
-        textTranslateds[4] = 'NHÃN HIỆU YÊU THÍCH';
-        textTranslateds[8] = 'CHẾ ĐỘ TỦ ĐỒ';
-        textTranslateds[10] = 'DANH SÁCH YÊU THÍCH';
+
+        if(lang === 'vi')
+        {
+            textTranslateds[3] = 'CHÚC MỪNG NĂM MỚI'
+            textTranslateds[4] = 'NHÃN HIỆU YÊU THÍCH';
+            textTranslateds[8] = 'CHẾ ĐỘ TỦ ĐỒ';
+            textTranslateds[10] = 'DANH SÁCH YÊU THÍCH';
+        }
         items.forEach((el, index) => {
             const icon = el.querySelector('i');
             el.textContent = textTranslateds[index];

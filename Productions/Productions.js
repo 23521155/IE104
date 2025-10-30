@@ -48,6 +48,28 @@ document.addEventListener('DOMContentLoaded',  async function () {
 
     setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
 
+    if(products.length === 0){
+        const storedLang = localStorage.getItem("selectedLang");
+        const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
+        const productGrid = document.getElementById('product-grid');
+        const homeBtn = document.querySelector('.home-button');
+        if(lang === 'vi'){
+            productGrid.innerHTML = 'Bây giờ chúng tôi chưa có sản phẩm';
+            homeBtn.innerHTML = `Trang chủ`
+        }else if(lang === 'en'){
+            productGrid.innerHTML = 'Now we don\'t have products';
+            homeBtn.innerHTML = 'Home'
+        }
+
+        productGrid.style.height = '100px';
+        productGrid.style.fontSize = '3rem';
+
+        const pagination = document.querySelector('.pagination');
+        pagination.remove();
+        return;
+    }
+
+
     const productGrid = document.getElementById('product-grid');
     const productsQuantity = document.getElementById('products-quantity');
     productsQuantity.textContent = totalProducts;
@@ -92,7 +114,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
             window.location.href = `../Productions/Productions.html?type=${productType}&page=${page}`;
         }
     });
-    sessionStorage.setItem('products', JSON.stringify(products));
+    localStorage.setItem('products', JSON.stringify(products));
 
     const storedLang = localStorage.getItem("selectedLang");
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
