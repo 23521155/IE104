@@ -620,7 +620,7 @@ html *::-webkit-scrollbar-track {
 
 }
 .menu-modal-list > div {
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 }
 .menu-modal-content{
     font-size: 1.8rem;

@@ -164,54 +164,65 @@
     margin-top: 15px;
 }
 
-.suggest-productions{
+.suggest-productions {
     width: 100%;
+    margin-top: 60px;
 }
+
 .suggest-productions > p {
-    height: 120px;
+    height: 100px;
     display: flex;
     align-items: center;
-    font-size: 2rem;
-    font-family:  'Outfit', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    color: #000;
 }
+
 .suggest-production {
     background-color: #f8f8f8;
-    margin-bottom: 30px;
     cursor: pointer;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .suggest-production:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
+
 .suggest-production img {
     width: 100%;
-    aspect-ratio: 2/3;
+    aspect-ratio: 1/1.15;
+    object-fit: cover;
 }
+
 .suggest-production-name,
 .suggest-production-price {
     padding: 0 12px;
 }
-.suggest-production-name{
+
+.suggest-production-name {
     font-size: 1.6rem;
-    font-weight: 520;
+    font-weight: 600;
     margin-top: 20px;
+    color: #000;
     font-family: 'Outfit', sans-serif;
-    color: #000008;
 }
-.suggest-production-price{
+
+.suggest-production-price {
     font-size: 1.5rem;
     color: #a09f9c;
-    font-family: 'Outfit', sans-serif;
+    margin: 10px 0 20px;
+    font-weight: 600;
     transition: color 0.3s ease;
     user-select: none;
-    font-weight: 600;
-    margin: 10px 0;
 }
+
 .suggest-production-price:hover {
-    color: #000008;
+    color: #000;
 }
+
 /* ===== Responsive ===== */
 @media (max-width: 64.1em) {
    .production-thumbnails{

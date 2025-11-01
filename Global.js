@@ -12,7 +12,10 @@ export const showToast = async (message, type = "success") => {
     };
     const storedLang = localStorage.getItem("selectedLang");
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
-    message = await translateText(message,lang);
+    if(message === 'LOGGED OUT!' && lang === 'vi') {
+       message = 'Đã đăng xuất';
+    } else message = await translateText(message,lang);
+
     toast.innerHTML = `
         <span class="toast-icon">${icons[type] || ""}</span>
         <span class="toast-message">${message}</span>
@@ -55,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
         const storedLang = localStorage.getItem("selectedLang");
         const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
-
+        const accessToken = localStorage.getItem("accessToken");
         const res = await fetch('http://localhost:1234/v1/productType/')
         const data = await res.json();
 
@@ -100,9 +103,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=shoes&page=1" class="menu-modal-content">SHOES</a></div>
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=jewelry&page=1" class="menu-modal-content">ACCESSORIES</a></div>
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=sale&page=1" class="menu-modal-content">SALE</a></div>
-            <div><a href="" class="menu-modal-content">MODE CLOSET</a></div>
-            <div><a href="" class="menu-modal-content">
-                <i class="fa-regular fa-user"></i>ACCOUNT</a></div>
+            <div><a href="#" class="menu-modal-content">MODE CLOSET</a></div>
+          ${accessToken ? `<div><a href="http://localhost:63342/IE104/User/User.html" class="menu-modal-content">
+                <i class="fa-regular fa-user"></i>ACCOUNT</a></div>` : ''}
             <div><a href="../WishList/WishList.html" class="menu-modal-content">
                 <i class="fa-regular fa-heart"></i>
                 WISHLIST</a></div>
@@ -690,7 +693,8 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
 })
 
-document.addEventListener("load", (event) => {
+
+window.addEventListener("load", (event) => {
     // GOOGLE SOCIAL LOGIN
     const loginGoogle = () => {
 
