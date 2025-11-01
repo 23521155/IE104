@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
                    <i class="fa-regular fa-heart wishlist-icon add-wishlist-btn"></i>   
                 </div>
                 <div class="product-info">
-                    <div class="product-name">${product.name}</div>
+                    <div class="product-name">${product.name.toUpperCase()}</div>
                     <div class="product-price">
                     <p>
                      ${formattedPrice}

@@ -1,4 +1,4 @@
-import { translateText } from "../Global.js";
+import {showToast, translateText} from "../Global.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const loadingOverlay = document.getElementById("loading-overlay");
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    function updateCartTotal() {
+    async function updateCartTotal() {
         const productEls = document.querySelectorAll(".cart-product");
         let totalUSD = 0;
 
@@ -229,5 +229,67 @@ document.addEventListener("DOMContentLoaded", async () => {
        ${lang === 'vi' ? `Thanh Toán` : 'CheckOut'} ${finalTotal}
       </div>
     `;
+        const totalCartUpdate = totalUSD + shippingUSD - voucherUSD;
+
+        await fetch('http://localhost:1234/v1/cart/update',{
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                cartId: cart._id,
+                updateData :{ totalPrice: totalCartUpdate }
+    }),
+        })
     }
+
+
+    cartTotal.addEventListener("click", async (e) => {
+        if (e.target.closest(".checkout-button")) {
+            const res = await fetch(`http://localhost:1234/v1/cart/get-cartt`, {
+                method: "GET",
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            const cart = await res.json();
+            if(cart.cartItems.length)
+            {
+                const result =  await fetch(`http://localhost:1234/v1/order/`, {
+                    method: "POST",
+
+                    headers:{ Authorization: `Bearer ${accessToken}`,"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        userId: cart.userId,
+                        totalPrice: cart.totalPrice,
+                        orderItems: cart.cartItems,
+                    })
+                })
+                if(result.ok){
+                    const noti = await translateText('You have successfully paid',lang)
+                    const result = await fetch(`http://localhost:1234/v1/cart/update`, {
+                        method: "PATCH",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            cartId: cart._id,
+                            updateData :{ totalPrice: 0 , cartItems: [] }
+                        }),
+                    })
+                    showToast(noti,"success")
+                    if(result.ok){
+                        setTimeout(()=>{
+                            window.location.href = '../User/User.html'
+                        },1000)
+                    }
+                }
+            }
+            else
+            {
+                const noti = await translateText('You don\'t have any products in cart',lang)
+                showToast(noti,"error")
+            }
+        }
+    });
 });
