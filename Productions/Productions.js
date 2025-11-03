@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
                 event.stopPropagation();
                 const token = localStorage.getItem('accessToken');
                 if(!token){
-                    showToastt('You need to Login!', 'error');
+                    showToast('You need to Login!', 'error');
                 }
                 else{
                     const res = await fetch('http://localhost:1234/v1/wishlist/add-wishlist', {

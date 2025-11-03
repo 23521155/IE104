@@ -207,8 +207,38 @@ body {
 }
 /* ----------------  Responsive ---------------- */
 
+/*Mobile and Tablet*/
+@media only screen and (max-width: 82.5em) {
+    .profile-header h1 {
+        font-size: 2.2rem;
+    }
+    .profile-left p {
+        font-size: 1.4rem;
+    }
+    .home-button{
+        font-size: 3.5rem;
+        margin-top: 60px;
+    }
+    .profile-right h3 {
+        font-size: 1.6rem;
+    }
+    .profile-right p {
+        font-size: 1.4rem;
+    }
+    .orders th,
+    .orders td {
+        font-size: 1.3rem;
+    }
+    .status{
+        font-size: 1.2rem;
+    }
+    .edit-input{
+        font-size: 1.3rem;
+    }
+}
+
 /* Tablet */
-@media (max-width: 992px) {
+@media (min-width: 46.25em) and (max-width: 64.1em) {
     .main-content {
         padding: 25px;
         margin: 20px;
@@ -228,17 +258,13 @@ body {
         padding: 25px;
     }
 
-    .profile-header h1 {
-        font-size: 24px;
-    }
-
     .orders-container {
         max-height: 300px;
     }
 }
 
 /* Mobile */
-@media (max-width: 600px) {
+@media (max-width: 46.25em) {
     .main-content {
         padding: 15px;
         margin: 10px;
@@ -249,27 +275,82 @@ body {
         align-items: flex-start;
     }
 
-    .actions {
-        margin-top: 10px;
+    .profile-header h1 {
+        font-size: 2rem;
     }
 
+    .actions {
+        margin-top: 10px;
+        font-size: 1.4rem;
+    }
+    .profile-left {
+        width: 100vw;
+    }
     .profile-left .avatar {
         width: 120px;
         height: 120px;
     }
 
+    .profile-left p {
+        font-size: 1.3rem;
+    }
+
+    .home-button{
+        font-size: 3rem;
+        margin-top: 40px;
+    }
+
     .orders th,
     .orders td {
-        font-size: 13px;
+        font-size: 1.2rem;
         padding: 8px;
     }
 
     .profile-right h3 {
-        font-size: 16px;
+        font-size: 1.5rem;
+    }
+
+    .profile-right p {
+        font-size: 1.3rem;
+    }
+
+    .status{
+        font-size: 1.1rem;
+        padding: 4px 8px;
+    }
+
+    .edit-input{
+        font-size: 1.2rem;
     }
 
     .orders-container {
         max-height: 250px;
+    }
+}
+
+/*Desktop vừa (1024px - 1320px) - giống Tablet*/
+@media (min-width: 64.1em) and (max-width: 82.5em){
+    .main-content {
+        padding: 30px 40px;
+        margin: 25px;
+    }
+
+    .profile-card {
+        flex-direction: column;
+    }
+
+    .profile-left {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        max-width: 100%;
+    }
+
+    .profile-right {
+        padding: 30px;
+    }
+
+    .orders-container {
+        max-height: 350px;
     }
 }
 #toast-container {

@@ -617,10 +617,11 @@ html *::-webkit-scrollbar-track {
     margin-left: 80px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 
 }
 .menu-modal-list > div {
-    margin-bottom: 25px;
+    height: calc(80vh / 11);
 }
 .menu-modal-content{
     font-size: 1.8rem;
@@ -1240,6 +1241,11 @@ html *::-webkit-scrollbar-track {
         background-position: 0% 50%;
     }
 }
+
+
+.autocomplete-search-responsive{
+    display: none;
+}
 /* viet css grid*/
 .grid{
     width: 100%;
@@ -1268,7 +1274,11 @@ html *::-webkit-scrollbar-track {
         display: none;
     }
     .header-right{
-        gap:20px
+        gap:20px;
+        font-size: 1.8rem;
+    }
+    .logo{
+        font-size: 2rem;
     }
     .user,
     .cart{
@@ -1282,6 +1292,12 @@ html *::-webkit-scrollbar-track {
     .cart:hover .cart-icon{
         transform: translateY(-50%) translateX(0);
     }
+    .menu-modal-title{
+        font-size: 2rem;
+    }
+    .menu-modal-content{
+        font-size: 1.6rem;
+    }
     .menu-modal-list > div:hover .menu-modal-content::before{
         width: 0;
         opacity: 0;
@@ -1289,14 +1305,68 @@ html *::-webkit-scrollbar-track {
     .menu-modal-left{
         width: 100%;
         height: 100%;
+        padding: 40px 30px;
     }
     .menu-modal-right{
         display: none;
+    }
+    .footer-title{
+        font-size: 1.8rem;
+    }
+    .footer-gmail,
+    .footer-item{
+        font-size: 1.3rem;
+    }
+    .footer-icon > a{
+        font-size: 1.5rem;
+    }
+    .footer-powered-text{
+        font-size: 1.6rem;
+    }
+    .footer-pay > a{
+        font-size: 2rem;
+    }
+    .login,
+    .register{
+        font-size: 1.8rem;
+    }
+    .login > div,
+    .register > div{
+        font-size: 1.8rem;
+    }
+    .login-icon > i{
+        font-size: 1.5rem;
+    }
+    .input-login-register input{
+        font-size: 1.3rem;
+    }
+    .input-login-register label{
+        font-size: 1.3rem;
+    }
+    .input-login-register input:focus ~ label,
+    .input-login-register input:valid ~ label{
+        font-size: 1.1rem;
+    }
+    .btn{
+        font-size: 1.1rem;
+    }
+    .password-forgot{
+        font-size: 1.3rem;
+    }
+    .welcome{
+        font-size: 2.2rem;
+    }
+    .forgot-password-title{
+        font-size: 1.8rem;
+    }
+    .forgot-password-para{
+        font-size: 1.1rem;
     }
 
     .hide-on-mobile-tablet{
         display: none;
     }
+
 }
 
 /*Mobile*/
@@ -1322,48 +1392,55 @@ html *::-webkit-scrollbar-track {
     .content-introduction{
         display: none;
     }
+    .header{
+        height: 124px;
+    }
     .header-left{
-        flex-direction: column;
+        height: 64px;
+        padding-left: 24px;
+    }
+    .autocomplete-search{
+        display: none;
+    }
+    .autocomplete-search-responsive{
+        display: flex;
         justify-content: center;
     }
     .logo{
-        align-items: flex-start;
-        margin-top: 20px;
-        font-size: 1.8rem;
+        font-size: 2rem;
+    }
+    .logo > p{
+        width: 100%;
+    }
+    .logo > p > a{
+        width: 100%;
+        height: 100%;
+
     }
     .search{
-        margin: 0;
-        position: absolute;
-        left: 30px;
-        height: 30px;
-        width: 80px;
+        width: 90%;
+    }
+    .search:hover,
+    .search.active{
+        width: 90%;
+        cursor: pointer;
+    }
+
+    .search:hover .search-input,
+    .search.active .search-input{
+        width: 90%;
+    }
+    .header-right{
+        font-size: 1.8rem;
+        height: 64px;
+        padding-right: 24px;
+    }
+    .cart{
+        display: none;
     }
     .search-icon{
         font-size: 1.2rem;
     }
-    .search:hover{
-        width: 200px;
-        z-index: 999;
-    }
-
-    .header-right{
-        padding: 0;
-        gap: 10px;
-        align-items: flex-start;
-        margin-top: 20px;
-    }
-    .header{
-        height: 100px;
-    }
-    .search{
-        margin-top: 80px;
-    }
-    .header-left{
-        margin-top: 20px;
-        height: auto;
-        flex-direction: column;
-    }
-
     .user,
     .cart{
         font-size: 1.7rem;
@@ -1398,8 +1475,31 @@ html *::-webkit-scrollbar-track {
     .footer-powered-text{
         font-size: 1.6rem;
     }
-    .footer-icon{
+    .footer-icon > a{
         font-size: 1.4rem;
+    }
+    .footer-pay > a{
+        font-size: 1.8rem;
+    }
+    .menu-modal-title{
+        font-size: 1.8rem;
+    }
+    .menu-modal-content{
+        font-size: 1.4rem;
+    }
+    .login,
+    .register{
+        font-size: 1.6rem;
+    }
+    .login > div,
+    .register > div{
+        font-size: 1.6rem;
+    }
+    .welcome{
+        font-size: 2rem;
+    }
+    .forgot-password-title{
+        font-size: 1.6rem;
     }
     .footer-item:last-child{
         margin-bottom: 20px;
@@ -1564,29 +1664,67 @@ html *::-webkit-scrollbar-track {
 /*Tablet*/
 @media only screen and (min-width: 46.25em) and ( max-width: 64.1em) {
     .header{
-        height: 100px;
+        height: 124px;
     }
     .header-left{
-        flex-direction: column;
-        height: auto;
-        margin-top: 20px;
-        align-items: flex-start;
+        height: 64px;
     }
-    .header-right{
-        align-items: flex-start;
-        margin-top: 20px;
+    .autocomplete-search{
+        display: none;
+    }
+    .autocomplete-search-responsive{
+        display: flex;
+        justify-content: center;
     }
     .logo{
-        align-items: flex-start;
-        margin-top: 20px;
         font-size: 1.8rem;
     }
+    .logo > p{
+        width: 100%;
+    }
+    .logo > p > a{
+        width: 100%;
+        height: 100%;
+
+    }
+    .header-right{
+        font-size: 1.8rem;
+        height: 64px;
+    }
     .search{
-        margin: 0;
-        left: 30px;
-        height: 30px;
-        width: 80px;
-        margin-top: 20px;
+        width: 100%;
+    }
+    .search:hover,
+    .search.active{
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .search:hover .search-input,
+    .search.active .search-input{
+        width: 100%;
+    }
+    .menu-modal-title{
+        font-size: 2rem;
+    }
+    .menu-modal-content{
+        font-size: 1.6rem;
+    }
+    .footer-title{
+        font-size: 1.8rem;
+    }
+    .footer-gmail,
+    .footer-item{
+        font-size: 1.3rem;
+    }
+    .footer-icon > a{
+        font-size: 1.5rem;
+    }
+    .footer-powered-text{
+        font-size: 1.6rem;
+    }
+    .footer-pay > a{
+        font-size: 2rem;
     }
     .menu-button{
         width: 60px;
@@ -1601,10 +1739,6 @@ html *::-webkit-scrollbar-track {
     .hamburger-menu::before{
         width: 40px;
     }
-    .search:hover{
-        width: 425px;
-    }
-
     .menu-modal{
         max-width: 100%;
     }
@@ -1621,6 +1755,22 @@ html *::-webkit-scrollbar-track {
 
     .menu-modal-list > div{
         font-size: 4rem;
+    }
+    .footer-title{
+        font-size: 1.8rem;
+    }
+    .footer-gmail,
+    .footer-item{
+        font-size: 1.3rem;
+    }
+    .footer-icon > a{
+        font-size: 1.5rem;
+    }
+    .footer-powered-text{
+        font-size: 1.6rem;
+    }
+    .footer-pay > a{
+        font-size: 2rem;
     }
    .wide{
        width: 700px!important;
@@ -1739,7 +1889,75 @@ html *::-webkit-scrollbar-track {
 }
 
 /*Desktop vua*/
-@media (min-width: 64.1em) and (max-width: 82.5em){
+@media (min-width: 64.1em) and (max-width: 82.5em)  {
+    .header{
+        height: 124px;
+    }
+    .header-left{
+        height: 64px;
+    }
+    .autocomplete-search{
+        display: none;
+    }
+    .row-autocomplete-search-responsive{
+        justify-content:  center;
+    }
+    .autocomplete-search-responsive{
+        display: block;
+    }
+    .search:hover,
+    .search.active{
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .search:hover .search-input,
+    .search.active .search-input{
+        width: 100%;
+    }
+    .logo{
+        font-size: 2rem;
+    }
+    .header-right{
+        font-size: 1.8rem;
+        height: 64px
+    }
+    .menu-modal-title{
+        font-size: 2rem;
+    }
+    .menu-modal-content{
+        font-size: 1.6rem;
+    }
+    .footer-title{
+        font-size: 1.8rem;
+    }
+    .footer-gmail,
+    .footer-item{
+        font-size: 1.3rem;
+    }
+    .footer-icon > a{
+        font-size: 1.5rem;
+    }
+    .footer-powered-text{
+        font-size: 1.6rem;
+    }
+    .footer-pay > a{
+        font-size: 2rem;
+    }
+    .login,
+    .register{
+        font-size: 1.8rem;
+    }
+    .login > div,
+    .register > div{
+        font-size: 1.8rem;
+    }
+    .welcome{
+        font-size: 2.2rem;
+    }
+    .forgot-password-title{
+        font-size: 1.8rem;
+    }
     .wide{
         width: 996px!important;
     }

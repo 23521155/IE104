@@ -92,3 +92,97 @@
     box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     transform: translateY(-5px);
 }
+
+/*Mobile and Tablet*/
+@media only screen and (max-width: 82.5em) {
+    .title-wishlist{
+        font-size: 2.4rem;
+        height: 120px;
+    }
+    .title-wishlist > p{
+        font-size: 2.2rem;
+    }
+    .home-wishlist{
+        font-size: 1.6rem;
+        height: 80px;
+    }
+    .box-wishlist{
+        height: auto;
+        max-height: 600px;
+    }
+    .name{
+        font-size: 1.6rem;
+    }
+    .price{
+        font-size: 1.3rem;
+    }
+    .addCart-button{
+        font-size: 1.8rem;
+        height: 45px;
+    }
+}
+
+/*Mobile*/
+@media only screen and (max-width: 46.25em){
+    .title-wishlist{
+        font-size: 2rem;
+        height: 100px;
+    }
+    .title-wishlist > p{
+        font-size: 2rem;
+    }
+    .home-wishlist{
+        font-size: 1.4rem;
+        height: 60px;
+    }
+    .box-wishlist{
+        max-height: 500px;
+    }
+    .row-wishlist{
+        padding: 30px 20px 15px 20px;
+    }
+    .production > img{
+        height: 300px;
+    }
+    .name{
+        font-size: 1.4rem;
+        height: 40px;
+    }
+    .price{
+        font-size: 1.2rem;
+    }
+    .addCart-button{
+        font-size: 1.6rem;
+        height: 45px;
+    }
+}
+
+/*Tablet*/
+@media only screen and (min-width: 46.25em) and (max-width: 64.1em) {
+    .title-wishlist{
+        font-size: 2.4rem;
+        height: 120px;
+    }
+    .title-wishlist > p{
+        font-size: 2.2rem;
+    }
+    .home-wishlist{
+        font-size: 1.6rem;
+        height: 80px;
+    }
+}
+
+/*Desktop vừa (1024px - 1320px) - giống Tablet*/
+@media (min-width: 64.1em) and (max-width: 82.5em){
+    .title-wishlist{
+        font-size: 2.4rem;
+        height: 120px;
+    }
+    .title-wishlist > p{
+        font-size: 2.2rem;
+    }
+    .home-wishlist{
+        font-size: 1.6rem;
+        height: 80px;
+    }
+}
