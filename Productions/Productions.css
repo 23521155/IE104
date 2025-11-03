@@ -181,3 +181,100 @@
     color: #a09f9c;
     margin-top: 5px;
 }
+
+/*Mobile and Tablet*/
+@media only screen and (max-width: 82.5em) {
+    .title-products{
+        font-size: 2.4rem;
+        height: 120px;
+    }
+    .title-products > p{
+        font-size: 2.2rem;
+    }
+    .home-products{
+        font-size: 1.6rem;
+        margin-bottom: 60px;
+    }
+    .product-name{
+        font-size: 1.5rem;
+    }
+    .product-price > p{
+        font-size: 1.4rem;
+    }
+    .add-cart-btn{
+        font-size: 1.3rem;
+        height: 45px;
+    }
+    .page-number,
+    .page-arrow{
+        font-size: 1.6rem;
+        width: 45px;
+        height: 45px;
+    }
+    #ellipsis{
+        font-size: 1.6rem;
+    }
+}
+
+/*Mobile*/
+@media only screen and (max-width: 46.25em){
+    .title-products{
+        font-size: 2rem;
+        height: 100px;
+    }
+    .title-products > p{
+        font-size: 2rem;
+    }
+    .home-products{
+        font-size: 1.4rem;
+        margin-bottom: 40px;
+    }
+    .product-name{
+        font-size: 1.4rem;
+    }
+    .product-price > p{
+        font-size: 1.3rem;
+    }
+    .add-cart-btn{
+        font-size: 1.2rem;
+        height: 40px;
+        margin-left: 20px;
+    }
+    .page-number,
+    .page-arrow{
+        font-size: 1.4rem;
+        width: 40px;
+        height: 40px;
+    }
+    #ellipsis{
+        font-size: 1.4rem;
+    }
+}
+
+/*Tablet*/
+@media only screen and (min-width: 46.25em) and (max-width: 64.1em) {
+    .title-products{
+        font-size: 2.4rem;
+        height: 120px;
+    }
+    .title-products > p{
+        font-size: 2.2rem;
+    }
+    .home-products{
+        font-size: 1.6rem;
+    }
+}
+
+/*Desktop vừa (1024px - 1320px) - giống Tablet*/
+@media (min-width: 64.1em) and (max-width: 82.5em){
+    .title-products{
+        font-size: 2.4rem;
+        height: 120px;
+    }
+    .title-products > p{
+        font-size: 2.2rem;
+    }
+    .home-products{
+        font-size: 1.6rem;
+    }
+}

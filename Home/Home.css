@@ -235,8 +235,6 @@
 .content-production:hover .production-img2{
     opacity: 1;
 }
-.content-sales{
-}
 .content-sales > div{
     background-color: white;
     width: 100%;
@@ -341,14 +339,56 @@
 
 /*Tablet*/
     @media only screen and (min-width: 46.25em) and (max-width: 64em) {
-
-        .sidebar > div{
+                 .sidebar > div{
             width: 80%;
-            text-align: left;         /* chữ bám lề trái */
-            max-width: 600px;    /* giới hạn chiều rộng */
+            text-align: left;
+            max-width: 600px;
         }
-
+        .sidebar > div > div{
+            font-size: 3rem;
+        }
+        .sidebar > div > h1{
+            font-size: 4rem;
+        }
+        .sidebar > div > h1 > strong{
+            font-size: 5rem;
+        }
+        .information{
+            font-size: 1.6rem;
+        }
+        .knowMore-button{
+            font-size: 1.8rem !important;
+            width: 130px;
+            height: 35px;
+        }
+        .sale-title{
+            font-size: 3.5rem;
+        }
         .content-productions{
             margin: 70px 0;
         }
     }
+
+/*Desktop vừa (1024px - 1320px) - giống Tablet*/
+@media (min-width: 64.1em) and (max-width: 82.5em){
+    .sidebar > div > div{
+        font-size: 3rem;
+    }
+    .sidebar > div > h1{
+        font-size: 4rem;
+    }
+    .sidebar > div > h1 > strong{
+        font-size: 5rem;
+    }
+    .information{
+        font-size: 1.6rem;
+    }
+    .knowMore-button{
+        font-size: 1.8rem !important;
+        width: 130px;
+        height: 35px;
+    }
+    .sale-title{
+        font-size: 3.5rem;
+    }
+}

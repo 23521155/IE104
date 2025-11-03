@@ -232,3 +232,118 @@
         width: 100%;
     }
 }
+
+/*Mobile and Tablet*/
+@media only screen and (max-width: 82.5em) {
+    .home-products{
+        font-size: 1.6rem;
+        margin-bottom: 60px;
+    }
+    .product-name{
+        font-size: 2rem;
+    }
+    .product-brand{
+        font-size: 1.3rem;
+    }
+    .product-price{
+        font-size: 1.8rem;
+    }
+    .add-cart-btn,
+    .add-wishlist-btn{
+        font-size: 1.6rem;
+    }
+    .product-info{
+        font-size: 1.5rem;
+    }
+    .product-info a{
+        font-size: 1.1rem;
+    }
+    .size-info{
+        font-size: 1.1rem;
+    }
+    .suggest-productions > p{
+        font-size: 2rem;
+        height: 80px;
+    }
+    .suggest-production-name{
+        font-size: 1.5rem;
+    }
+    .suggest-production-price{
+        font-size: 1.4rem;
+    }
+}
+
+/*Mobile*/
+@media only screen and (max-width: 46.25em){
+    .home-products{
+        font-size: 1.4rem;
+        margin-bottom: 40px;
+    }
+    .product-name{
+        font-size: 1.8rem;
+    }
+    .product-brand{
+        font-size: 1.2rem;
+    }
+    .product-price{
+        font-size: 1.6rem;
+    }
+    .size-btn{
+        padding: 6px 12px;
+        font-size: 1.3rem;
+    }
+    .product-action{
+        padding: 0 20px;
+        gap: 20px;
+    }
+    .add-cart-btn,
+    .add-wishlist-btn{
+        font-size: 1.4rem;
+        height: 45px;
+    }
+    .product-info{
+        font-size: 1.4rem;
+    }
+    .product-info a{
+        font-size: 1rem;
+    }
+    .size-info{
+        font-size: 1rem;
+    }
+    .suggest-productions > p{
+        font-size: 1.8rem;
+        height: 70px;
+    }
+    .suggest-production-name{
+        font-size: 1.4rem;
+    }
+    .suggest-production-price{
+        font-size: 1.3rem;
+    }
+}
+
+/*Tablet*/
+@media only screen and (min-width: 46.25em) and (max-width: 64.1em) {
+    .home-products{
+        font-size: 1.6rem;
+    }
+    .product-name{
+        font-size: 2rem;
+    }
+    .product-price{
+        font-size: 1.8rem;
+    }
+}
+
+/*Desktop vừa (1024px - 1320px) - giống Tablet*/
+@media (min-width: 64.1em) and (max-width: 82.5em){
+    .home-products{
+        font-size: 1.6rem;
+    }
+    .product-name{
+        font-size: 2rem;
+    }
+    .product-price{
+        font-size: 1.8rem;
+    }
+}

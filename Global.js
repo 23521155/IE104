@@ -103,10 +103,12 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=shoes&page=1" class="menu-modal-content">SHOES</a></div>
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=jewelry&page=1" class="menu-modal-content">ACCESSORIES</a></div>
             <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=sale&page=1" class="menu-modal-content">SALE</a></div>
-            <div><a href="#" class="menu-modal-content">MODE CLOSET</a></div>
           ${accessToken ? `<div><a href="http://localhost:63342/IE104/User/User.html" class="menu-modal-content">
                 <i class="fa-regular fa-user"></i>ACCOUNT</a></div>` : ''}
-            <div><a href="../WishList/WishList.html" class="menu-modal-content">
+                      <div><a href="http://localhost:63342/IE104/Cart/Cart.html" class="menu-modal-content">
+            <i class="fa-solid fa-cart-shopping"></i>
+            CART</a></div>
+            <div><a href="http://localhost:63342/IE104/WishList/WishList.html" class="menu-modal-content">
                 <i class="fa-regular fa-heart"></i>
                 WISHLIST</a></div>
 
@@ -124,7 +126,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         {
             textTranslateds[3] = 'CHÚC MỪNG NĂM MỚI'
             textTranslateds[4] = 'NHÃN HIỆU YÊU THÍCH';
-            textTranslateds[8] = 'CHẾ ĐỘ TỦ ĐỒ';
+            textTranslateds[9] = 'GIỎ HÀNG';
             textTranslateds[10] = 'DANH SÁCH YÊU THÍCH';
         }
         items.forEach((el, index) => {
@@ -365,18 +367,19 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
 // Search Input
     const searchInput = ()=>{
-        const search = document.querySelector(".search");
-        const input = document.querySelector(".search-input");
-
-        input.addEventListener("input", () => {
-            if (input.value.trim() !== "") {
-                // Khi có chữ
-                search.classList.add("active");
-            } else {
-                // Khi trống
-                search.classList.remove("active");
-            }
-        });
+        const searchRoots = document.querySelectorAll('.autocomplete-search, .autocomplete-search-responsive');
+        searchRoots.forEach((root)=>{
+            const search = root.querySelector('.search');
+            const input = root.querySelector('.search-input');
+            if(!search || !input) return;
+            input.addEventListener('input', () => {
+                if (input.value.trim() !== '') {
+                    search.classList.add('active');
+                } else {
+                    search.classList.remove('active');
+                }
+            });
+        })
     }
 
 // Delete input in user modal
@@ -539,80 +542,80 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
 // Search Logic
     const searchLogic = () => {
-        const input = document.querySelector(".search-input");
-        const resultsBox = document.querySelector(".search-results");
-        let timeout = null;
+        const searchRoots = document.querySelectorAll('.autocomplete-search, .autocomplete-search-responsive');
+        searchRoots.forEach((root)=>{
+            const input = root.querySelector('.search-input');
+            const resultsBox = root.querySelector('.search-results');
+            const searchWrapper = root.querySelector('.search');
+            if(!input || !resultsBox || !searchWrapper) return;
 
+            let timeout = null;
 
-        // Ẩn gợi ý khi click ra ngoài
-        document.addEventListener("click", (e) => {
-            if (!e.target.closest(".search")) {
-                resultsBox.classList.remove("show");
-            }
-        });
-
-        input.addEventListener("input", () => {
-            const query = input.value.trim();
-            clearTimeout(timeout);
-
-            if (query === "") {
-                resultsBox.innerHTML = "";
-                resultsBox.classList.remove("show");
-                return;
-            }
-
-            // Đợi người dùng ngừng gõ 300ms mới gọi API
-            timeout = setTimeout(async () => {
-
-                try {
-                    const res = await fetch(`http://localhost:1234/v1/productType?q=${encodeURIComponent(query)}`);
-                    const data = await res.json();
-
-                    if (res.ok && data.length > 0) {
-                        renderResults(data);
-                    } else {
-                        resultsBox.innerHTML = `<div class="no-result">No products found</div>`;
-                        resultsBox.classList.add("show");
-                    }
-                } catch (error) {
-                    console.error("Search error:", error);
-                    resultsBox.innerHTML = `<div class="no-result">Error connecting to server</div>`;
-                    resultsBox.classList.add("show");
+            // Ẩn gợi ý khi click ra ngoài
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search')) {
+                    resultsBox.classList.remove('show');
                 }
-            }, 300);
-        });
-
-
-        function renderResults(products) {
-            const html = products
-                .slice(0, 6) // chỉ lấy 6 sản phẩm đầu
-                .map(
-                    (p) => `
-                      <div class="search-item" data-id = '${p._id}'>
-                         <img src="${p.images[0].url}" alt="">                            
-                             <div class="search-info">
-                                   <p class="search-name">${p.name}</p>
-                                   <p class="search-see-more">See more</p>
-                              </div>
-                       </div>
-            `
-                )
-                .join("");
-
-            resultsBox.innerHTML = html;
-            resultsBox.classList.add("show");
-
-            //Sự kiện click vào từng sản phẩm
-            document.querySelectorAll(".search-item").forEach((item) => {
-                item.addEventListener("click", () => {
-                    const id = item.getAttribute("data-id");
-                    const product = products.find(p => p._id === id)
-                    console.log(product)
-                    sessionStorage.setItem('product', JSON.stringify(product));
-                    window.location.href = `../Production/Production.html?id=${id}`;
-                });
             });
-        }
+
+            input.addEventListener('input', () => {
+                const query = input.value.trim();
+                clearTimeout(timeout);
+
+                if (query === '') {
+                    resultsBox.innerHTML = '';
+                    resultsBox.classList.remove('show');
+                    return;
+                }
+
+                // Đợi người dùng ngừng gõ 300ms mới gọi API
+                timeout = setTimeout(async () => {
+                    try {
+                        const res = await fetch(`http://localhost:1234/v1/productType?q=${encodeURIComponent(query)}`);
+                        const data = await res.json();
+
+                        if (res.ok && data.length > 0) {
+                            renderResults(data);
+                        } else {
+                            resultsBox.innerHTML = `<div class='no-result'>No products found</div>`;
+                            resultsBox.classList.add('show');
+                        }
+                    } catch (error) {
+                        console.error('Search error:', error);
+                        resultsBox.innerHTML = `<div class='no-result'>Error connecting to server</div>`;
+                        resultsBox.classList.add('show');
+                    }
+                }, 300);
+            });
+
+            function renderResults(products) {
+                const html = products
+                    .slice(0, 6)
+                    .map((p) => `
+                      <div class="search-item" data-id='${p._id}'>
+                         <img src="${p.images[0].url}" alt="">
+                         <div class="search-info">
+                               <p class="search-name">${p.name}</p>
+                               <p class="search-see-more">See more</p>
+                          </div>
+                       </div>
+                `)
+                    .join('');
+
+                resultsBox.innerHTML = html;
+                resultsBox.classList.add('show');
+
+                //Sự kiện click vào từng sản phẩm
+                resultsBox.querySelectorAll('.search-item').forEach((item) => {
+                    item.addEventListener('click', () => {
+                        const id = item.getAttribute('data-id');
+                        const product = products.find(p => p._id === id)
+                        sessionStorage.setItem('product', JSON.stringify(product));
+                        window.location.href = `../Production/Production.html?id=${id}`;
+                    });
+                });
+            }
+        })
     };
 
     const chooseLanguageLogic = () => {

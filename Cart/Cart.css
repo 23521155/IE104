@@ -155,19 +155,226 @@
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
 }
-
-
-@media  screen and (max-width: 64.1em) {
-.cart-products-header{
-    display: none;
-}
-    .cart-product{
-        height: 300px;
+/*Mobile and Tablet*/
+@media only screen and (max-width: 82.5em) {
+    .cart-products-header{
+        display: none;
     }
-    .product-total-price{
+    .row-cart{
         margin-left: 0;
+        margin-right: 0;
+    }
+    .row-cart > .col{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .cart-products{
+        height: auto;
+        max-height: 500px;
+        margin-bottom: 20px;
+    }
+    .cart-product{
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        min-height: auto;
+    }
+    .cart-product-details{
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .cart-product-details > img{
+        width: 100px;
+    }
+    .info{
+        margin-left: 15px;
+        width: calc(100% - 115px);
+    }
+    .product-price{
+        font-size: 1.6rem;
+    }
+    .name{
+        font-size: 1.6rem;
     }
     .quantity-control{
+        width: 100%;
+        justify-content: flex-start;
+        margin: 15px 0;
+    }
+    .product-total-price{
+        position: static;
+        font-size: 2rem;
+        margin-top: 10px;
+        align-items: flex-start;
+        width: 100%;
+    }
+    .cart-total{
+        padding: 20px;
+        margin-top: 20px;
+        width: 100%;
+    }
+    .total-price{
+        font-size: 3rem;
+    }
+    .checkout-button{
+        margin-top: 30px;
+        height: 45px;
+        font-size: 1.8rem;
+    }
+}
+
+/*Mobile*/
+@media only screen and (max-width: 46.25em){
+    .title-cart{
+        font-size: 2rem;
+        height: 100px;
+    }
+    .title-cart > p{
+        font-size: 2rem;
+    }
+    .home-cart{
+        font-size: 1.4rem;
+        height: 60px;
+    }
+    .cart-products{
+        max-height: 400px;
+    }
+    .cart-product{
+        padding: 15px;
+    }
+    .cart-product-details > img{
+        width: 80px;
+    }
+    .info{
+        margin-left: 10px;
+        width: calc(100% - 90px);
+    }
+    .product-price{
+        font-size: 1.4rem;
+    }
+    .name{
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+    }
+    .length{
+        font-size: 1.2rem;
+    }
+    .trash{
+        width: 18px;
+        margin-top: 5px;
+    }
+    .quantity-control button {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+    .quantity-control .qty-input {
+        width: 40px;
+        height: 28px;
+        font-size: 14px;
+    }
+    .product-total-price{
+        font-size: 1.8rem;
+    }
+    .cart-total{
+        padding: 15px;
+    }
+    .total{
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+    .total-price{
+        font-size: 2.5rem;
+        margin: 15px 0;
+    }
+    .total,
+    .total-ship,
+    .total-voucher{
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+    }
+    .checkout-button{
+        margin-top: 20px;
+        height: 45px;
+        font-size: 1.6rem;
+    }
+}
+
+/*Tablet*/
+@media only screen and (min-width: 46.25em) and (max-width: 64.1em) {
+    .title-cart{
+        font-size: 2.4rem;
+        height: 120px;
+    }
+    .title-cart > p{
+        font-size: 2.2rem;
+    }
+    .home-cart{
+        font-size: 1.6rem;
+        height: 80px;
+    }
+    .cart-products{
+        max-height: 450px;
+    }
+    .cart-product{
+        padding: 25px;
+    }
+    .product-price{
+        font-size: 1.8rem;
+    }
+    .name{
+        font-size: 1.7rem;
+    }
+    .product-total-price{
+        font-size: 2.2rem;
+    }
+    .total-price{
+        font-size: 3.5rem;
+    }
+}
+
+/*Desktop vừa (1024px - 1320px) - giống Tablet*/
+@media (min-width: 64.1em) and (max-width: 82.5em){
+    .info{
+        margin-left: 15px;
+        width: calc(100% - 115px);
+    }
+    .product-price{
+        font-size: 1.8rem;
+    }
+    .name{
+        font-size: 1.7rem;
+    }
+    .quantity-control{
+        width: 100%;
+        justify-content: flex-start;
+        margin: 15px 0;
+    }
+    .product-total-price{
+        position: static;
+        font-size: 2.2rem;
+        margin-top: 10px;
+        align-items: flex-start;
+        width: 100%;
+    }
+    .cart-total{
+        padding: 25px;
+        margin-top: 20px;
+        width: 100%;
+    }
+    .total-price{
+        font-size: 3.5rem;
+    }
+    .total,
+    .total-ship,
+    .total-voucher{
+        font-size: 1.7rem;
+    }
+    .checkout-button{
+        margin-top: 30px;
+        height: 45px;
+        font-size: 1.8rem;
     }
 }
 
