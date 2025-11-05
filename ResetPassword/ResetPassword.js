@@ -1,3 +1,5 @@
+import {API_CONFIG} from "../apiConfig.js";
+
 function showToast(message, type = "success") {
     const container = document.getElementById("toast-container");
     const toast = document.createElement("div");
@@ -46,7 +48,7 @@ const resetPassword = () => {
     document.getElementById('resetForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const newPassword = document.getElementById('newPassword').value;
-        const res = await fetch('http://localhost:1234/v1/users/reset-password', {
+        const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/reset-password`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token, newPassword }),

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '../animations/Grocery.json' // ✅ đường dẫn đúng
+        path: '../animations/Sale.json'
     });
     await lottie.loadAnimation({
         container: document.getElementById('loading-animation-ellipsis'),

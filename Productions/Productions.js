@@ -1,4 +1,5 @@
 import {showToast, translateText} from "../Global.js";
+import {API_CONFIG} from "../apiConfig.js";
 
 document.addEventListener('DOMContentLoaded',  async function () {
     const loadingOverlay = document.getElementById('loading-overlay');
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '../animations/Grocery.json'
+        path: '../animations/Sale.json'
     });
     await lottie.loadAnimation({
         container: document.getElementById('loading-animation-ellipsis'),
@@ -29,14 +30,14 @@ document.addEventListener('DOMContentLoaded',  async function () {
     let products = [];
     let totalProducts = 0;
     if(productType){
-        const response = await fetch(`http://localhost:1234/v1/product/${productType}?page=${page}&limit=${limit}`);
+        const response = await fetch(`${API_CONFIG.DEPLOY_URL}/product/${productType}?page=${page}&limit=${limit}`);
         const data = await response.json();
         products = data.products;
         totalProducts = data.totalProducts;
     }
     else {
         // new arrival
-        const res = await fetch('http://localhost:1234/v1/productType/')
+        const res = await fetch(`${API_CONFIG.DEPLOY_URL}/productType/`)
         const data = await res.json();
         const sorted = data.sort((a, b) => b.createdAt - a.createdAt);
         products = sorted.slice(0, 24);
@@ -181,7 +182,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
                     showToast('You need to Login!', 'error');
                 }
                 else{
-                    const res = await fetch('http://localhost:1234/v1/cart/add-cart', {
+                    const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/add-cart`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -205,7 +206,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
                     showToast('You need to Login!', 'error');
                 }
                 else{
-                    const res = await fetch('http://localhost:1234/v1/wishlist/add-wishlist', {
+                    const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/add-wishlist`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

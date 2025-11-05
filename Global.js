@@ -1,4 +1,7 @@
-export const showToast = async (message, type = "success") => {
+import {API_CONFIG,FE_URL} from "./apiConfig.js";
+
+
+    export const showToast = async (message, type = "success") => {
     const container = document.getElementById("toast-container");
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
@@ -59,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         const storedLang = localStorage.getItem("selectedLang");
         const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
         const accessToken = localStorage.getItem("accessToken");
-        const res = await fetch('http://localhost:1234/v1/productType/')
+        const res = await fetch(`${API_CONFIG.DEPLOY_URL}/productType/`)
         const data = await res.json();
 
         const products = data.filter(product => product._isBestSeller);
@@ -88,27 +91,27 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                 const id = el.dataset.id;
                 const product = products.filter(product => product._id === id);
                 sessionStorage.setItem('product', JSON.stringify(...product));
-                window.location.href = `http://localhost:63342/IE104/Production/Production.html?id=${id}`;
+                window.location.href = `${FE_URL}/Production/Production.html?id=${id}`;
             });
         });
 
         const menuModalList = document.querySelector('.menu-modal-list')
 
         menuModalList.innerHTML = `
-            <div><a href="http://localhost:63342/IE104/Productions/Productions.html" class="menu-modal-content">NEW ARRIVALS</a></div>
-            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=dresses&page=1" class="menu-modal-content">DRESSES</a></div>
-            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=tops&page=1" class="menu-modal-content">CLOTHING</a></div>
-            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=happylunar&page=1" class="menu-modal-content">HAPPY LUNAR YEAR</a></div>
+            <div><a href="${FE_URL}/Productions/Productions.html" class="menu-modal-content">NEW ARRIVALS</a></div>
+            <div><a href="${FE_URL}/Productions/Productions.html?type=dresses&page=1" class="menu-modal-content">DRESSES</a></div>
+            <div><a href="${FE_URL}/Productions/Productions.html?type=tops&page=1" class="menu-modal-content">CLOTHING</a></div>
+            <div><a href="${FE_URL}/Productions/Productions.html?type=happylunar&page=1" class="menu-modal-content">HAPPY LUNAR YEAR</a></div>
             <div><a href="https://www.gucci.com/us/en/" class="menu-modal-content">BRANDS WE LOVE</a></div>
-            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=shoes&page=1" class="menu-modal-content">SHOES</a></div>
-            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=jewelry&page=1" class="menu-modal-content">ACCESSORIES</a></div>
-            <div><a href="http://localhost:63342/IE104/Productions/Productions.html?type=sale&page=1" class="menu-modal-content">SALE</a></div>
-          ${accessToken ? `<div><a href="http://localhost:63342/IE104/User/User.html" class="menu-modal-content">
+            <div><a href="${FE_URL}/Productions/Productions.html?type=shoes&page=1" class="menu-modal-content">SHOES</a></div>
+            <div><a href="${FE_URL}/Productions/Productions.html?type=jewelry&page=1" class="menu-modal-content">ACCESSORIES</a></div>
+            <div><a href="${FE_URL}/Productions/Productions.html?type=sale&page=1" class="menu-modal-content">SALE</a></div>
+          ${accessToken ? `<div><a href="${FE_URL}/User/User.html" class="menu-modal-content">
                 <i class="fa-regular fa-user"></i>ACCOUNT</a></div>` : ''}
-                      <div><a href="http://localhost:63342/IE104/Cart/Cart.html" class="menu-modal-content">
+                      <div><a href="${FE_URL}/Cart/Cart.html" class="menu-modal-content">
             <i class="fa-solid fa-cart-shopping"></i>
             CART</a></div>
-            <div><a href="http://localhost:63342/IE104/WishList/WishList.html" class="menu-modal-content">
+            <div><a href="${FE_URL}/WishList/WishList.html" class="menu-modal-content">
                 <i class="fa-regular fa-heart"></i>
                 WISHLIST</a></div>
 
@@ -225,7 +228,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             logoutBtn.addEventListener('click', async () => {
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
-                await fetch('http://localhost:1234/v1/users/logout', {
+                await fetch(`${API_CONFIG.DEPLOY_URL}/users/logout`, {
                     method: 'DELETE',
                 })
                 showToast('LOGGED OUT!', 'success');
@@ -441,7 +444,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
             // Gửi dữ liệu lên backend
             try {
-                const res = await fetch("http://localhost:1234/v1/users/register", {
+                const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/register`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -482,7 +485,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             // Gửi dữ liệu lên backend
 
             try{
-                const res = await fetch("http://localhost:1234/v1/users/login", {
+                const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -516,7 +519,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             const email = document.getElementById("emailForgotPassword").value.trim();
 
             try{
-                const res = await fetch("http://localhost:1234/v1/users/forgot-password", {
+                const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/forgot-password`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -571,7 +574,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                 // Đợi người dùng ngừng gõ 300ms mới gọi API
                 timeout = setTimeout(async () => {
                     try {
-                        const res = await fetch(`http://localhost:1234/v1/productType?q=${encodeURIComponent(query)}`);
+                        const res = await fetch(`${API_CONFIG.DEPLOY_URL}/productType?q=${encodeURIComponent(query)}`);
                         const data = await res.json();
 
                         if (res.ok && data.length > 0) {
@@ -635,7 +638,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
         if (!currentLang) {
             currentLang = {
-                flag: "http://localhost:63342/IE104/public/images/united-states.png",
+                flag: `${FE_URL}/public/images/united-states.png`,
                 lang: "EN",
             };
 
@@ -722,7 +725,7 @@ window.addEventListener("load", (event) => {
 
             console.log("code", code)
             try {
-                const res = await fetch("http://localhost:1234/v1/users/google-login", {
+                const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/google-login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ code }), //
