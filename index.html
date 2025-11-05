@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex">
+  <title>Redirecting…</title>
+  <!-- Fast JS redirect (keeps URL clean) -->
+  <script>
+    (function(){
+      // Nếu muốn giữ / as root -> chuyển tới /Home/Home.html
+      location.replace('/Home/Home.html');
+    })();
+  </script>
+  <!-- Fallback for no-js (meta refresh) -->
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=/Home/Home.html" />
+  </noscript>
+</head>
+<body>
+Redirecting to Home…
+</body>
+</html>
