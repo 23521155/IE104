@@ -1,4 +1,5 @@
 import {showToast, translateText} from "../Global.js";
+import {API_CONFIG} from "../apiConfig.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const loadingOverlay = document.getElementById('loading-overlay');
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '../animations/Grocery.json' //
+        path: '../animations/Sale.json' //
     });
     await lottie.loadAnimation({
         container: document.getElementById('loading-animation-ellipsis'),
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             showToast('You need to Login!', 'error');
         }
         else{
-            const res = await fetch('http://localhost:1234/v1/cart/add-cart', {
+            const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/add-cart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(!token){
             showToast('You need to Login!', 'error');
         } else{
-            const res = await fetch('http://localhost:1234/v1/wishlist/add-wishlist', {
+            const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/add-wishlist`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

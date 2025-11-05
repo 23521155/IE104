@@ -1,4 +1,5 @@
 import {showToast, translateText} from "../Global.js";
+import {API_CONFIG} from "../apiConfig.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const loadingOverlay = document.getElementById("loading-overlay");
@@ -10,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderer: "svg",
         loop: true,
         autoplay: true,
-        path: "../animations/Grocery.json",
+        path: "../animations/Sale.json",
     });
     await lottie.loadAnimation({
         container: document.getElementById("loading-animation-ellipsis"),
@@ -28,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const accessToken = localStorage.getItem("accessToken");
 
     // Fetch cart
-    const res = await fetch(`http://localhost:1234/v1/cart/get-cartt`, {
+    const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/get-cartt`, {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` },
     });
@@ -167,7 +168,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function deleteProduct(productId) {
         const res = await fetch(
-            `http://localhost:1234/v1/cart/delete-cartProduct/${productId}`,
+            `${API_CONFIG.DEPLOY_URL}/cart/delete-cartProduct/${productId}`,
             {
                 method: "DELETE",
                 headers: {
@@ -231,7 +232,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     `;
         const totalCartUpdate = totalUSD + shippingUSD - voucherUSD;
 
-        await fetch('http://localhost:1234/v1/cart/update',{
+        await fetch(`${API_CONFIG.DEPLOY_URL}/cart/update`,{
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -247,14 +248,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     cartTotal.addEventListener("click", async (e) => {
         if (e.target.closest(".checkout-button")) {
-            const res = await fetch(`http://localhost:1234/v1/cart/get-cartt`, {
+            const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/get-cartt`, {
                 method: "GET",
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
             const cart = await res.json();
             if(cart.cartItems.length)
             {
-                const result =  await fetch(`http://localhost:1234/v1/order/`, {
+                const result =  await fetch(`${API_CONFIG.DEPLOY_URL}/order/`, {
                     method: "POST",
 
                     headers:{ Authorization: `Bearer ${accessToken}`,"Content-Type": "application/json"},
@@ -266,7 +267,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 })
                 if(result.ok){
                     const noti = await translateText('You have successfully paid',lang)
-                    const result = await fetch(`http://localhost:1234/v1/cart/update`, {
+                    const result = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/update`, {
                         method: "PATCH",
                         headers: {
                             Authorization: `Bearer ${accessToken}`,

@@ -1376,6 +1376,9 @@ html *::-webkit-scrollbar-track {
         padding: 0;
 
     }
+    .hamburger-menu::before{
+        height: 1px;
+    }
     .menu-button:hover .hamburger-menu::before{
         width: 30px;
     }
@@ -1663,6 +1666,9 @@ html *::-webkit-scrollbar-track {
 
 /*Tablet*/
 @media only screen and (min-width: 46.25em) and ( max-width: 64.1em) {
+    .hamburger-menu::before{
+        height: 1.5px;
+    }
     .header{
         height: 124px;
     }

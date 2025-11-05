@@ -1,4 +1,5 @@
 import {showToast} from '../Global.js';
+import {API_CONFIG} from "../apiConfig.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const loadingOverlay = document.getElementById('loading-overlay');
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '../animations/Grocery.json' // ✅ đường dẫn đúng
+        path: '../animations/Sale.json' // ✅ đường dẫn đúng
     });
     await lottie.loadAnimation({
         container: document.getElementById('loading-animation-ellipsis'),
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const rowWishList = document.querySelector('.row-wishlist');
     const accessToken = localStorage.getItem('accessToken');
-    const res = await fetch(`http://localhost:1234/v1/wishlist/get-wishList`, {
+    const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/get-wishList`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
@@ -99,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // --- Xử lý xoá sản phẩm ---
         if (trashBtn) {
-            const res = await fetch(`http://localhost:1234/v1/wishlist/delete-wishlistProduct/${productId}`, {
+            const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/delete-wishlistProduct/${productId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -113,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // --- Xử lý thêm vào giỏ ---
         if (addBtn) {
-            const res = await fetch('http://localhost:1234/v1/cart/add-cart', {
+            const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/add-cart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

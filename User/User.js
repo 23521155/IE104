@@ -1,3 +1,4 @@
+import {API_CONFIG} from "../apiConfig.js";
 
 const translateText = async (text, targetLanguage = 'vi') => {
     const cacheKey = `trans_${targetLanguage}_${text}`;
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const accessToken = localStorage.getItem("accessToken");
     const storedLang = localStorage.getItem("selectedLang");
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
-    const res = await fetch(`http://localhost:1234/v1/users/`, {
+    const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/`, {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` },
     });
@@ -110,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         reader.readAsDataURL(file);
     });
 
-    const result = await fetch(`http://localhost:1234/v1/order/`, {
+    const result = await fetch(`${API_CONFIG.DEPLOY_URL}/order/`, {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` },
     });
@@ -209,7 +210,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
 
-            const res = await fetch("http://localhost:1234/v1/users/update", {
+            const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/update`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${accessToken}`, // KHÔNG set Content-Type, fetch tự làm
@@ -243,21 +244,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             //showToast("No changes were made!", "info");
         }
 
-        // if(avatar.dataset.newFile === "true" && avatar.file){
-        //     const formData = new FormData();
-        //     formData.append("avatar", avatar.file);
-        //
-        //     const resUpload = await fetch("http://localhost:1234/v1/users/upload-avatar", {
-        //         method: "POST",
-        //         headers: {
-        //             Authorization: `Bearer ${accessToken}`
-        //         },
-        //         body: formData
-        //     });
-        //
-        //     // const data = await resUpload.json();
-        //     // updatedData.avatar = data.avatarUrl; // giả sử server trả về link avatar mới
-        // }
 
         document.getElementById("user-avatar").classList.remove("editable");
         editBtn.style.display = "inline";
