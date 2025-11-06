@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const homeButton = document.querySelector('.home-wishlist');
     homeButton.innerHTML = `
-            <a href="../../IE104/Home/Home.html">${home}</a>
+            <a href="../Home/Home.html">${home}</a>
             <p>/</p>
             <a href="">${a}</a>
     `
