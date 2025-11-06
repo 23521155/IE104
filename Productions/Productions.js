@@ -146,7 +146,6 @@ document.addEventListener('DOMContentLoaded',  async function () {
 
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
-
             productCard.innerHTML = `
                 <div class="product-image-container">
                 <div>

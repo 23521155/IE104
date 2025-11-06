@@ -44,6 +44,7 @@
     margin-bottom: 1px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 .product-card:hover {
     transform: translateY(-5px);
@@ -98,11 +99,13 @@
 
 .product-info {
     padding: 12px;
+    height: 103px;
 }
 
 .product-name {
     font-size: 1.6rem;
     font-weight: 520;
+
     margin-top: 10px;
     font-family: 'Outfit', sans-serif;
 }
@@ -124,10 +127,12 @@
 }
 
 .add-cart-btn {
+
+    margin-left: calc((100% - 80%) / 2);
     width: 80%;
     height: 50px;
-    margin-left: 40px;
     padding: 12px;
+
     margin-top: 12px;
     margin-bottom: 40px;
     background-color: #fff;
@@ -138,6 +143,7 @@
     cursor: pointer;
     transition: background-color 0.5s, color 0.3s;
     font-family: 'Outfit', sans-serif;
+    color: var(--text-color);
 }
 
 .add-cart-btn:hover {
@@ -238,7 +244,6 @@
     .add-cart-btn{
         font-size: 1.2rem;
         height: 40px;
-        margin-left: 20px;
     }
     .page-number,
     .page-arrow{

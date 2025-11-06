@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const suggestProducts = document.querySelector('.suggest-productions');
     suggestProducts.innerHTML =
         `
-         <p>${p}</p>
+         <p style="margin-left: 10px">${p}</p>
          
          <div class="grid wide">
               <div class="row">
