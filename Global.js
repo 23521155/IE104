@@ -125,12 +125,19 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             texts.map(text => translateText(text, lang))
         );
 
-        if(lang === 'vi')
+        if(lang === 'vi' && textTranslateds.length === 11)
         {
             textTranslateds[3] = 'CHÚC MỪNG NĂM MỚI'
             textTranslateds[4] = 'NHÃN HIỆU YÊU THÍCH';
             textTranslateds[9] = 'GIỎ HÀNG';
             textTranslateds[10] = 'DANH SÁCH YÊU THÍCH';
+        }
+        else if (lang === 'vi' && textTranslateds.length === 10)
+        {
+            textTranslateds[3] = 'CHÚC MỪNG NĂM MỚI'
+            textTranslateds[4] = 'NHÃN HIỆU YÊU THÍCH';
+            textTranslateds[8] = 'GIỎ HÀNG';
+            textTranslateds[9] = 'DANH SÁCH YÊU THÍCH';
         }
         items.forEach((el, index) => {
             const icon = el.querySelector('i');
