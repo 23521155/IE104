@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const home = await translateText("Home", lang);
     cartTitle.innerHTML = `<i class="fa-solid fa-cart-shopping"></i><p>${p}</p>`;
     homeCart.innerHTML = `
-      <a href="../../IE104/Home/Home.html">${home}</a>
+      <a href="../Home/Home.html">${home}</a>
       <p>/</p>
       <a href="">${p}</a>
   `;
@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
     }
 
-
+// checkout logic
     cartTotal.addEventListener("click", async (e) => {
         if (e.target.closest(".checkout-button")) {
             const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/get-cartt`, {
@@ -253,44 +253,58 @@ document.addEventListener("DOMContentLoaded", async () => {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
             const cart = await res.json();
-            if(cart.cartItems.length)
-            {
-                const result =  await fetch(`${API_CONFIG.DEPLOY_URL}/order/`, {
-                    method: "POST",
 
-                    headers:{ Authorization: `Bearer ${accessToken}`,"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        userId: cart.userId,
-                        totalPrice: cart.totalPrice,
-                        orderItems: cart.cartItems,
-                    })
-                })
-                if(result.ok){
-                    const noti = await translateText('You have successfully paid',lang)
-                    const result = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/update`, {
-                        method: "PATCH",
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            cartId: cart._id,
-                            updateData :{ totalPrice: 0 , cartItems: [] }
-                        }),
-                    })
-                    showToast(noti,"success")
-                    if(result.ok){
-                        setTimeout(()=>{
-                            window.location.href = '../User/User.html'
-                        },1000)
-                    }
-                }
+            const result = await fetch(`${API_CONFIG.DEPLOY_URL}/users/`, {
+                method: "GET",
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            const user = await result.json();
+
+            if(!user.address || !user.phoneNumber) {
+                showToast('Update your information');
+                setTimeout(() => { window.location.href = "../User/User.html" }, 1000);
             }
-            else
-            {
-                const noti = await translateText('You don\'t have any products in cart',lang)
-                showToast(noti,"error")
-            }
+
+
+            // if(cart.cartItems.length)
+            // {
+            //     const result =  await fetch(`${API_CONFIG.DEPLOY_URL}/order/`, {
+            //         method: "POST",
+            //
+            //         headers:{ Authorization: `Bearer ${accessToken}`,"Content-Type": "application/json"},
+            //         body: JSON.stringify({
+            //             userId: cart.userId,
+            //             totalPrice: cart.totalPrice,
+            //             orderItems: cart.cartItems,
+            //         })
+            //     })
+            //     if(result.ok){
+            //         const noti = await translateText('You have successfully paid',lang)
+            //         const result = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/update`, {
+            //             method: "PATCH",
+            //             headers: {
+            //                 Authorization: `Bearer ${accessToken}`,
+            //                 "Content-Type": "application/json",
+            //             },
+            //             body: JSON.stringify({
+            //                 cartId: cart._id,
+            //                 updateData :{ totalPrice: 0 , cartItems: [] }
+            //             }),
+            //         })
+            //         showToast(noti,"success")
+            //         if(result.ok){
+            //             setTimeout(()=>{
+            //                 window.location.href = '../User/User.html'
+            //             },1000)
+            //         }
+            //     }
+            // }
+            // else
+            // {
+            //     const noti = await translateText('You don\'t have any products in cart',lang)
+            //     showToast(noti,"error")
+            // }
+
         }
     });
 });
