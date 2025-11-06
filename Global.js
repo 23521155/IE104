@@ -1,7 +1,7 @@
 import {API_CONFIG,FE_URL} from "./apiConfig.js";
 
 
-    export const showToast = async (message, type = "success") => {
+export const showToast = async (message, type = "success") => {
     const container = document.getElementById("toast-container");
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
@@ -138,45 +138,54 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             if (icon) el.prepend(icon); // thêm lại icon vào đầu nếu có
         });
 
-
-
-
-
-
         menuBtn.addEventListener('click', () => {
             // reset nếu đang đóng
 
-            menuModal.classList.remove('closing');
-            // menuModal.style.display = 'block';
-            setTimeout(() => {
+            if(window.innerWidth > 740) {
+                menuModal.classList.remove('closing');
+                // menuModal.style.display = 'block';
+                setTimeout(() => {
+                    menuModal.classList.add('active');
+                    content.classList.add('shift-right');
+                    body.classList.add('modal-open');
+                }, 10);
+                setTimeout(() => {
+                    content.classList.remove('shift-right');
+                    content.classList.add('shift-down');
+                }, 1000);
+            } else {
+                menuModal.classList.remove('closing');
                 menuModal.classList.add('active');
-                content.classList.add('shift-right');
-                body.classList.add('modal-open');
-            }, 10);
-            setTimeout(() => {
-                content.classList.remove('shift-right');
-                content.classList.add('shift-down');
-            }, 1000);
+            }
         });
 
         closeBtn.addEventListener('click', () => {
-            // gỡ shift-right để content về vị trí cũ
-            content.classList.remove('shift-right');
-            // gỡ class active để không bị translateX
-            menuModal.classList.remove('active');
-            menuModal.classList.add('closing');
+              if(window.innerWidth > 740) {
+                  // gỡ shift-right để content về vị trí cũ
+                  content.classList.remove('shift-right');
+                  // gỡ class active để không bị translateX
+                  menuModal.classList.remove('active');
+                  menuModal.classList.add('closing');
 
 
 
-            setTimeout(() => {
-                content.classList.remove('shift-down');
-            }, 0);
+                  setTimeout(() => {
+                      content.classList.remove('shift-down');
+                  }, 0);
 
-            // sau khi animation xong thì ẩn
-            menuModal.addEventListener('animationend', () => {
-                menuModal.classList.remove('closing');
-                body.classList.remove('modal-open');
-            }, { once: true });
+                  // sau khi animation xong thì ẩn
+                  menuModal.addEventListener('animationend', () => {
+                      menuModal.classList.remove('closing');
+                      body.classList.remove('modal-open');
+                  }, { once: true });
+              }
+              else {
+                  menuModal.classList.remove('active');
+                  menuModal.classList.add('closing');
+                  setTimeout(() => {
+                      menuModal.classList.remove('closing');
+                  },1000)
+              }
         });
     }
 
