@@ -85,6 +85,7 @@
     font-weight: 500;
     transition: all 0.3s ease;
     font-family:  'Outfit', sans-serif;
+    color: var(--text-color);
 }
 
 .size-btn:hover,
