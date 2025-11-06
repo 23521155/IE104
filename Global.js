@@ -180,8 +180,10 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                   }, { once: true });
               }
               else {
-                  menuModal.classList.remove('active');
                   menuModal.classList.add('closing');
+                  setTimeout(()=>{
+                      menuModal.classList.remove('active');
+                  },500)
                   setTimeout(() => {
                       menuModal.classList.remove('closing');
                   },1000)
