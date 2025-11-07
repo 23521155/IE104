@@ -98,6 +98,7 @@ html *::-webkit-scrollbar-track {
     display: flex;
     align-items: center;
 }
+
 .header-right{
     display: flex;
     font-size: 2rem;
@@ -1408,16 +1409,11 @@ html *::-webkit-scrollbar-track {
         display: flex;
         justify-content: center;
     }
-    .logo{
+    .logo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
         font-size: 2rem;
-    }
-    .logo > p{
-        width: 100%;
-    }
-    .logo > p > a{
-        width: 100%;
-        height: 100%;
-
     }
     .search{
         width: 90%;
