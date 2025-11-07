@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                    }
                            return (
                                `
-                                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                                <div class="col xxl-3 xl-3 l-4 m-6 c-12">
                                <div class="production" data-id='${product._id}' >
                                <img src="${product.images[0].url}" alt="">
                                <div class="info">

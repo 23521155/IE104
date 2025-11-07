@@ -140,6 +140,7 @@
     }
     .row-wishlist{
         padding: 30px 20px 15px 20px;
+        min-height: 300px;
     }
     .production > img{
         height: 300px;
@@ -170,6 +171,9 @@
         font-size: 1.6rem;
         height: 80px;
     }
+    .row-wishlist{
+        min-height: 400px;
+    }
 }
 
 /*Desktop vừa (1024px - 1320px) - giống Tablet*/
@@ -184,5 +188,8 @@
     .home-wishlist{
         font-size: 1.6rem;
         height: 80px;
+    }
+    .row-wishlist{
+        min-height: 400px;
     }
 }
