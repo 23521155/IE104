@@ -90,7 +90,10 @@
     gap: 8px;
     color: var(--text-color);
 }
-
+.qty-increase,
+.qty-decrease{
+    color: var(--text-color);
+}
 .quantity-control button {
     width: 32px;
     height: 32px;
