@@ -15,6 +15,11 @@
     input[type="search"]::-webkit-search-cancel-button {
         cursor: pointer;
     }
+    /*tat highlight default*/
+    -webkit-tap-highlight-color: transparent; /* iOS Safari */
+    -webkit-touch-callout: none; /* iOS Safari - tắt menu khi giữ lâu */
+    -webkit-user-select: none; /* Tắt select text (tùy chọn) */
+    user-select: none; /* Tắt select text (tùy chọn) */
 }
 
 html{

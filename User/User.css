@@ -4,6 +4,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Outfit", sans-serif;
+    -webkit-tap-highlight-color: transparent; /* iOS Safari */
+    -webkit-touch-callout: none; /* iOS Safari - tắt menu khi giữ lâu */
+    -webkit-user-select: none; /* Tắt select text (tùy chọn) */
+    user-select: none; /* Tắt select text (tùy chọn) */
 }
 
 body {
@@ -98,11 +102,14 @@ body {
     font-size: 15px;
 }
 
-.home-button{
-    font-size: 40px;
+.home-button-container {
     display: flex;
     justify-content: center;
     margin-top: 80px;
+}
+.home-button{
+    font-size: 40px;
+
     color: #e9e9e9;
 }
 .home-button:hover{

@@ -86,7 +86,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <p><strong>Email:</strong> <span id="email">${user.email}</span></p>
                 <p><strong>${lang === 'vi' ? 'Tên người dùng' : 'Username'}:</strong> <span id="username">${user.username}</span></p>
                 <p><strong>${lang === 'vi' ? 'Vai trò' : 'Role'}:</strong> <span>${user.role}</span></p>
+               <div class="home-button-container">
                 <a href="../Home/Home.html" class="home-button"><i class="fa-solid fa-house"></i></a>
+               </div>
+               
     `
 
     const avatar = document.getElementById("user-avatar");
