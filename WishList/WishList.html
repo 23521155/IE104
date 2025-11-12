@@ -228,12 +228,12 @@
         </div>
         <form class="user-modal-login-form" id="user-modal-login-form">
             <div class="input-login-register">
-                <input type="text" id="emailLogin" required >
+                <input type="text" id="emailLogin" autocomplete="username" required >
                 <label>EMAIL</label>
                 <div class="input-close"></div>
             </div>
             <div class="input-login-register">
-                <input type="password" id="passwordLogin" required>
+                <input type="password" id="passwordLogin" autocomplete="current-password" required>
                 <label>PASSWORD</label>
                 <div class="input-close"></div>
             </div>
@@ -281,18 +281,18 @@
                 </div>
             </div>
             <div class="input-login-register">
-                <input type="text" id="emailRegister" required>
+                <input type="text" id="emailRegister" autocomplete="email" required>
                 <label>EMAIL</label>
                 <div class="input-close"></div>
             </div>
             <div class="register-password">
                 <div class="input-login-register">
-                    <input type="password" id="passwordRegister" required>
+                    <input type="password" id="passwordRegister" autocomplete="new-password" required>
                     <label>PASSWORD</label>
                     <div class="input-close"></div>
                 </div>
                 <div class="input-login-register" id="confirmPasswordWrapper">
-                    <input type="password" id="confirmPasswordRegister" required>
+                    <input type="password" id="confirmPasswordRegister" autocomplete="new-password" required>
                     <label>CONFIRM PASSWORD</label>
                     <div class="input-close"></div>
                 </div>
