@@ -764,6 +764,20 @@ window.addEventListener("load", (event) => {
             }
         }
     };
+    const loginFaceBook = () =>{
+        const facebookLoginBtn = document.getElementById("facebookLoginBtn");
+        facebookLoginBtn.addEventListener("click", (e) => {
+            showToast(`Facebook login is currently unavailable. Please log in with Google or your account.`,'error');
+        })
+    }
 
+    const loginApple = () =>{
+        const appleLoginBtn = document.getElementById("appleLoginBtn");
+        appleLoginBtn.addEventListener("click", (e) => {
+            showToast(`Apple login is currently unavailable. Please log in with Google or your account.`,'error');
+        })
+    }
     loginGoogle()
+    loginFaceBook()
+    loginApple()
 })
