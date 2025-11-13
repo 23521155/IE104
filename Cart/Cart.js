@@ -248,6 +248,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 // checkout logic
     cartTotal.addEventListener("click", async (e) => {
         if (e.target.closest(".checkout-button")) {
+
+            const checkoutBtn = e.target.closest(".checkout-button");
+
+            if (checkoutBtn.disabled) return;
+            checkoutBtn.disabled = true;
+            checkoutBtn.style.opacity = '0.6';
+            checkoutBtn.style.cursor = 'not-allowed';
+
+
             const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/get-cartt`, {
                 method: "GET",
                 headers: { Authorization: `Bearer ${accessToken}` },
