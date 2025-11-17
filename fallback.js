@@ -3,7 +3,7 @@ function fallback () {
     const validPaths = [
         '/',
         '/index.html',
-        'http://localhost:63342/Home/Home.html',
+        '/Home/Home.html',
         '/Cart/Cart.html',
         '/Productions/Productions.html',
         '/ResetPassword/index.html',
@@ -16,8 +16,7 @@ function fallback () {
     console.log(current)
 
     if (!validPaths.includes(current)) {
-        // window.location.href = `/404/404.html`;
-        console.log(current)
+         window.location.href = `/404/404.html`;
     }
 }
 fallback();
