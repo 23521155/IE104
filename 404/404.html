@@ -52,24 +52,6 @@
     </aside>
 </main>
 
-<script>
-    function doSearch(e){
-        e.preventDefault();
-        const q = document.getElementById('q').value.trim();
-        if(!q) {
-            const el = document.getElementById('q');
-            el.style.borderColor = '#f97316';
-            setTimeout(()=> el.style.borderColor='rgba(15,23,42,0.06)',800);
-            return false;
-        }
-        window.location.href = '/search?q=' + encodeURIComponent(q);
-        return false;
-    }
 
-    setTimeout(()=> {
-        const q = document.getElementById('q');
-        if(q) q.focus();
-    },200);
-</script>
 </body>
 </html>
