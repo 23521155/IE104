@@ -1,10 +1,9 @@
 // fallback.js
-import {FE_URL} from "./apiConfig";
-(function () {
+function fallback () {
     const validPaths = [
         '/',
         '/index.html',
-        '/Home/Home.html',
+        'http://localhost:63342/Home/Home.html',
         '/Cart/Cart.html',
         '/Productions/Productions.html',
         '/ResetPassword/index.html',
@@ -17,6 +16,8 @@ import {FE_URL} from "./apiConfig";
     console.log(current)
 
     if (!validPaths.includes(current)) {
-        window.location.href = `/404/404.html`;
+        // window.location.href = `/404/404.html`;
+        console.log(current)
     }
-})();
+}
+fallback();
