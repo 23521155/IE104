@@ -16,7 +16,7 @@ function fallback () {
     console.log(current)
 
     if (!validPaths.includes(current)) {
-         window.location.href = `/404/404.html`;
+         window.location.href = `404.html`;
     }
 }
 fallback();
