@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: ie104-onrender
+    env: static
+    buildCommand: echo "No build needed"
+    staticPublishPath: .
+    notFoundPage: 404.html
