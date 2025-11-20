@@ -108,9 +108,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             <div><a href="${FE_URL}/Productions/Productions.html?type=sale&page=1" class="menu-modal-content">SALE</a></div>
           ${accessToken ? `<div><a href="${FE_URL}/User/User.html" class="menu-modal-content">
                 <i class="fa-regular fa-user"></i>ACCOUNT</a></div>` : ''}
-                      <div><a href="${FE_URL}/Cart/Cart.html" class="menu-modal-content">
+          ${accessToken ? `<div><a href="${FE_URL}/Cart/Cart.html" class="menu-modal-content">
             <i class="fa-solid fa-cart-shopping"></i>
-            CART</a></div>
+            CART</a></div>` : ``}
             <div><a href="${FE_URL}/WishList/WishList.html" class="menu-modal-content">
                 <i class="fa-regular fa-heart"></i>
                 WISHLIST</a></div>
@@ -132,12 +132,11 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             textTranslateds[9] = 'GIỎ HÀNG';
             textTranslateds[10] = 'DANH SÁCH YÊU THÍCH';
         }
-        else if (lang === 'vi' && textTranslateds.length === 10)
+        else if (lang === 'vi' && textTranslateds.length === 9)
         {
             textTranslateds[3] = 'CHÚC MỪNG NĂM MỚI'
             textTranslateds[4] = 'NHÃN HIỆU YÊU THÍCH';
-            textTranslateds[8] = 'GIỎ HÀNG';
-            textTranslateds[9] = 'DANH SÁCH YÊU THÍCH';
+            textTranslateds[8] = 'DANH SÁCH YÊU THÍCH';
         }
         items.forEach((el, index) => {
             const icon = el.querySelector('i');
@@ -250,7 +249,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                     method: 'DELETE',
                 })
                 showToast('LOGGED OUT!', 'success');
-                setTimeout(() => location.reload(), 800); // reload lại trang
+                window.location.href = `${FE_URL}/Home/Home.html` // reload lại trang
             });
         })
         userCloseBtn.addEventListener('click', () => {
@@ -714,6 +713,15 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     forgotPassword()
     searchLogic()
     chooseLanguageLogic()
+
+
+    const token = localStorage.getItem('accessToken');
+    const cart = document.querySelector('.cart');
+    if (!token) {
+        cart.style.display = 'none';
+    } else {
+        cart.style.display = '';
+    }
 
 })
 
