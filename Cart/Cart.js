@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         .join("")}
   `;
 
-    // === Cập nhật tổng giỏ hàng ban đầu ===
+    //  Cập nhật tổng giỏ hàng ban đầu ===
     updateCartTotal();
 
     // Lắng nghe sự kiện click và input
@@ -194,8 +194,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             totalUSD += price * qty;
         });
 
-        const shippingUSD = 3;
-        const voucherUSD = 1;
+
+
+        let shippingUSD = 3;
+        let voucherUSD = 1;
+
+        if( cart.cartItems.length === 0) {
+            shippingUSD = 0
+            voucherUSD = 0
+        }
         const shippingVN = shippingUSD * EXCHANGE_USD_TO_VND;
         const voucherVN = voucherUSD * EXCHANGE_USD_TO_VND
         const finalTotalUSD = '$' + (totalUSD + shippingUSD - voucherUSD).toLocaleString(
