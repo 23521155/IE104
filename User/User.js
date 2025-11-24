@@ -1,4 +1,4 @@
-import {API_CONFIG} from "../apiConfig.js";
+import {API_CONFIG,FE_URL} from "../apiConfig.js";
 
 const translateText = async (text, targetLanguage = 'vi') => {
     const cacheKey = `trans_${targetLanguage}_${text}`;
@@ -70,11 +70,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <a href="#" id="editBtn">${lang === 'vi' ? 'Chỉnh sửa' : 'Edit'}</a>
                 <a href="#" id="saveBtn" style="display:none;">${lang === 'vi' ? 'Lưu' : 'Save'}</a>
                 <a href="#" id="cancelBtn" style="display:none;">${lang === 'vi' ? 'Hủy' : 'Cancel'}</a>
+                <a href="#" id="logoutBtn" class="logout-btn">${lang === 'vi' ? 'Đăng xuất' : 'Logout'}</a>
             </div>
     `
     const editBtn = document.getElementById("editBtn");
     const saveBtn = document.getElementById("saveBtn");
     const cancelBtn = document.getElementById("cancelBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
 
     const profileLeft = document.querySelector('.profile-left');
     profileLeft.innerHTML =`
@@ -272,4 +274,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         saveBtn.style.display = "none";
         cancelBtn.style.display = "none";
     });
+
+    logoutBtn.addEventListener("click", async (e) => {
+
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            await fetch(`${API_CONFIG.DEPLOY_URL}/users/logout`, {
+                method: 'DELETE',
+            })
+            window.location.href = `${FE_URL}/Home/Home.html` // reload lại trang
+    })
 });

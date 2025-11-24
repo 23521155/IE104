@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     }
 
 // User modal
-    const logicUserModal = ()=>{
+    const logicUserModal = async ()=>{
         const userBtn = document.getElementById('user-button');
         const userModal = document.getElementById('user-modal');
         const userCloseBtn = document.getElementById('user-close-modal');
@@ -219,38 +219,16 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             const inputs = el.getElementsByTagName('input'); // lấy các input con
             allInputs.push(...inputs); // nối vào mảng allInputs
         }
-        userBtn.addEventListener('click', () => {
-            userModal.style.opacity ='1';
-            userModal.style.visibility = 'visible';
-            userModalLogin.style.transform = 'scaleY(1)'
 
-            const token = localStorage.getItem('accessToken');
-            const loginForm = document.getElementById('user-modal-login-form');
-            const loginIcon = document.getElementById('login-icon');
-            const loggedInDiv = document.getElementById('user-logged-in');
-            const logoutBtn = document.getElementById('btnLogout');
-            if (token) {
-                // Ẩn form login, hiện nút đăng xuất
-                loginForm.style.display = 'none';
-                loginIcon.style.display = 'none';
-                loggedInDiv.style.display = 'block';
-            } else {
-                // Ngược lại
-                loginForm.style.display = 'block';
-                loginIcon.style.display = 'flex';
-                loggedInDiv.style.display = 'none';
+        userBtn.addEventListener('click', () => {
+            const accessToken = localStorage.getItem('accessToken');
+            if(accessToken) window.location.href = `${FE_URL}/User/User.html`
+            else{
+                userModal.style.opacity ='1';
+                userModal.style.visibility = 'visible';
+                userModalLogin.style.transform = 'scaleY(1)'
             }
 
-// 🔥 Xử lý nút đăng xuất
-            logoutBtn.addEventListener('click', async () => {
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
-                await fetch(`${API_CONFIG.DEPLOY_URL}/users/logout`, {
-                    method: 'DELETE',
-                })
-                showToast('LOGGED OUT!', 'success');
-                window.location.href = `${FE_URL}/Home/Home.html` // reload lại trang
-            });
         })
         userCloseBtn.addEventListener('click', () => {
             allInputs.forEach(input => {
@@ -715,13 +693,171 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     chooseLanguageLogic()
 
 
+    //Dang nhap roi moi cho hien gio hang
     const token = localStorage.getItem('accessToken');
     const cart = document.querySelector('.cart');
     if (!token) {
         cart.style.display = 'none';
     } else {
         cart.style.display = '';
+        const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+
+        const user = document.getElementById('user-button');
+        user.style.height = '30px';
+
+        user.innerHTML = `
+            <div class="user-icon" style="height: 30px;width: 30px">
+                <img 
+                src="${data.avatar}" 
+                alt="avatar"
+                style="width:30px;height:30px;object-fit:cover;border-radius:50%;" 
+                />
+            </div>
+            <div class="user-title">
+                USER
+            </div>
+`;
     }
+
+    const storedLang = localStorage.getItem("selectedLang");
+    const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
+    const footer = document.querySelector('.footer');
+    footer.innerHTML = `
+     ${lang === 'vi' ? `
+     <div class="grid wide">
+            <div class="row">
+                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                    <div class="footer-list">
+                        <div class="footer-title">ANDIFI</div>
+                        <div class="footer-gmail">ANDIFI@gmail.com</div>
+                        <div class="footer-icon">
+                            <a href=""><i class="fa-regular fa-envelope"></i></a>
+                            <a href=""><i class="fa-brands fa-facebook"></i></a>
+                            <a href=""><i class="fa-brands fa-instagram"></i></a>
+                            <a href=""><i class="fa-brands fa-tiktok"></i></a>
+                            <a href=""><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                    <div class="footer-list">
+                        <div class="footer-title">Tài khoản</div>
+                        <a href="" class="footer-item">Trạng thái đơn hàng</a>
+                        <a href="" class="footer-item">Giải thưởng ModSquad</a>
+                        <a href="" class="footer-item">Cho 20%, Nhận 20%</a>
+                        <a href="" class="footer-item">Để lại đánh giá</a>
+                        <a href="" class="footer-item">Quyền riêng tư california</a>
+                    </div>
+                </div>
+                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                    <div class="footer-list">
+                        <div class="footer-title">Trợ giúp</div>
+                        <a class="footer-item" href="">FAQ</a>
+                        <a class="footer-item" href="">Chính sách hoàn trả</a>
+                        <a class="footer-item" href="">Thông tin giao hàng</a>
+                        <a class="footer-item" href="">Hướng dẫn kích cỡ / Bảng kích cỡ</a>
+                        <a class="footer-item" href="">Chăm sóc khách hàng</a>
+                    </div>
+                </div>
+                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                    <div class="footer-list">
+                        <div class="footer-title">Công ty</div>
+                        <a href="" class="footer-item">Liên hệ</a>
+                        <a href="" class="footer-item">Blog</a>
+                        <a href="" class="footer-item">Chứng thực khách hàng</a>
+                        <a href="" class="footer-item">ANDIFI thẻ thưởng</a>
+                        <a href="" class="footer-item">Mua bán trao đổi tại ANDIFI</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-powered">
+            <div class="grid wide">
+                <div class="row row-powered">
+                    <div class="col xxl-9 xl-9 l-9 m-6 c-12 col-powered">
+                        <a class="footer-powered-text" href="">Bản quyền © 2025 ANDIFI thuộc về Phòng khtc UIT.</a>
+                    </div>
+                    <div class="col xxl-3 xl-3 l-3 m-6 c-12 col-powered">
+                        <div class="footer-pay">
+                            <a href=""><i class="fa-brands fa-cc-paypal"></i></a>
+                            <a href=""><i class="fa-brands fa-cc-visa"></i></a>
+                            <a href=""><i class="fa-brands fa-cc-mastercard"></i></a>
+                            <a href=""><i class="fa-brands fa-cc-apple-pay"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     ` : `
+       <div class="grid wide">
+            <div class="row">
+                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                    <div class="footer-list">
+                        <div class="footer-title">ANDIFI</div>
+                        <div class="footer-gmail">ANDIFI@gmail.com</div>
+                        <div class="footer-icon">
+                            <a href=""><i class="fa-regular fa-envelope"></i></a>
+                            <a href=""><i class="fa-brands fa-facebook"></i></a>
+                            <a href=""><i class="fa-brands fa-instagram"></i></a>
+                            <a href=""><i class="fa-brands fa-tiktok"></i></a>
+                            <a href=""><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                    <div class="footer-list">
+                        <div class="footer-title">ACCOUNT</div>
+                        <a href="" class="footer-item">Order Status</a>
+                        <a href="" class="footer-item">ModSquad Rewards</a>
+                        <a href="" class="footer-item">Give 20%, Get 20%</a>
+                        <a href="" class="footer-item">Leave a Review</a>
+                        <a href="" class="footer-item">Your California Privacy Rights</a>
+                    </div>
+                </div>
+                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                    <div class="footer-list">
+                        <div class="footer-title">HELP</div>
+                        <a class="footer-item" href="">FAQ</a>
+                        <a class="footer-item" href="">Return Policy</a>
+                        <a class="footer-item" href="">Shipping Information</a>
+                        <a class="footer-item" href="">Sizing Guide / Size Charts</a>
+                        <a class="footer-item" href="">Customer Care</a>
+                    </div>
+                </div>
+                <div class="col xxl-3 xl-3 l-3 m-6 c-12">
+                    <div class="footer-list">
+                        <div class="footer-title">COMPANY</div>
+                        <a href="" class="footer-item">About Us</a>
+                        <a href="" class="footer-item">Blog</a>
+                        <a href="" class="footer-item">Customer Testimonials</a>
+                        <a href="" class="footer-item">ANDIFI Gift Cards</a>
+                        <a href="" class="footer-item">Shop and Trade on ANDIFI</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-powered">
+            <div class="grid wide">
+                <div class="row row-powered">
+                    <div class="col xxl-9 xl-9 l-9 m-6 c-12 col-powered">
+                        <a class="footer-powered-text" href="">Copyright © 2025 ANDIFI Powered by Phòng khtc UIT.</a>
+                    </div>
+                    <div class="col xxl-3 xl-3 l-3 m-6 c-12 col-powered">
+                        <div class="footer-pay">
+                            <a href=""><i class="fa-brands fa-cc-paypal"></i></a>
+                            <a href=""><i class="fa-brands fa-cc-visa"></i></a>
+                            <a href=""><i class="fa-brands fa-cc-mastercard"></i></a>
+                            <a href=""><i class="fa-brands fa-cc-apple-pay"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     `}`
 
 })
 
