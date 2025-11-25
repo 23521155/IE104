@@ -84,9 +84,6 @@
     transition: opacity 1.5s ease;
     cursor: pointer;
 }
-
-
-
 .wishlist-icon {
     position: absolute;
     top: 15px;
@@ -94,7 +91,8 @@
     font-size: 2.5rem;
     color: #000008;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: none !important;
+    background: transparent !important;
 }
 
 .product-info {

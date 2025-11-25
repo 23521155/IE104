@@ -707,14 +707,17 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         const data = await res.json();
 
         const user = document.getElementById('user-button');
-        user.style.height = '30px';
 
+
+        const size = window.innerWidth <= 1024 ? 24 : 30;
+        user.style.height = size + 'px';
+        console.log(size)
         user.innerHTML = `
-            <div class="user-icon" style="height: 30px;width: 30px">
+            <div class="user-icon" style="height: ${size}px;width: ${size}px">
                 <img 
                 src="${data.avatar}" 
                 alt="avatar"
-                style="width:30px;height:30px;object-fit:cover;border-radius:50%;" 
+                style="width:${size}px;height:${size}px;object-fit:cover;border-radius:50%;" 
                 />
             </div>
             <div class="user-title">
