@@ -2,6 +2,7 @@ import {showToast} from '../Global.js';
 import {API_CONFIG} from "../apiConfig.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Animation loading
     const loadingOverlay = document.getElementById('loading-overlay');
     loadingOverlay.classList.remove('hidden');
 
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '../animations/Sale.json' // ✅ đường dẫn đúng
+        path: '../animations/Sale.json'
     });
     await lottie.loadAnimation({
         container: document.getElementById('loading-animation-ellipsis'),
@@ -28,7 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             'Authorization': `Bearer ${accessToken}`,
         }
     });
-    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
+
+    // Stop animation after call api
+    loadingOverlay.classList.add('hidden');
 
     const wishList = await res.json();
     const products = wishList.wishListItems;
@@ -37,6 +40,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
     const EXCHANGE_USD_TO_VND = 26328;
 
+    /**
+     * TRANSLATE UI TEXT
+     * Set text labels based on selected language (Vietnamese or English)
+     */
     const wishlistTitle = document.querySelector('.title-wishlist');
     let p,home,a,addCartBtn;
     if(lang === "vi") {
@@ -50,11 +57,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         a = 'Wish list';
         addCartBtn = 'Add to cart';
     }
+
+    /**
+     * UPDATE WISHLIST TITLE
+     * Display heart icon and translated title
+     */
     wishlistTitle.innerHTML = `
            <i class="fa-regular fa-heart"></i>
            <p class="p">${p}</p>
     `;
 
+    /**
+     * UPDATE BREADCRUMB NAVIGATION
+     * Display home and wishlist links with translations
+     */
     const homeButton = document.querySelector('.home-wishlist');
     homeButton.innerHTML = `
             <a href="../Home/Home.html">${home}</a>
@@ -62,6 +78,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             <a href="">${a}</a>
     `
 
+    /**
+     * RENDER WISHLIST PRODUCTS
+     * Build HTML for each product in the wishlist
+     * Includes product image, name, price, delete button, and add to cart button
+     */
     rowWishList.innerHTML = `
                        ${products.map((product) => {
                            let formattedPrice;
@@ -89,16 +110,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                            )
     }).join('')}             
     `;
+
+    /**
+     * WISHLIST INTERACTION HANDLER
+     * Handles three types of clicks:
+     * 1. Delete button - removes product from wishlist
+     * 2. Add to cart button - adds product to shopping cart
+     * 3. Product area - navigates to product detail page
+     */
     rowWishList.addEventListener('click', async (e) => {
         const trashBtn = e.target.closest('.trash');
         const addBtn = e.target.closest('.addCart-button');
         const productEl = e.target.closest('.production'); //
 
+        // Exit if click was outside any product element
         if (!productEl) return;
+
+        // Get product ID and full product data
         const productId = productEl.dataset.id;
         const product = products.find(product => product._id === productId);
 
-        // --- Xử lý xoá sản phẩm ---
+        // Remove product from wishlist via API and reload page
         if (trashBtn) {
             const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/delete-wishlistProduct/${productId}`, {
                 method: 'DELETE',
@@ -108,11 +140,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
                 credentials: 'include'
             });
+
+            // Reload page if deletion successful
             if (res.ok) window.location.reload();
-            return; // dừng luôn, tránh chạy phần dưới
+            return; // Stop execution to prevent running code below
         }
 
-        // --- Xử lý thêm vào giỏ ---
+        // Add product to shopping cart via API
         if (addBtn) {
             const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/add-cart`, {
                 method: 'POST',
@@ -127,7 +161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // --- Click chỗ khác (hiển thị chi tiết sản phẩm) ---
+        // Navigate to product detail page when clicking anywhere else on product
         sessionStorage.setItem('product', JSON.stringify(product));
         window.location.href = `../Production/Production.html?id=${product._id}`;
     });

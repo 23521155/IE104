@@ -2,10 +2,10 @@ import {showToast, translateText} from "../Global.js";
 import {API_CONFIG} from "../apiConfig.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+    // Animation loading
     const loadingOverlay = document.getElementById("loading-overlay");
     loadingOverlay.classList.remove("hidden");
 
-    // Animation loading
     await lottie.loadAnimation({
         container: document.getElementById("loading-animation"),
         renderer: "svg",
@@ -35,11 +35,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     const cart = await res.json();
 
-    setTimeout(() => {
-        loadingOverlay.classList.add("hidden");
-    }, 1000);
+    // Stop loading animation after call api
+    loadingOverlay.classList.add("hidden");
 
-    // Ngôn ngữ
+    // Get status of language from localStorage
     const storedLang = localStorage.getItem("selectedLang");
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
     const EXCHANGE_USD_TO_VND = 26328;
@@ -54,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       <a href="">${p}</a>
   `;
 
-    // Render sản phẩm
+    // Render productions
     const products = cart.cartItems || [];
     cartProducts.innerHTML = `
     <div class="cart-products-header">
@@ -101,37 +100,39 @@ document.addEventListener("DOMContentLoaded", async () => {
         .join("")}
   `;
 
-    //  Cập nhật tổng giỏ hàng ban đầu ===
+    //  Update cart the first time
     updateCartTotal();
 
-    // Lắng nghe sự kiện click và input
     cartProducts.addEventListener("click", handleCartInteraction);
     cartProducts.addEventListener("input", handleCartInteraction);
     cartProducts.addEventListener("blur", handleCartBlur, true);
 
+    // Handles all interactions within the cart
     function handleCartInteraction(e) {
         const productEl = e.target.closest(".cart-product");
         if (!productEl) return;
 
         const qtyInput = productEl.querySelector(".qty-input");
         const productId = productEl.dataset.id;
-        const basePrice = parseFloat(productEl.dataset.price); // giá USD gốc
+        const basePrice = parseFloat(productEl.dataset.price); // Original USD price
         let currentQty = parseInt(qtyInput.value) || 1;
 
-        // Xử lý nút xóa
+        // Handle delete button click
         if (e.target.closest(".trash")) return deleteProduct(productId);
 
-        // Tăng/giảm số lượng
+        // Increase/decrease quantity
         if (e.target.closest(".qty-decrease")) currentQty = Math.max(1, currentQty - 1);
         if (e.target.closest(".qty-increase")) currentQty += 1;
 
+        // Update quantity input and save productId to localStorage
         qtyInput.value = currentQty;
         localStorage.setItem(`qty_${productId}`, currentQty);
 
+        // Recalculate item and cart totals
         updateItemTotal(productEl, basePrice, currentQty);
         updateCartTotal();
 
-        // Click ảnh -> xem sản phẩm
+        // Click image -> view product details
         if (e.target.tagName === "IMG") {
             const product = products.find((p) => p._id === productId);
             sessionStorage.setItem("product", JSON.stringify(product));
@@ -139,24 +140,33 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    // Handles blur event on quantity input to validate and update quantity
     function handleCartBlur(e) {
         if (e.target.classList.contains("qty-input")) {
             const productEl = e.target.closest(".cart-product");
             const productId = productEl.dataset.id;
             const basePrice = parseFloat(productEl.dataset.price);
             let qty = parseInt(e.target.value);
+
+            // Validate quantity (minimum 1)
             if (isNaN(qty) || qty < 1) qty = 1;
+
+            // Update input value and localStorage
             e.target.value = qty;
             localStorage.setItem(`qty_${productId}`, qty);
+
+            // Update input value and localStorage
             updateItemTotal(productEl, basePrice, qty);
             updateCartTotal();
         }
     }
 
+    // Updates the total price display for a single cart item
     function updateItemTotal(productEl, basePrice, qty) {
         const productTotalEl = productEl.querySelector(".product-total-price");
         const totalUSD = basePrice * qty;
 
+        // Display price in Vietnamese Dong or USD based on language setting
         if (lang === "vi") {
             productTotalEl.textContent = `${(totalUSD * EXCHANGE_USD_TO_VND).toLocaleString(
                 "vi-VN"
@@ -166,6 +176,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    // Deletes a product from the cart via API call
     async function deleteProduct(productId) {
         const res = await fetch(
             `${API_CONFIG.DEPLOY_URL}/cart/delete-cartProduct/${productId}`,
@@ -178,39 +189,50 @@ document.addEventListener("DOMContentLoaded", async () => {
                 credentials: "include",
             }
         );
+
+        // If deletion successful, remove from localStorage and reload page
         if (res.ok) {
             localStorage.removeItem(`qty_${productId}`);
             window.location.reload();
         }
     }
 
+    // Calculates and updates the total cart price including shipping and voucher
     async function updateCartTotal() {
         const productEls = document.querySelectorAll(".cart-product");
         let totalUSD = 0;
 
+        // Calculate subtotal from all cart items
         productEls.forEach((el) => {
             const price = parseFloat(el.dataset.price);
             const qty = parseInt(el.querySelector(".qty-input").value) || 1;
             totalUSD += price * qty;
         });
 
-
-
+        // Set shipping and voucher fees
         let shippingUSD = 3;
         let voucherUSD = 1;
 
+        // If cart is empty, no shipping or voucher
         if( cart.cartItems.length === 0) {
             shippingUSD = 0
             voucherUSD = 0
         }
+
+        // Calculate VND equivalents
         const shippingVN = shippingUSD * EXCHANGE_USD_TO_VND;
         const voucherVN = voucherUSD * EXCHANGE_USD_TO_VND
+
+        // Calculate final totals in both currencies
         const finalTotalUSD = '$' + (totalUSD + shippingUSD - voucherUSD).toLocaleString(
             "en-US",{ minimumFractionDigits: 2 });
         const finalTotalVN = ((totalUSD + shippingUSD - voucherUSD) * EXCHANGE_USD_TO_VND).toLocaleString("vi-VN") + '₫';
+
+        // Format shipping and voucher based on language
         let finalShipping;
         let finalVoucher;
         let finalTotal
+
         if(lang ==='vi'){
             finalTotal = finalTotalVN
             finalShipping = '+' + shippingVN.toLocaleString("vi-VN") + '₫';
@@ -221,6 +243,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             finalShipping = '+$' + shippingUSD.toLocaleString("en-US",{ minimumFractionDigits: 2 });
             finalVoucher = '-$' + voucherUSD.toLocaleString("en-US",{ minimumFractionDigits: 2 });
         }
+
+        // Format cart subtotal
         let formattedCartTotal;
         if (lang === "vi") {
             formattedCartTotal = `${(totalUSD * EXCHANGE_USD_TO_VND).toLocaleString("vi-VN")} ₫`;
@@ -228,6 +252,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             formattedCartTotal = `$${totalUSD.toFixed(2)}`;
         }
 
+        // Update cart total HTML display
         cartTotal.innerHTML = `
       <p class="total">${lang === "vi" ? "Tổng cộng" : "Total"}</p>
       <p class="total-price">${formattedCartTotal}</p>
@@ -239,6 +264,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     `;
         const totalCartUpdate = totalUSD + shippingUSD - voucherUSD;
 
+        // Update cart total on backend
         await fetch(`${API_CONFIG.DEPLOY_URL}/cart/update`,{
             method: "PATCH",
             headers: {
@@ -252,37 +278,40 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
     }
 
-// checkout logic
+    // Handles checkout button click event
     cartTotal.addEventListener("click", async (e) => {
         if (e.target.closest(".checkout-button")) {
 
             const checkoutBtn = e.target.closest(".checkout-button");
 
+            // Prevent multiple clicks during processing
             if (checkoutBtn.disabled) return;
             checkoutBtn.disabled = true;
             checkoutBtn.style.opacity = '0.6';
             checkoutBtn.style.cursor = 'not-allowed';
 
-
+            // Fetch current cart data
             const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/get-cartt`, {
                 method: "GET",
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
             const cart = await res.json();
 
+            // Fetch user information
             const result = await fetch(`${API_CONFIG.DEPLOY_URL}/users/`, {
                 method: "GET",
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
             const user = await result.json();
 
+            // Validate user has required information (address and phone)
             if(!user.address || !user.phoneNumber) {
                 showToast('You need your information','error');
                 setTimeout(() => { window.location.href = "../User/User.html" }, 1000);
                 return;
             }
 
-
+            // Process order if cart has items
             if(cart.cartItems.length)
             {
                 const result =  await fetch(`${API_CONFIG.DEPLOY_URL}/order/`, {
@@ -295,6 +324,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         orderItems: cart.cartItems,
                     })
                 })
+
                 if(result.ok){
                     const noti = await translateText('You have successfully paid',lang)
                     const result = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/update`, {
@@ -309,6 +339,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         }),
                     })
                     showToast(noti,"success")
+                    // Redirect to user page after successful checkout
                     if(result.ok){
                         setTimeout(()=>{
                             window.location.href = '../User/User.html'
@@ -318,6 +349,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             else
             {
+                // Show error if cart is empty
                 const noti = await translateText('You don\'t have any products in cart',lang)
                 showToast(noti,"error")
             }

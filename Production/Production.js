@@ -2,6 +2,8 @@ import {showToast, translateText} from "../Global.js";
 import {API_CONFIG} from "../apiConfig.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+    // Animation loading
     const loadingOverlay = document.getElementById('loading-overlay');
     loadingOverlay.classList.remove('hidden');
 
@@ -10,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '../animations/Sale.json' //
+        path: '../animations/Sale.json'
     });
     await lottie.loadAnimation({
         container: document.getElementById('loading-animation-ellipsis'),
@@ -20,7 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         path: '../animations/Loading.json'
     });
 
-    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
+    // Stop animation after 1s
+    setTimeout(()=> {loadingOverlay.classList.add('hidden');},500)
     const product = JSON.parse(sessionStorage.getItem('product'));
     const products = JSON.parse(localStorage.getItem('products'));
     const randomProducts = products.sort(() => Math.random() - 0.5).slice(0, 4);
@@ -148,7 +151,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Nếu API cần token (JWT, v.v.), thêm dòng này:
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
@@ -170,7 +172,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Nếu API cần token (JWT, v.v.), thêm dòng này:
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
@@ -225,7 +226,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     suggestItems.forEach(item => {
         item.addEventListener('click', () => {
             const productId = item.dataset.id;
-            console.log(productId)
+
             const product = randomProducts.filter((product) => product._id === productId);
             sessionStorage.setItem('product', JSON.stringify(...product));
             window.location.href = `../Production/Production.html?id=${productId}`;
