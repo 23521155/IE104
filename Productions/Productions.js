@@ -2,10 +2,11 @@ import {showToast, translateText} from "../Global.js";
 import {API_CONFIG} from "../apiConfig.js";
 
 document.addEventListener('DOMContentLoaded',  async function () {
+    // Animation loading
     const loadingOverlay = document.getElementById('loading-overlay');
     loadingOverlay.classList.remove('hidden');
 
-   await lottie.loadAnimation({
+    await lottie.loadAnimation({
         container: document.getElementById('loading-animation'),
         renderer: 'svg',
         loop: true,
@@ -20,9 +21,6 @@ document.addEventListener('DOMContentLoaded',  async function () {
         path: '../animations/Loading.json'
     });
 
-
-
-
     const params = new URLSearchParams(window.location.search);
     let page = parseInt(params.get('page')) || 1;
     const productType = params.get('type');
@@ -36,18 +34,13 @@ document.addEventListener('DOMContentLoaded',  async function () {
         totalProducts = data.totalProducts;
     }
     else {
-        // new arrival
+        // New arrival
         const res = await fetch(`${API_CONFIG.DEPLOY_URL}/productType/`)
         const data = await res.json();
         const sorted = data.sort((a, b) => b.createdAt - a.createdAt);
         products = sorted.slice(0, 24);
         totalProducts = products.length;
     }
-
-
-
-
-    setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
 
     if(products.length === 0){
         const storedLang = localStorage.getItem("selectedLang");
@@ -70,7 +63,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
         return;
     }
 
-
+    // DOM
     const productGrid = document.getElementById('product-grid');
     const productsQuantity = document.getElementById('products-quantity');
     productsQuantity.textContent = totalProducts;
@@ -80,43 +73,67 @@ document.addEventListener('DOMContentLoaded',  async function () {
     const ellipsis = document.getElementById('ellipsis');
     const lastPageNumber = document.getElementById('last-page-number');
 
+    // Display current page number in first position
     firstPageNumber.textContent = page;
+
+    // Display next page number in second position
     secondPageNumber.textContent = page+1;
+
+    // Display last page number in final position
     lastPageNumber.textContent = totalPages;
+
+    // Hide ellipsis if there are fewer than 4 pages remaining
     if(totalPages - page + 1 < 4)
     {
         ellipsis.style.display = 'none';
     }
+
+    // Hide second page number if current page is second-to-last
     if(page + 1 === totalPages){
         secondPageNumber.style.display = 'none';
     }
+
+    // Hide both second and last page numbers when on the last page
     if (page === totalPages){
         secondPageNumber.style.display = 'none';
         lastPageNumber.style.display = 'none';
     }
+
+    // Next page button
     document.getElementById("nextPage").addEventListener("click", () => {
         if(page < totalPages) {
             page++;
             window.location.href = `../Productions/Productions.html?type=${productType}&page=${page}`;
         }
     });
+
+    // First page number button
     firstPageNumber.addEventListener('click', () => {
         window.location.href=`../Productions/Productions.html?type=${productType}&page=${firstPageNumber.textContent}`;
     })
+
+    // Second page number button
     secondPageNumber.addEventListener('click', () => {
         window.location.href=`../Productions/Productions.html?type=${productType}&page=${secondPageNumber.textContent}`;
     })
+
+    // Last page number button
     lastPageNumber.addEventListener('click', () => {
         window.location.href=`../Productions/Productions.html?type=${productType}&page=${lastPageNumber.textContent}`;
     })
+
+    // Previous page button
     document.getElementById("prevPage").addEventListener("click", () => {
         if (page > 1) {
             page--;
             window.location.href = `../Productions/Productions.html?type=${productType}&page=${page}`;
         }
     });
+
+    // Save products into localStorage
     localStorage.setItem('products', JSON.stringify(products));
 
+    // Get status of language
     const storedLang = localStorage.getItem("selectedLang");
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
 
@@ -130,6 +147,8 @@ document.addEventListener('DOMContentLoaded',  async function () {
     const originalText = homeButton.innerText;
     const translatedText = await translateText(originalText, lang);
     homeButton.innerText = translatedText;
+
+    // Render all productions
     products.forEach(product => {
         const col = document.createElement('div');
         col.className = 'col xxl-3 xl-3 l-4 m-6 c-12 no-gutters';
@@ -149,8 +168,8 @@ document.addEventListener('DOMContentLoaded',  async function () {
             productCard.innerHTML = `
                 <div class="product-image-container">
                 <div>
-                <img src="${product?.images[0]?.url}" alt="${product.name}" class="product-image">
-                <img src="${product?.images[1]?.url}" alt="${product.name}" class="product-image">
+                <img src="${product?.images[0]?.url}" alt="${product.name}" class="product-image" loading="lazy">
+                <img src="${product?.images[1]?.url}" alt="${product.name}" class="product-image" loading="lazy">
                 </div>
                    <i class="fa-regular fa-heart wishlist-icon add-wishlist-btn"></i>   
                 </div>
@@ -185,7 +204,6 @@ document.addEventListener('DOMContentLoaded',  async function () {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            // Nếu API cần token (JWT, v.v.), thêm dòng này:
                             'Authorization': `Bearer ${token}`
                         },
                         body: JSON.stringify({
@@ -209,7 +227,6 @@ document.addEventListener('DOMContentLoaded',  async function () {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            // Nếu API cần token (JWT, v.v.), thêm dòng này:
                             'Authorization': `Bearer ${token}`
                         },
                         body: JSON.stringify({
@@ -221,4 +238,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
                 }
             })
         });
+
+    // Stop animation loading after call api
+    loadingOverlay.classList.add('hidden');
     });

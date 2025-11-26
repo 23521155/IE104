@@ -144,12 +144,11 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             if (icon) el.prepend(icon); // thêm lại icon vào đầu nếu có
         });
 
+        // Menu button
         menuBtn.addEventListener('click', () => {
-            // reset nếu đang đóng
-
+            // The effect works when the screen is above 740px
             if(window.innerWidth > 740) {
                 menuModal.classList.remove('closing');
-                // menuModal.style.display = 'block';
                 setTimeout(() => {
                     menuModal.classList.add('active');
                     content.classList.add('shift-right');
@@ -167,19 +166,16 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
         closeBtn.addEventListener('click', () => {
               if(window.innerWidth > 740) {
-                  // gỡ shift-right để content về vị trí cũ
+                  // Remove shift-right
                   content.classList.remove('shift-right');
-                  // gỡ class active để không bị translateX
+                  // Remove class active
                   menuModal.classList.remove('active');
                   menuModal.classList.add('closing');
-
-
 
                   setTimeout(() => {
                       content.classList.remove('shift-down');
                   }, 0);
 
-                  // sau khi animation xong thì ẩn
                   menuModal.addEventListener('animationend', () => {
                       menuModal.classList.remove('closing');
                       body.classList.remove('modal-open');
@@ -213,11 +209,11 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         const userModalRegister = document.getElementById('user-modal-register');
         const userModalForgotPassword = document.getElementById('user-modal-forgot-password')
         const inputLoginRegister = document.getElementsByClassName('input-login-register');
-        const allInputs = []; // mảng chứa tất cả input con
+        const allInputs = [];
 
         for (const el of inputLoginRegister) {
             const inputs = el.getElementsByTagName('input'); // lấy các input con
-            allInputs.push(...inputs); // nối vào mảng allInputs
+            allInputs.push(...inputs);
         }
 
         userBtn.addEventListener('click', () => {
@@ -232,9 +228,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         })
         userCloseBtn.addEventListener('click', () => {
             allInputs.forEach(input => {
-                input.value = ""; // xóa chữ
-                input.focus(); // đưa con trỏ lại input
-                input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+                input.value = "";
+                input.focus();
+                input.dispatchEvent(new Event("input"));
             })
             const oldError = document.querySelector(".error-message");
             if (oldError) oldError.remove();
@@ -247,9 +243,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         userCLoseRegisterBtn.addEventListener('click', () => {
 
             allInputs.forEach(input => {
-                input.value = ""; // xóa chữ
-                input.focus(); // đưa con trỏ lại input
-                input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+                input.value = "";
+                input.focus();
+                input.dispatchEvent(new Event("input"));
             })
             const oldError = document.querySelector(".error-message");
             if (oldError) oldError.remove();
@@ -263,9 +259,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         })
         userCloseForgotPasswordBtn.addEventListener('click', () => {
             allInputs.forEach(input => {
-                input.value = ""; // xóa chữ
-                input.focus(); // đưa con trỏ lại input
-                input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+                input.value = "";
+                input.focus();
+                input.dispatchEvent(new Event("input"));
             })
             const oldError = document.querySelector(".error-message");
             if (oldError) oldError.remove();
@@ -303,9 +299,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         })
         loginBtn.addEventListener('click', () => {
             allInputs.forEach(input => {
-                input.value = ""; // xóa chữ
-                input.focus(); // đưa con trỏ lại input
-                input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+                input.value = "";
+                input.focus();
+                input.dispatchEvent(new Event("input"));
             })
             const oldError = document.querySelector(".error-message");
             if (oldError) oldError.remove();
@@ -325,9 +321,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         })
         backRegBtn.addEventListener('click', () => {
             allInputs.forEach(input => {
-                input.value = ""; // xóa chữ
-                input.focus(); // đưa con trỏ lại input
-                input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+                input.value = "";
+                input.focus(); /
+                input.dispatchEvent(new Event("input"));
             })
             const oldError = document.querySelector(".error-message");
             if (oldError) oldError.remove();
@@ -384,11 +380,11 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     const deleteInputUserModal = () =>{
         document.querySelectorAll(".input-close").forEach(closeBtn => {
             closeBtn.addEventListener("click", () => {
-                const wrapper = closeBtn.closest(".input-login-register"); // tìm khối cha
-                const input = wrapper.querySelector("input"); // chọn input bên trong khối đó
-                input.value = ""; // xóa chữ
-                input.focus(); // đưa con trỏ lại input
-                input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+                const wrapper = closeBtn.closest(".input-login-register");
+                const input = wrapper.querySelector("input");
+                input.value = "";
+                input.focus();
+                input.dispatchEvent(new Event("input"));
             });
         });
     }
@@ -396,27 +392,24 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 // User register form api
     const registerForm = ()=>{
         document.getElementById("btnRegister").addEventListener("click", async (e) => {
-            e.preventDefault(); // Ngăn form reload trang
+            e.preventDefault();
 
-            // Xóa thông báo lỗi cũ (nếu có)
             const oldError = document.querySelector(".error-message");
             if (oldError) oldError.remove();
 
-
-            // Lấy dữ liệu từ input
             const firstName = document.getElementById("firstNameRegister").value.trim();
             const lastName = document.getElementById("lastNameRegister").value.trim();
             const email = document.getElementById("emailRegister").value.trim();
             const password = document.getElementById("passwordRegister").value.trim();
             const confirmPassword = document.getElementById("confirmPasswordRegister").value.trim();
             const inputLoginRegister = document.getElementsByClassName('input-login-register');
-            const allInputs = []; // mảng chứa tất cả input con
+            const allInputs = [];
 
             for (const el of inputLoginRegister) {
                 const inputs = el.getElementsByTagName('input'); // lấy các input con
-                allInputs.push(...inputs); // nối vào mảng allInputs
+                allInputs.push(...inputs);
             }
-            // Kiểm tra đơn giản
+
             if (password !== confirmPassword) {
                 const wrapper = document.getElementById("confirmPasswordWrapper");
                 const error = document.createElement("div");
@@ -425,7 +418,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                 error.textContent = "Passwords do not match!";
                 wrapper.appendChild(error);
                 userRegisterForm.classList.add("error-show");
-                // Xóa lỗi khi user sửa lại
+
                 const confirmInput = document.getElementById("confirmPasswordRegister");
                 confirmInput.addEventListener(
                     "input",
@@ -437,7 +430,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                 return;
             }
 
-            // Gửi dữ liệu lên backend
             try {
                 const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/register`, {
                     method: "POST",
@@ -457,9 +449,9 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                 if (res.ok) {
                     showToast("Register success!", "success");
                     allInputs.forEach(input => {
-                        input.value = ""; // xóa chữ
-                        input.focus(); // đưa con trỏ lại input
-                        input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+                        input.value = "";
+                        input.focus();
+                        input.dispatchEvent(new Event("input"));
                     })
                 } else {
                     showToast(data.message || "Register failed!", "error");
@@ -477,7 +469,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
             const email = document.getElementById("emailLogin").value.trim();
             const password = document.getElementById("passwordLogin").value.trim();
-            // Gửi dữ liệu lên backend
 
             try{
                 const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/login`, {
@@ -487,14 +478,14 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                         email: email,
                         password: password
                     }),
-                    credentials: "include" // 🔥 quan trọng
+                    credentials: "include"
                 });
                 const data = await res.json();
                 if(res.ok) {
                     localStorage.setItem("accessToken", data.accessToken);
                     localStorage.setItem("refreshToken", data.refreshToken);
                     showToast('Login success', "success");
-                    setTimeout(() => location.reload(), 500); // đợi 0.3s rồi reload
+                    setTimeout(() => location.reload(), 500);
                 }else {
                     showToast(data.message, "error");
                 }
@@ -504,8 +495,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             }
         })
     }
-
-
 
 // Forgot password
     const forgotPassword = () => {
@@ -520,7 +509,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                     body: JSON.stringify({
                         email: email,
                     }),
-                    credentials: "include" // 🔥 quan trọng
+                    credentials: "include"
                 });
 
                 const data = await res.json();
@@ -537,7 +526,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         })
     }
 
-
 // Search Logic
     const searchLogic = () => {
         const searchRoots = document.querySelectorAll('.autocomplete-search, .autocomplete-search-responsive');
@@ -549,7 +537,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
             let timeout = null;
 
-            // Ẩn gợi ý khi click ra ngoài
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('.search')) {
                     resultsBox.classList.remove('show');
@@ -566,7 +553,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                     return;
                 }
 
-                // Đợi người dùng ngừng gõ 300ms mới gọi API
                 timeout = setTimeout(async () => {
                     try {
                         const res = await fetch(`${API_CONFIG.DEPLOY_URL}/productType?q=${encodeURIComponent(query)}`);
@@ -603,7 +589,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
                 resultsBox.innerHTML = html;
                 resultsBox.classList.add('show');
 
-                //Sự kiện click vào từng sản phẩm
                 resultsBox.querySelectorAll('.search-item').forEach((item) => {
                     item.addEventListener('click', () => {
                         const id = item.getAttribute('data-id');
@@ -616,6 +601,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         })
     };
 
+// Choose language logic
     const chooseLanguageLogic = () => {
         const languageBtn = document.querySelector(".language-button");
         const dropdown = document.querySelector(".language-dropdown");
@@ -693,7 +679,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     chooseLanguageLogic()
 
 
-    //Dang nhap roi moi cho hien gio hang
+    // Login to have cart
     const token = localStorage.getItem('accessToken');
     const cart = document.querySelector('.cart');
     if (!token) {
@@ -711,7 +697,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
         const size = window.innerWidth <= 1024 ? 24 : 30;
         user.style.height = size + 'px';
-        console.log(size)
         user.innerHTML = `
             <div class="user-icon" style="height: ${size}px;width: ${size}px">
                 <img 
@@ -869,7 +854,7 @@ window.addEventListener("load", (event) => {
     // GOOGLE SOCIAL LOGIN
     const loginGoogle = () => {
 
-        // Khởi tạo popup Google OAuth2 (hiển thị chọn tài khoản)
+        // Initiate Google OAuth2 popup (show select account)
         const client = google.accounts.oauth2.initCodeClient({
             client_id: "989333640465-booovcfjq5mo389qn4ptd0h1oojhpvb2.apps.googleusercontent.com",
             scope: "email profile openid",
@@ -877,18 +862,17 @@ window.addEventListener("load", (event) => {
             callback: handleGoogleResponse,
         });
 
-        //  Khi click nút google icon => mở popup
+
+        // When clicking the google icon button => open popup
         const googleLoginBtn = document.getElementById("googleLoginBtn");
         googleLoginBtn.addEventListener("click", () => {
-            client.requestCode(); // hiện popup chọn tài khoản
+            client.requestCode();
         });
 
-        // 3⃣ Callback khi user đăng nhập xong
+        // Callback when the user has finished logging in
         async function handleGoogleResponse(response) {
+            const code = response.code;
 
-            const code = response.code; // Đây là mã xác thực bạn gửi cho backend
-
-            console.log("code", code)
             try {
                 const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/google-login`, {
                     method: "POST",

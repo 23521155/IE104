@@ -46,11 +46,8 @@ const showToast = async (message, type = "success") => {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // Các trường được phép chỉnh sửa (đã thêm address)
-    const fields = ["firstName", "lastName", "email", "username", "phoneNumber", "address","avatar"];
-
-
-
+    // Editable fields (added address)
+    const fields = ["firstName", "lastName", "username", "phoneNumber", "address","avatar"];
 
     let originalValues = {};
 
@@ -98,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const avatarInput = document.getElementById("avatarInput");
 
     avatar.addEventListener("click", () => {
-        // chỉ cho phép chọn ảnh khi đang ở chế độ edit
+        // Only allows photo selection while in edit mode
         if (saveBtn.style.display !== "inline") return;
         avatarInput.click();
     });
@@ -109,13 +106,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const reader = new FileReader();
         reader.onload = () => {
-            avatar.src = reader.result; // preview ảnh
-            avatar.dataset.newFile = "true"; //  đánh dấu là có ảnh mới
-            avatar.file = file; // lưu file vào DOM element
+            avatar.src = reader.result; // Preview image
+            avatar.dataset.newFile = "true"; // Make as new photo
+            avatar.file = file; // Save file into DOM element
         };
         reader.readAsDataURL(file);
     });
 
+    // Fetch orders
     const result = await fetch(`${API_CONFIG.DEPLOY_URL}/order/`, {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -159,14 +157,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     </tbody>
                 </table>
     `
-    // Khi bấm Edit
 
-
+    // Edit button
     editBtn.addEventListener("click", (e) => {
         e.preventDefault();
-
-        // Kiểm tra: nếu đã đang ở chế độ edit thì không làm gì thêm
-
 
         originalValues = {};
         originalValues.avatar = user.avatar || "";
@@ -185,15 +179,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             input.id = id;
         });
 
-
-
         document.getElementById("user-avatar").classList.add("editable");
         editBtn.style.display = "none";
         saveBtn.style.display = "inline";
         cancelBtn.style.display = "inline";
     });
 
-    // Khi bấm Save
+    // Save button
     saveBtn.addEventListener("click", async (e) => {
         e.preventDefault();
 
@@ -202,7 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const input = document.getElementById(id);
             if (!input) return;
             if (input && input.value !== originalValues[id]) {
-                updatedData[id] = input.value; // chỉ lấy giá trị thay đổi
+                updatedData[id] = input.value; // Just get the changed value
             }
         });
 
@@ -214,18 +206,19 @@ document.addEventListener("DOMContentLoaded", async () => {
                 formData.append(key, updatedData[key]);
             }
 
-
+            // Fetch update user
             const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/update`, {
                 method: "PATCH",
                 headers: {
-                    Authorization: `Bearer ${accessToken}`, // KHÔNG set Content-Type, fetch tự làm
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: formData,
             });
 
-            if (!res.ok) throw new Error("Lỗi cập nhật người dùng!");
+            if (!res.ok) showToast('user update error','error');
 
-
+            // Convert input fields back to read-only spans with updated values
+            // Replace editable inputs with static text display
             fields.forEach((id) => {
                 const input = document.getElementById(id);
                 if (!input) return;
@@ -237,6 +230,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             showToast('User information updated successfully!','success');
         } else {
 
+            // No changes were made - revert all inputs back to original values
+            // Convert inputs back to spans displaying original data
             fields.forEach((id) => {
                 const input = document.getElementById(id);
                 if (!input) return;
@@ -245,10 +240,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 newSpan.innerText = originalValues[id];
                 input.replaceWith(newSpan);
             });
-
-            //showToast("No changes were made!", "info");
         }
-
 
         document.getElementById("user-avatar").classList.remove("editable");
         editBtn.style.display = "inline";
@@ -256,7 +248,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         cancelBtn.style.display = "none";
     });
 
-    // Khi bấm Cancel
+    // Cancel button
     cancelBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
@@ -275,6 +267,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         cancelBtn.style.display = "none";
     });
 
+    // Logout button
     logoutBtn.addEventListener("click", async (e) => {
 
             localStorage.removeItem('accessToken');
@@ -282,6 +275,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             await fetch(`${API_CONFIG.DEPLOY_URL}/users/logout`, {
                 method: 'DELETE',
             })
-            window.location.href = `${FE_URL}/Home/Home.html` // reload lại trang
+            window.location.href = `${FE_URL}/Home/Home.html` // Go home page after logout
     })
 });

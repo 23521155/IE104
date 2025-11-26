@@ -32,11 +32,11 @@ function showToast(message, type = "success") {
 const deleteInput = () =>{
     const inputClose = document.getElementById('input-close');
     inputClose.addEventListener('click', (event)=>{
-        const wrapper = inputClose.closest(".input-reset-password"); // tìm khối cha
-        const input = wrapper.querySelector("input"); // chọn input bên trong khối đó
-        input.value = ""; // xóa chữ
-        input.focus(); // đưa con trỏ lại input
-        input.dispatchEvent(new Event("input")); // để CSS label tự cập nhật
+        const wrapper = inputClose.closest(".input-reset-password");
+        const input = wrapper.querySelector("input");
+        input.value = "";
+        input.focus();
+        input.dispatchEvent(new Event("input"));
     })
 }
 

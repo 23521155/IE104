@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    // Animation loading
     const loadingOverlay = document.getElementById('loading-overlay');
+
     loadingOverlay.classList.remove('hidden');
+
     await lottie.loadAnimation({
         container: document.getElementById('loading-animation'),
         renderer: 'svg',
@@ -15,12 +18,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         autoplay: true,
         path: '../animations/Loading.json'
     });
-
+    // Logic of slider image
     let currentSlide = 0;
     const slides = document.querySelectorAll(".slide");
     const dots = document.querySelectorAll(".dot");
     const slidesContainer = document.querySelector(".slides");
-
+    // Function of show slide image
     function showSlide(index) {
         if (index < 0) index = slides.length - 1;
         if (index >= slides.length) index = 0;
@@ -37,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     dots.forEach((dot, idx) => {
         dot.addEventListener("click", () => showSlide(idx));
     });
-
+    // Get status of language from localStorage
     const storedLang = localStorage.getItem("selectedLang");
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
 
@@ -45,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const knowMoreBtn = document.querySelector('.knowMore-button');
     let informationText
     let knowMoreText
+    // Change language information
     if(lang === 'vi'){
         informationText = 'Trang phục thời trang 2025 nêu bật sự cân bằng hài hòa giữa sự tối giản, bền vững,\n' +
             '                                Và\n' +
@@ -62,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     information.innerHTML = `${informationText}`
     knowMoreBtn.innerHTML = `${knowMoreText}`
+    // Stop animation after 1s
     setTimeout(()=> {loadingOverlay.classList.add('hidden');},1000)
 })
 
