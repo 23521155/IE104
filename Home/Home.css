@@ -53,6 +53,7 @@
 .knowMore-button{
     background: white;
     color: var(--text-color)!important;
+    font-family: 'Oswald', sans-serif!important;
     width: 150px;
     height: 40px;
     font-size: 2rem !important;

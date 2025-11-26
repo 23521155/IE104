@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         backRegBtn.addEventListener('click', () => {
             allInputs.forEach(input => {
                 input.value = "";
-                input.focus(); /
+                input.focus();
                 input.dispatchEvent(new Event("input"));
             })
             const oldError = document.querySelector(".error-message");
@@ -667,7 +667,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         });
     };
 
-
     logicMenuModal()
     logicUserModal()
     searchInput()
@@ -690,6 +689,16 @@ document.addEventListener("DOMContentLoaded", async (event) => {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` },
         });
+
+        // Auto logout when 410
+        if(res.status === 410){
+            // Remove token
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            window.location.reload();
+            return;
+        }
+
         const data = await res.json();
 
         const user = document.getElementById('user-button');
@@ -697,6 +706,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
         const size = window.innerWidth <= 1024 ? 24 : 30;
         user.style.height = size + 'px';
+
         user.innerHTML = `
             <div class="user-icon" style="height: ${size}px;width: ${size}px">
                 <img 
@@ -712,6 +722,8 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     }
 
     const storedLang = localStorage.getItem("selectedLang");
+
+    // Change language footer
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
     const footer = document.querySelector('.footer');
     footer.innerHTML = `
