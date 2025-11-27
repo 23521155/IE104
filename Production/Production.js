@@ -24,12 +24,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Stop animation after 1s
     setTimeout(()=> {loadingOverlay.classList.add('hidden');},500)
+
+    // Get random products to render suggestProducts
     const product = JSON.parse(sessionStorage.getItem('product'));
     const products = JSON.parse(localStorage.getItem('products'));
     const randomProducts = products.sort(() => Math.random() - 0.5).slice(0, 4);
+
+    // Get status of language
     const storedLang = localStorage.getItem("selectedLang");
     const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
 
+    // Change language
     let addCartBtnValue
     let addWishListBtnValue
     let displayPrice = product.price;
@@ -60,10 +65,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!product) return;
 
+    // Create image product
     const container = document.querySelector('.production-img-container');
     if (!container) return;
-
-    const html = `
+    container.innerHTML =  `
     <div class="production-img grid">
       <div class="row">
         <div class="col xxl-2 xl-2 l-2">
@@ -78,10 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     </div>
   `;
 
-    container.innerHTML = html;
-
-
-
+    // Create thumbnail image
     const thumbnails = container.querySelectorAll('.production-thumbnail');
     const mainImg = container.querySelector('.production-main-img');
     thumbnails.forEach((thumb) => {
@@ -90,6 +92,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // Create info of production
     const productionInfo = document.querySelector('.production-info');
     productionInfo.innerHTML =
         `
@@ -139,11 +142,15 @@ document.addEventListener('DOMContentLoaded', async () => {
            
         ` ;
 
+    // Get accessToken from localStorage
+    const accessToken = localStorage.getItem('accessToken');
+
+    // AddCart button
     const addCartBtn = document.querySelector('.add-cart-btn');
     addCartBtn.addEventListener('click', async event => {
         event.stopPropagation();
-        const token = localStorage.getItem('accessToken');
-        if(!token){
+
+        if(!accessToken){
             showToast('You need to Login!', 'error');
         }
         else{
@@ -151,28 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    product
-                })
-            });
-            const response = await res.json();
-            showToast(response, 'success');
-        }
-    })
-    const addWishlistBtn = document.querySelector('.add-wishlist-btn');
-    addWishlistBtn.addEventListener('click', async event => {
-        event.stopPropagation();
-        const token = localStorage.getItem('accessToken');
-        if(!token){
-            showToast('You need to Login!', 'error');
-        } else{
-            const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/add-wishlist`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${accessToken}`
                 },
                 body: JSON.stringify({
                     product
@@ -183,6 +169,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     })
 
+    // WishList button
+    const addWishlistBtn = document.querySelector('.add-wishlist-btn');
+    addWishlistBtn.addEventListener('click', async event => {
+        event.stopPropagation();
+
+        if(!accessToken){
+            showToast('You need to Login!', 'error');
+        } else{
+            const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/add-wishlist`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                body: JSON.stringify({
+                    product
+                })
+            });
+            const response = await res.json();
+            showToast(response, 'success');
+        }
+    })
+
+    // Create suggestProducts
     const p = await translateText("You may also like",lang)
     const suggestProducts = document.querySelector('.suggest-productions');
     suggestProducts.innerHTML =
@@ -223,6 +233,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         `
     const suggestItems = document.querySelectorAll('.suggest-production');
 
+    // Click suggestProduct
     suggestItems.forEach(item => {
         item.addEventListener('click', () => {
             const productId = item.dataset.id;
