@@ -679,15 +679,15 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
 
     // Login to have cart
-    const token = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessToken');
     const cart = document.querySelector('.cart');
-    if (!token) {
+    if (!accessToken) {
         cart.style.display = 'none';
     } else {
         cart.style.display = '';
         const res = await fetch(`${API_CONFIG.DEPLOY_URL}/users/`, {
             method: "GET",
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${accessToken}` },
         });
 
         // Auto logout when 410

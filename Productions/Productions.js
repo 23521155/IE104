@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
         totalProducts = products.length;
     }
 
+    // No have products
     if(products.length === 0){
         const storedLang = localStorage.getItem("selectedLang");
         const lang = storedLang ? JSON.parse(storedLang).lang.toLowerCase() : "en";
@@ -67,6 +68,9 @@ document.addEventListener('DOMContentLoaded',  async function () {
     const productGrid = document.getElementById('product-grid');
     const productsQuantity = document.getElementById('products-quantity');
     productsQuantity.textContent = totalProducts;
+
+    document.querySelector('.product-type').textContent = productType.toUpperCase();
+
     const totalPages = Math.ceil(totalProducts / limit);
     const firstPageNumber = document.getElementById('first-page-number');
     const secondPageNumber = document.getElementById('second-page-number');
@@ -148,6 +152,23 @@ document.addEventListener('DOMContentLoaded',  async function () {
     const translatedText = await translateText(originalText, lang);
     homeButton.innerText = translatedText;
 
+    // Get accessToken from localStorage
+    const accessToken = localStorage.getItem('accessToken');
+
+    // This function to get wishList productions
+    const getWishListProducts = async () => {
+        const result = await fetch(`${API_CONFIG.DEPLOY_URL}/wishList/get-wishList`, {
+            METHOD: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+        })
+        const wishList = await result.json();
+        return  wishList.wishListItems
+    }
+    const wishListProducts = await getWishListProducts();
+
     // Render all productions
     products.forEach(product => {
         const col = document.createElement('div');
@@ -163,9 +184,12 @@ document.addEventListener('DOMContentLoaded',  async function () {
             formattedPrice = `$${displayPrice.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
         }
 
+        // Create DOM productCard
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
-            productCard.innerHTML = `
+
+
+        productCard.innerHTML = `
                 <div class="product-image-container">
                 <div>
                 <img src="${product?.images[0]?.url}" alt="${product.name}" class="product-image" loading="lazy">
@@ -184,58 +208,112 @@ document.addEventListener('DOMContentLoaded',  async function () {
                 <button class="add-cart-btn">${addCartBtnValue}</button>
             `;
 
-            col.appendChild(productCard);
-            productGrid.appendChild(col);
-
-            productCard.addEventListener('click', event => {
-                sessionStorage.setItem('product', JSON.stringify(product));
-
-                window.location.href = `../Production/Production.html?id=${product._id}`;
+        if(wishListProducts.length > 0)
+        {
+            wishListProducts.forEach(wishListProduct => {
+                if(wishListProduct._id == product._id) {
+                    productCard.innerHTML = `
+                          <div class="product-image-container">
+                <div>
+                <img src="${product?.images[0]?.url}" alt="${product.name}" class="product-image" loading="lazy">
+                <img src="${product?.images[1]?.url}" alt="${product.name}" class="product-image" loading="lazy">
+                </div>
+                   <i class="fa-solid fa-heart wishlist-icon add-wishlist-btn" style="color: red"></i>   
+                </div>
+                <div class="product-info">
+                    <div class="product-name">${product.name.toUpperCase()}</div>
+                    <div class="product-price">
+                    <p>
+                     ${formattedPrice}
+                    </p>
+                    </div>
+                </div>
+                <button class="add-cart-btn">${addCartBtnValue}</button>
+                         `
+                }
             })
-            const addCartBtn = productCard.querySelector('.add-cart-btn');
-            addCartBtn.addEventListener('click', async event => {
-                event.stopPropagation();
-                const token = localStorage.getItem('accessToken');
-                if(!token){
-                    showToast('You need to Login!', 'error');
-                }
-                else{
-                    const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/add-cart`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            product
-                        })
-                    });
-                    const response = await res.json();
-                    showToast(response, 'success');
-                }
-            });
+        }
 
-            const wishlistBtn = productCard.querySelector('.add-wishlist-btn');
-            wishlistBtn.addEventListener('click', async event => {
-                event.stopPropagation();
-                const token = localStorage.getItem('accessToken');
-                if(!token){
-                    showToast('You need to Login!', 'error');
-                }
-                else{
-                    const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/add-wishlist`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            product
-                        })
-                    });
-                    const response = await res.json();
-                    showToast(response, 'success');
-                }
+        col.appendChild(productCard);
+        productGrid.appendChild(col);
+
+        // Click productCard
+        productCard.addEventListener('click', event => {
+                sessionStorage.setItem('product', JSON.stringify(product));
+                window.location.href = `../Production/Production.html?id=${product._id}`;
+        })
+
+        // AddCart button
+        const addCartBtn = productCard.querySelector('.add-cart-btn');
+        addCartBtn.addEventListener('click', async event => {
+            event.stopPropagation();
+
+            if(!accessToken){
+                showToast('You need to Login!', 'error');
+            }
+            else{
+                const res = await fetch(`${API_CONFIG.DEPLOY_URL}/cart/add-cart`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify({
+                        product
+                    })
+                });
+                const response = await res.json();
+                showToast(response, 'success');
+            }
+        });
+
+        // WishList button
+        const wishlistBtn = productCard.querySelector('.add-wishlist-btn');
+        wishlistBtn.addEventListener('click', async event => {
+            event.stopPropagation();
+
+            if(!accessToken){
+                showToast('You need to Login!', 'error');
+            }
+            else{
+                const res = await fetch(`${API_CONFIG.DEPLOY_URL}/wishlist/add-wishlist`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify({
+                        product
+                    })
+                });
+                const response = await res.json();
+                showToast(response, 'success');
+
+                // Get wishList productions after add wishList
+                const wishListProducts = await getWishListProducts();
+
+                wishListProducts.forEach(wishListProduct => {
+                    if(wishListProduct._id === product._id) productCard.innerHTML = `
+                          <div class="product-image-container">
+                <div>
+                <img src="${product?.images[0]?.url}" alt="${product.name}" class="product-image" loading="lazy">
+                <img src="${product?.images[1]?.url}" alt="${product.name}" class="product-image" loading="lazy">
+                </div>
+                   <i class="fa-solid fa-heart wishlist-icon add-wishlist-btn" style="color: red"></i>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">${product.name.toUpperCase()}</div>
+                    <div class="product-price">
+                    <p>
+                     ${formattedPrice}
+                    </p>
+                    </div>
+                </div>
+                <button class="add-cart-btn">${addCartBtnValue}</button>
+                         `
+                })
+            }
+
             })
         });
 
