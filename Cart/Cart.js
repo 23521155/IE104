@@ -122,9 +122,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Increase/decrease quantity
         if (e.target.closest(".qty-decrease")) currentQty = Math.max(1, currentQty - 1);
-        if (e.target.closest(".qty-increase")) currentQty += 1;
+        if (e.target.closest(".qty-increase")) currentQty = Math.min(100, currentQty + 1);
 
         // Update quantity input and save productId to localStorage
+        if(currentQty > 100) currentQty = 100
         qtyInput.value = currentQty;
         localStorage.setItem(`qty_${productId}`, currentQty);
 
@@ -148,8 +149,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             const basePrice = parseFloat(productEl.dataset.price);
             let qty = parseInt(e.target.value);
 
-            // Validate quantity (minimum 1)
+            // Validate quantity (minimum 1) (maximum 100)
             if (isNaN(qty) || qty < 1) qty = 1;
+            if (qty > 100) qty = 100;
 
             // Update input value and localStorage
             e.target.value = qty;
