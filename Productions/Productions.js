@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded',  async function () {
                 <button class="add-cart-btn">${addCartBtnValue}</button>
             `;
 
-        if(wishListProducts.length > 0)
+        if(wishListProducts?.length > 0)
         {
             wishListProducts.forEach(wishListProduct => {
                 if(wishListProduct._id == product._id) {
